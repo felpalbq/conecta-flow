@@ -1,0 +1,689 @@
+# MVP Specification
+Version: 1.0
+
+---
+
+# Objetivo
+
+Definir o escopo funcional da primeira versão utilizável do Conecta Flow.
+
+Este documento estabelece:
+
+- funcionalidades obrigatórias;
+- funcionalidades futuras;
+- fluxos principais;
+- critérios de aceite;
+- limites do MVP.
+
+---
+
+# Definição do MVP
+
+O MVP representa a primeira versão capaz de:
+
+- operar atendimento real;
+- utilizar IA;
+- organizar contatos;
+- realizar handoff humano;
+- gerar percepção clara de valor.
+
+---
+
+# Usuário alvo inicial
+
+Micro e pequenas empresas que:
+
+- recebem contatos pelo WhatsApp;
+- possuem atendimento manual;
+- perdem oportunidades;
+- possuem poucos funcionários;
+- precisam reduzir esforço operacional.
+
+---
+
+# Atores do Sistema
+
+O MVP possui quatro atores:
+
+```
+
+Administrador da Plataforma
+
+        |
+
+Empresa
+
+        |
+
+Usuário Atendente
+
+        |
+
+Cliente Final
+
+
+Agente Inteligente
+```
+
+---
+
+# Funcionalidades Core Obrigatórias
+
+---
+
+# 1. Autenticação
+
+## Objetivo
+
+Permitir acesso seguro.
+
+---
+
+Inclui:
+
+- login;
+- logout;
+- recuperação de senha;
+- controle de sessão.
+
+---
+
+Não inclui:
+
+- OAuth;
+- múltiplos métodos de login.
+
+---
+
+Critério:
+
+Usuário autorizado acessa somente sua empresa.
+
+---
+
+# 2. Multi-tenancy
+
+## Objetivo
+
+Garantir isolamento entre empresas.
+
+---
+
+Inclui:
+
+- criação de empresas;
+- vínculo usuário-empresa;
+- isolamento de dados.
+
+---
+
+Critério:
+
+Empresa A nunca visualiza dados da Empresa B.
+
+---
+
+# 3. Usuários
+
+## Objetivo
+
+Permitir equipe de atendimento.
+
+---
+
+Inclui:
+
+- criação de usuários;
+- ativação/desativação;
+- permissões básicas.
+
+---
+
+Roles iniciais:
+
+```
+
+Owner
+
+Attendant
+
+```
+
+---
+
+Não inclui:
+
+- supervisor;
+- hierarquia complexa.
+
+---
+
+# 4. Inbox
+
+## Objetivo
+
+Ser o centro da experiência.
+
+---
+
+A tela principal do produto.
+
+---
+
+Inclui:
+
+- lista de conversas;
+- conversa ativa;
+- histórico;
+- envio de mensagens;
+- recebimento;
+- status.
+
+---
+
+Interface deve lembrar:
+
+WhatsApp Web.
+
+---
+
+Inclui:
+
+- emoji;
+- anexos;
+- mídia;
+- respostas rápidas.
+
+---
+
+Não inclui inicialmente:
+
+- múltiplos canais.
+
+---
+
+# 5. Conversas
+
+## Objetivo
+
+Gerenciar atendimento.
+
+---
+
+Estados:
+
+```
+
+Nova
+
+Em atendimento IA
+
+Em atendimento humano
+
+Finalizada
+
+```
+
+---
+
+Ações:
+
+- assumir;
+- devolver para IA;
+- transferir.
+
+---
+
+# 6. Contatos
+
+## Objetivo
+
+Organizar clientes e leads.
+
+---
+
+Inclui:
+
+- cadastro;
+- histórico;
+- informações básicas;
+- tags;
+- classificação.
+
+---
+
+Campos iniciais:
+
+```
+
+nome
+
+telefone
+
+origem
+
+status
+
+score
+
+observações
+
+```
+
+---
+
+# 7. Triagem Inteligente
+
+## Objetivo
+
+Reduzir custo e esforço.
+
+---
+
+Primeira ação da IA.
+
+---
+
+Fluxo:
+
+Mensagem recebida
+
+↓
+
+Identificação
+
+↓
+
+Classificação inicial
+
+---
+
+Categorias:
+
+```
+
+irrelevante
+
+particular
+
+cliente
+
+lead
+
+```
+
+---
+
+Somente leads/clientes avançam.
+
+---
+
+# 8. Agente Inteligente
+
+## Objetivo
+
+Automatizar atendimento.
+
+---
+
+Responsabilidades:
+
+- responder dúvidas;
+- consultar conhecimento;
+- coletar informações;
+- classificar;
+- sugerir próxima ação.
+
+---
+
+Não deve:
+
+- tomar decisões críticas sem regra definida.
+
+---
+
+# 9. Handoff
+
+## Objetivo
+
+Transferência inteligente para humano.
+
+---
+
+Ações:
+
+IA → humano
+
+Humano → IA
+
+Humano → humano
+
+---
+
+Registrar:
+
+- motivo;
+- responsável;
+- horário.
+
+---
+
+# 10. Follow-up
+
+## Objetivo
+
+Evitar perda de oportunidades.
+
+---
+
+Inclui:
+
+- identificar contatos parados;
+- sugerir retomada;
+- enviar mensagens.
+
+---
+
+Inicialmente:
+
+fluxos simples.
+
+---
+
+Não inclui:
+
+campanhas avançadas.
+
+---
+
+# 11. Dashboard
+
+## Objetivo
+
+Mostrar valor.
+
+---
+
+Não é tela principal.
+
+---
+
+Indicadores simples:
+
+- conversas atendidas;
+- leads identificados;
+- tempo de resposta;
+- atendimentos pela IA;
+- transferências humanas;
+- oportunidades recuperadas.
+
+---
+
+Não inclui:
+
+analytics avançado.
+
+---
+
+# 12. Mission Control Inicial
+
+## Objetivo
+
+Permitir operação da plataforma.
+
+---
+
+Inclui:
+
+- empresas;
+- usuários;
+- status;
+- consumo básico;
+- erros.
+
+---
+
+# Interface MVP
+
+Ordem de prioridade:
+
+```
+
+1. Inbox
+
+2. Contatos
+
+3. Home
+
+4. Dashboard
+
+5. Configurações
+
+
+```
+
+---
+
+# Fluxos Principais
+
+---
+
+# Fluxo 1
+
+## Novo contato
+
+```
+
+Cliente envia mensagem
+
+↓
+
+WhatsApp
+
+↓
+
+Sistema recebe
+
+↓
+
+Triagem IA
+
+↓
+
+Classificação
+
+↓
+
+Resposta
+
+↓
+
+Handoff se necessário
+
+```
+
+---
+
+# Fluxo 2
+
+## Atendimento humano
+
+```
+
+IA atende
+
+↓
+
+Atendente assume
+
+↓
+
+Conversa continua
+
+↓
+
+Finaliza
+
+↓
+
+IA pode retomar
+
+```
+
+---
+
+# Fluxo 3
+
+## Lead parado
+
+```
+
+Contato sem resposta
+
+↓
+
+Sistema identifica
+
+↓
+
+Follow-up
+
+↓
+
+Reativação
+
+```
+
+---
+
+# Fora do MVP
+
+Não construir inicialmente:
+
+---
+
+## Agendamento
+
+Motivo:
+
+Módulo adicional.
+
+---
+
+## Pagamentos
+
+Motivo:
+
+Módulo adicional.
+
+---
+
+## Campanhas
+
+Motivo:
+
+Complexidade operacional.
+
+---
+
+## Landing Pages
+
+Motivo:
+
+Aquisição, não Core.
+
+---
+
+## Instagram
+
+Motivo:
+
+Segundo canal.
+
+---
+
+## Analytics avançado
+
+Motivo:
+
+Não essencial.
+
+---
+
+## CRM Pipeline Kanban
+
+Motivo:
+
+Não representa a filosofia do produto.
+
+---
+
+# Critérios de Sucesso
+
+O MVP está pronto quando:
+
+---
+
+Empresa consegue:
+
+[x]
+
+Cadastrar usuários.
+
+
+[x]
+
+Receber mensagens.
+
+
+[x]
+
+Visualizar conversas.
+
+
+[x]
+
+Responder.
+
+
+[x]
+
+Usar IA.
+
+
+[x]
+
+Transferir atendimento.
+
+
+[x]
+
+Organizar contatos.
+
+
+[x]
+
+Visualizar resultados.
+
+
+---
+
+# Critério Comercial
+
+O produto deve permitir demonstrar:
+
+"Quantos atendimentos foram automatizados?"
+
+"Quantos clientes foram recuperados?"
+
+"Quanto trabalho humano foi reduzido?"
+
+---
+
+# Regra Final
+
+O MVP não é um CRM com IA.
+
+É um sistema de conversa inteligente com gestão de relacionamento.
+
+A conversa é o centro.

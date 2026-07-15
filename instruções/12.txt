@@ -1,0 +1,312 @@
+# Multi Tenancy
+Version: 1.0
+
+---
+
+# Objetivo
+
+Definir a estratégia oficial de multi-tenancy do Conecta Flow.
+
+Toda empresa deve operar como um ambiente completamente isolado.
+
+O isolamento é um princípio arquitetural.
+
+Nunca uma funcionalidade opcional.
+
+---
+
+# Filosofia
+
+O sistema é único.
+
+Os dados são separados.
+
+Não existirão instalações independentes para cada cliente.
+
+Existe apenas uma plataforma.
+
+Cada empresa enxerga apenas seu universo.
+
+---
+
+# Unidade de Isolamento
+
+A entidade Company representa o limite de isolamento.
+
+Todo objeto persistente pertence obrigatoriamente a uma Company.
+
+Exemplos.
+
+Conversation
+
+Contact
+
+User
+
+Lead
+
+Message
+
+Attachment
+
+Task
+
+Timeline
+
+Follow-up
+
+Module
+
+Integration
+
+Settings
+
+Nunca existirão registros "órfãos".
+
+---
+
+# Regra Fundamental
+
+Toda consulta deve possuir contexto da empresa.
+
+Nenhuma consulta poderá acessar registros sem Company.
+
+---
+
+# Autenticação
+
+Após autenticar.
+
+O sistema identifica.
+
+User
+
+↓
+
+Company
+
+↓
+
+Permissões
+
+↓
+
+Módulos
+
+Toda operação depende dessas informações.
+
+---
+
+# Autorização
+
+O usuário nunca acessa dados diretamente.
+
+Toda operação deve validar.
+
+Empresa
+
+↓
+
+Permissão
+
+↓
+
+Recurso
+
+↓
+
+Ação
+
+---
+
+# Compartilhamento
+
+Não existe compartilhamento entre empresas.
+
+Mesmo que duas empresas utilizem o mesmo número.
+
+Mesmo cliente.
+
+Mesmo usuário.
+
+Mesmo administrador.
+
+Cada ambiente permanece isolado.
+
+---
+
+# Mission Control
+
+Mission Control possui visão global.
+
+Porém nunca modifica dados diretamente.
+
+Toda operação ocorre utilizando contexto explícito da empresa.
+
+---
+
+# IA
+
+Cada empresa possui.
+
+Configuração própria.
+
+Prompt próprio.
+
+RAG próprio.
+
+Memória própria.
+
+Documentação própria.
+
+Nunca compartilhar conhecimento entre empresas.
+
+---
+
+# Banco Vetorial
+
+Cada empresa possui seu próprio espaço lógico.
+
+Nunca misturar embeddings.
+
+Nunca compartilhar contexto.
+
+---
+
+# Eventos
+
+Todo evento possui obrigatoriamente.
+
+Company ID.
+
+Isso garante rastreabilidade completa.
+
+---
+
+# Integrações
+
+Toda integração pertence a uma empresa.
+
+Nunca utilizar credenciais globais.
+
+Exemplos.
+
+WhatsApp.
+
+Meta.
+
+Google.
+
+Stripe.
+
+Evolution.
+
+Cada empresa administra suas conexões.
+
+---
+
+# Workflows
+
+Os workflows podem ser compartilhados.
+
+Os dados nunca.
+
+Sempre executar utilizando o contexto da empresa.
+
+---
+
+# Módulos
+
+A habilitação ocorre por empresa.
+
+Empresa A.
+
+Agenda.
+
+Empresa B.
+
+Sem Agenda.
+
+Empresa C.
+
+Agenda + Pagamentos.
+
+Toda funcionalidade consulta primeiro os módulos ativos.
+
+---
+
+# Configurações
+
+Nunca utilizar configurações globais.
+
+Toda configuração deve responder.
+
+"Pertence a qual empresa?"
+
+---
+
+# Cache
+
+Caso exista cache.
+
+A chave sempre inclui.
+
+Company ID.
+
+Nunca compartilhar cache.
+
+---
+
+# Logs
+
+Todos os logs devem registrar.
+
+Empresa.
+
+Usuário.
+
+Data.
+
+Origem.
+
+Evento.
+
+---
+
+# Auditoria
+
+Toda auditoria é segmentada.
+
+Mission Control possui acesso global.
+
+Empresas possuem acesso apenas aos próprios registros.
+
+---
+
+# Backup
+
+Backups são globais.
+
+A restauração poderá ocorrer por empresa.
+
+Sempre preservando isolamento.
+
+---
+
+# Crescimento
+
+O sistema deve suportar milhares de empresas.
+
+Sem necessidade de alterar arquitetura.
+
+---
+
+# Regra Final
+
+Toda entidade pertence a exatamente uma Company.
+
+Toda operação acontece dentro de uma Company.
+
+Toda consulta respeita uma Company.
+
+Nunca quebrar esse princípio.

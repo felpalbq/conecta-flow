@@ -1,0 +1,627 @@
+# AI Agent Architecture
+Version: 1.0
+
+---
+
+# Objetivo
+
+Definir a arquitetura do agente inteligente do Conecta Flow.
+
+O agente é responsável por auxiliar empresas no atendimento, qualificação e relacionamento com clientes.
+
+---
+
+# Filosofia
+
+O agente não substitui pessoas.
+
+O agente aumenta a capacidade da equipe.
+
+---
+
+# Papel do Agente
+
+O agente deve:
+
+- receber contatos;
+- compreender intenção;
+- eliminar interações sem valor;
+- responder dúvidas;
+- qualificar oportunidades;
+- manter relacionamento;
+- executar tarefas autorizadas;
+- encaminhar para humanos quando necessário.
+
+---
+
+# O Agente Não Deve
+
+Nunca:
+
+- tomar decisões comerciais irreversíveis;
+- prometer condições não autorizadas;
+- acessar dados de outra empresa;
+- alterar configurações;
+- substituir julgamento humano em situações críticas.
+
+---
+
+# Arquitetura Geral
+
+```
+
+Mensagem
+
+↓
+
+Channel Adapter
+
+↓
+
+Conversation Service
+
+↓
+
+Agent Orchestrator
+
+↓
+
+Intent Analysis
+
+↓
+
+Context Retrieval
+
+↓
+
+Decision
+
+↓
+
+Response / Action / Handoff
+
+```
+
+---
+
+# Componentes
+
+O agente é dividido em camadas.
+
+---
+
+# 1. Input Layer
+
+Responsável por receber:
+
+- mensagens;
+- contexto da conversa;
+- informações do contato;
+- histórico.
+
+---
+
+Nunca enviar apenas a última mensagem.
+
+O contexto é obrigatório.
+
+---
+
+# 2. Context Layer
+
+Responsável por montar o contexto.
+
+Inclui:
+
+- histórico recente;
+- dados do contato;
+- classificação;
+- empresa;
+- regras;
+- conhecimento.
+
+---
+
+# 3. Intelligence Layer
+
+Responsável pelo raciocínio.
+
+Inclui:
+
+- modelo LLM;
+- interpretação;
+- classificação;
+- decisão.
+
+---
+
+# 4. Action Layer
+
+Executa ações permitidas.
+
+Exemplos:
+
+- responder;
+- criar follow-up;
+- atualizar classificação;
+- solicitar humano;
+- criar agendamento.
+
+---
+
+# 5. Memory Layer
+
+Controla memória.
+
+Existem três níveis.
+
+---
+
+# Memória de Conversa
+
+Curto prazo.
+
+Contexto da conversa atual.
+
+---
+
+Exemplo:
+
+"Ele informou que quer orçamento para amanhã."
+
+---
+
+# Memória do Contato
+
+Relacionamento.
+
+Histórico relevante.
+
+---
+
+Exemplo:
+
+"Cliente já pediu orçamento anteriormente."
+
+---
+
+# Memória da Empresa
+
+Conhecimento permanente.
+
+Exemplo:
+
+- produtos;
+- preços;
+- horários;
+- políticas.
+
+---
+
+# RAG
+
+O conhecimento empresarial utiliza Retrieval Augmented Generation.
+
+---
+
+Fluxo:
+
+```
+
+Documento
+
+↓
+
+Processamento
+
+↓
+
+Chunks
+
+↓
+
+Embeddings
+
+↓
+
+Vector Database
+
+↓
+
+Busca contextual
+
+↓
+
+LLM
+
+```
+
+---
+
+# Isolamento
+
+Cada empresa possui seu próprio contexto.
+
+Obrigatório:
+
+company_id
+
+metadata
+
+namespace lógico
+
+---
+
+# Nunca
+
+A IA de uma empresa pode acessar conhecimento de outra.
+
+---
+
+# Triagem Inicial
+
+A primeira função do agente é filtrar.
+
+---
+
+# Objetivos:
+
+Reduzir custo.
+
+Reduzir ruído.
+
+Priorizar oportunidades.
+
+---
+
+# Classificações iniciais:
+
+```
+
+unknown
+
+↓
+
+irrelevant
+
+↓
+
+personal_contact
+
+↓
+
+existing_customer
+
+↓
+
+potential_lead
+
+```
+
+---
+
+# Exemplos de descarte:
+
+- mensagens erradas;
+- spam;
+- conversas particulares;
+- curiosos sem intenção.
+
+---
+
+# Qualificação
+
+Somente após passar pela triagem.
+
+---
+
+# Dados possíveis:
+
+- necessidade;
+- urgência;
+- interesse;
+- orçamento;
+- perfil;
+- intenção.
+
+---
+
+# Lead Score
+
+O score representa probabilidade comercial.
+
+Não representa certeza.
+
+---
+
+# Exemplo:
+
+Score baixo:
+
+"apenas pesquisando"
+
+---
+
+Score alto:
+
+"quero contratar esta semana"
+
+---
+
+# Handoff
+
+O agente deve saber quando parar.
+
+---
+
+# Motivos:
+
+- pedido explícito;
+- alta intenção;
+- negociação;
+- reclamação;
+- situação complexa;
+- baixa confiança.
+
+---
+
+# Estados
+
+```
+
+AI_ACTIVE
+
+↓
+
+HUMAN_REQUESTED
+
+↓
+
+HUMAN_ACTIVE
+
+↓
+
+AI_RETURNED
+
+```
+
+---
+
+# Assumir Conversa
+
+Atendente pode assumir manualmente.
+
+---
+
+Quando ocorre:
+
+Evento:
+
+conversation.human_takeover
+
+---
+
+A IA deve respeitar.
+
+---
+
+# Retorno para IA
+
+Atendente pode devolver.
+
+---
+
+Evento:
+
+conversation.returned_to_agent
+
+---
+
+# Follow-up
+
+Uma das funções principais.
+
+---
+
+O agente deve:
+
+- identificar ausência de resposta;
+- avaliar oportunidade;
+- sugerir retomada;
+- executar contato autorizado.
+
+---
+
+# Nunca
+
+Enviar mensagens insistentes.
+
+Respeitar:
+
+- limites;
+- frequência;
+- políticas da empresa.
+
+---
+
+# Ferramentas do Agente
+
+O agente pode utilizar ferramentas controladas.
+
+Exemplos:
+
+buscar produto;
+
+consultar agenda;
+
+criar agendamento;
+
+gerar link;
+
+registrar informação.
+
+---
+
+# Tool Permission
+
+Cada ferramenta possui permissão.
+
+Exemplo:
+
+```
+
+agent.can_schedule
+
+agent.can_create_payment_link
+
+```
+
+---
+
+# O agente nunca possui acesso total.
+
+---
+
+# Prompt Management
+
+Prompts possuem:
+
+- versão;
+- empresa;
+- data;
+- autor;
+- histórico.
+
+---
+
+# Estrutura do Prompt
+
+```
+
+Identidade
+
+↓
+
+Objetivo
+
+↓
+
+Contexto
+
+↓
+
+Regras
+
+↓
+
+Limitações
+
+↓
+
+Ferramentas
+
+↓
+
+Formato de resposta
+
+```
+
+---
+
+# Modelo LLM
+
+A arquitetura deve permitir múltiplos modelos.
+
+Exemplo:
+
+Alta capacidade:
+
+qualificação complexa.
+
+Modelo econômico:
+
+triagem inicial.
+
+---
+
+# Otimização de Custos
+
+Aplicar estratégia:
+
+Mensagem simples:
+
+modelo barato.
+
+---
+
+Análise complexa:
+
+modelo avançado.
+
+---
+
+# Métricas do Agente
+
+Medir:
+
+- mensagens atendidas;
+- taxa de resolução;
+- handoffs;
+- conversões;
+- custo IA;
+- tempo resposta.
+
+---
+
+# Avaliação
+
+O agente deve ser continuamente avaliado.
+
+Critérios:
+
+- precisão;
+- satisfação;
+- custo;
+- segurança.
+
+---
+
+# Falhas
+
+Quando IA falhar:
+
+registrar;
+
+não insistir;
+
+encaminhar humano quando necessário.
+
+---
+
+# Auditoria
+
+Registrar:
+
+modelo usado;
+
+versão do prompt;
+
+ferramentas utilizadas;
+
+resultado.
+
+---
+
+# Evolução
+
+Novas capacidades devem ser adicionadas como ferramentas.
+
+Nunca criar agentes completamente diferentes sem necessidade.
+
+---
+
+# Regra Final
+
+O agente inteligente é um funcionário digital.
+
+Ele deve agir com contexto, limites e responsabilidade.

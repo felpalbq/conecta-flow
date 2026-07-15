@@ -1,0 +1,625 @@
+# Integration Strategy
+Version: 1.0
+
+---
+
+# Objetivo
+
+Definir a estratégia de integrações externas do Conecta Flow.
+
+Este documento estabelece:
+
+- princípios;
+- fornecedores;
+- arquitetura;
+- prioridades;
+- regras de implementação.
+
+---
+
+# Filosofia
+
+Integrações externas são dependências.
+
+O produto não deve depender da implementação específica de um fornecedor.
+
+---
+
+# Princípio Principal
+
+Toda integração deve possuir uma camada de abstração.
+
+---
+
+# Arquitetura
+
+```
+
+External Provider
+
+        |
+
+Integration Adapter
+
+        |
+
+Application Domain
+
+```
+
+---
+
+# Exemplo
+
+WhatsApp:
+
+```
+
+Meta API
+
+Evolution API
+
+Outro Provider
+
+        |
+
+WhatsApp Adapter
+
+        |
+
+Conversation Domain
+
+```
+
+---
+
+# Regra
+
+O domínio nunca chama diretamente:
+
+- Meta API;
+- Evolution API;
+- Google API.
+
+---
+
+# Domínio conhece:
+
+```
+sendMessage()
+
+receiveMessage()
+
+getConversationHistory()
+
+```
+
+---
+
+# Integrações Prioritárias
+
+Ordem:
+
+1.
+
+WhatsApp
+
+2.
+
+IA / LLM
+
+3.
+
+Banco vetorial / RAG
+
+4.
+
+Google Calendar
+
+5.
+
+Instagram
+
+6.
+
+Pagamentos
+
+7.
+
+Landing Pages
+
+---
+
+# 1. WhatsApp
+
+## Importância
+
+Integração principal do produto.
+
+O Core nasce orientado para conversas.
+
+---
+
+# Protótipo
+
+Utilizar:
+
+Evolution API.
+
+---
+
+Motivo:
+
+- baixo custo;
+- rápida implementação;
+- ambiente controlado.
+
+---
+
+Não representa:
+
+arquitetura definitiva.
+
+---
+
+# Produção
+
+Utilizar:
+
+Meta WhatsApp Cloud API.
+
+---
+
+Motivos:
+
+- oficial;
+- estabilidade;
+- compliance;
+- escala.
+
+---
+
+# Responsabilidades
+
+WhatsApp Adapter:
+
+- receber mensagens;
+- enviar mensagens;
+- enviar mídia;
+- receber eventos;
+- controlar status.
+
+---
+
+# Não Responsável
+
+- classificação;
+- score;
+- IA;
+- decisão comercial.
+
+---
+
+# Fluxo Entrada
+
+```
+
+Cliente envia mensagem
+
+↓
+
+WhatsApp Provider
+
+↓
+
+Webhook
+
+↓
+
+Integration Adapter
+
+↓
+
+Conversation Domain
+
+↓
+
+Agent
+
+```
+
+---
+
+# Fluxo Saída
+
+```
+
+Agent/Human
+
+↓
+
+Conversation Domain
+
+↓
+
+WhatsApp Adapter
+
+↓
+
+Provider
+
+↓
+
+Cliente
+
+```
+
+---
+
+# 2. LLM
+
+## Objetivo
+
+Alimentar o agente inteligente.
+
+---
+
+# Arquitetura
+
+```
+
+Agent Module
+
+↓
+
+LLM Provider
+
+↓
+
+Model
+
+```
+
+---
+
+# Não acoplar:
+
+```
+OpenAI somente
+
+```
+
+---
+
+Preparar:
+
+- múltiplos providers;
+- troca de modelo;
+- controle de custo.
+
+---
+
+# Informações monitoradas
+
+- tokens;
+- custo;
+- latência;
+- erros;
+- respostas.
+
+---
+
+# 3. RAG / Conhecimento
+
+## Objetivo
+
+Permitir respostas específicas da empresa.
+
+---
+
+# Arquitetura
+
+```
+
+Company Knowledge
+
+↓
+
+Processing
+
+↓
+
+Embeddings
+
+↓
+
+Vector Search
+
+↓
+
+Agent Context
+
+```
+
+---
+
+# Isolamento
+
+Cada empresa possui sua própria base.
+
+---
+
+Nunca:
+
+misturar conhecimento entre clientes.
+
+---
+
+# Dados
+
+Exemplos:
+
+- produtos;
+- serviços;
+- preços;
+- políticas;
+- documentos.
+
+---
+
+# 4. Google Calendar
+
+## Módulo futuro
+
+Não faz parte do Core inicial.
+
+---
+
+Usado por:
+
+- clínicas;
+- salões;
+- serviços.
+
+---
+
+Responsabilidades:
+
+- consultar disponibilidade;
+- criar eventos;
+- atualizar;
+- cancelar.
+
+---
+
+# 5. Instagram
+
+## Módulo futuro
+
+---
+
+Objetivo:
+
+capturar leads.
+
+---
+
+Possibilidades:
+
+- mensagens;
+- comentários;
+- anúncios.
+
+---
+
+# Regra
+
+Instagram gera entrada.
+
+Não altera o Core.
+
+---
+
+# 6. Pagamentos
+
+## Módulo futuro
+
+---
+
+Possíveis integrações:
+
+- gateways;
+- links;
+- confirmação.
+
+---
+
+Responsabilidade:
+
+Payment Module.
+
+---
+
+Não pertence ao Conversation Core.
+
+---
+
+# 7. Landing Pages
+
+## Módulo futuro
+
+---
+
+Objetivo:
+
+captura de leads.
+
+---
+
+Fluxo:
+
+```
+
+Lead formulário
+
+↓
+
+Integration
+
+↓
+
+Contact Created
+
+↓
+
+Agent
+
+```
+
+---
+
+# Webhooks
+
+Toda integração deve possuir:
+
+- endpoint;
+- validação;
+- logs;
+- tratamento de erro.
+
+---
+
+# Eventos Externos
+
+Nunca processar diretamente.
+
+---
+
+Fluxo:
+
+```
+
+Webhook
+
+↓
+
+External Event
+
+↓
+
+Domain Event
+
+↓
+
+Business Logic
+
+```
+
+---
+
+# Credenciais
+
+Nunca ficam:
+
+- código;
+- banco público;
+- GitHub.
+
+---
+
+Utilizar:
+
+- environment variables;
+- secret manager.
+
+---
+
+# Monitoramento
+
+Toda integração deve informar:
+
+- status;
+- última sincronização;
+- erro recente.
+
+---
+
+# Mission Control
+
+Deve visualizar:
+
+```
+
+WhatsApp
+
+CONNECTED
+
+
+LLM
+
+CONNECTED
+
+
+Calendar
+
+ERROR
+
+```
+
+---
+
+# Falhas
+
+Integrações podem falhar.
+
+O sistema deve:
+
+- registrar;
+- tentar novamente;
+- alertar.
+
+---
+
+# Desenvolvimento
+
+Toda integração nova exige:
+
+1.
+
+Documentação.
+
+2.
+
+Adapter.
+
+3.
+
+Eventos.
+
+4.
+
+Permissões.
+
+5.
+
+Testes.
+
+---
+
+# Segurança
+
+Dados externos devem respeitar:
+
+- tenant;
+- permissões;
+- auditoria.
+
+---
+
+# Regra Final
+
+Integrações são portas.
+
+O produto é o sistema interno.
+
+Nunca construir o produto em cima de uma porta específica.

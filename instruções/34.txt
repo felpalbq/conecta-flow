@@ -1,0 +1,470 @@
+# Mission Control Architecture
+Version: 1.0
+
+---
+
+# Objetivo
+
+Definir a arquitetura e responsabilidades do Mission Control.
+
+O Mission Control é a camada administrativa interna do Conecta Flow.
+
+Ele existe para operar, monitorar e evoluir a plataforma.
+
+---
+
+# Filosofia
+
+O produto cliente e a plataforma são sistemas diferentes conceitualmente.
+
+O cliente usa:
+
+"Meu atendimento inteligente."
+
+O administrador usa:
+
+"Minha plataforma SaaS."
+
+---
+
+# Separação
+
+```
+
+                  Platform
+
+                     |
+
+        ----------------------------
+
+        |                          |
+
+ Customer Application        Mission Control
+
+
+```
+
+---
+
+# Customer Application
+
+Usado pelas empresas clientes.
+
+Objetivo:
+
+operar atendimento.
+
+---
+
+# Mission Control
+
+Usado pelo administrador da plataforma.
+
+Objetivo:
+
+operar o SaaS.
+
+---
+
+# Responsabilidades
+
+O Mission Control deve permitir:
+
+- gestão de empresas;
+- gestão de usuários;
+- suporte;
+- monitoramento;
+- configuração;
+- auditoria;
+- análise de custos;
+- saúde operacional.
+
+---
+
+# Não Responsabilidades
+
+O Mission Control não deve:
+
+- substituir o sistema do cliente;
+- ser usado por atendentes;
+- administrar conversas diariamente;
+- virar CRM interno.
+
+---
+
+# Módulos do Mission Control
+
+---
+
+# 1. Company Management
+
+Gestão dos tenants.
+
+Permite:
+
+- criar empresa;
+- ativar/desativar;
+- visualizar plano;
+- visualizar módulos;
+- acessar informações técnicas.
+
+---
+
+Dados principais:
+
+```
+company
+
+status
+
+plan
+
+created_at
+
+modules
+
+usage
+
+```
+
+---
+
+# 2. User Management
+
+Gestão dos usuários.
+
+Permite:
+
+- criar usuários;
+- bloquear acesso;
+- redefinir permissões;
+- visualizar atividade.
+
+---
+
+# 3. Tenant Health
+
+Saúde das empresas.
+
+Mostrar:
+
+- integrações ativas;
+- erros recentes;
+- consumo;
+- atividade.
+
+---
+
+Exemplo:
+
+Empresa X
+
+WhatsApp:
+
+Online
+
+
+IA:
+
+Operando
+
+
+Última mensagem:
+
+2 minutos atrás
+
+---
+
+# 4. Integration Management
+
+Monitoramento das integrações.
+
+Exemplos:
+
+WhatsApp
+
+Instagram
+
+Google Calendar
+
+Pagamentos
+
+---
+
+Mostrar:
+
+- conectado;
+- expirado;
+- erro;
+- última sincronização.
+
+---
+
+# 5. AI Operations
+
+Gestão da inteligência.
+
+Permitir:
+
+- visualizar agentes;
+- acompanhar custo;
+- revisar falhas;
+- controlar versões.
+
+---
+
+Informações:
+
+Modelo utilizado
+
+Tokens consumidos
+
+Custo estimado
+
+Taxa de handoff
+
+---
+
+# 6. Knowledge Management
+
+Gestão do conhecimento das empresas.
+
+Permitir:
+
+- acompanhar documentos;
+- status de processamento;
+- erros de indexação.
+
+---
+
+Nunca misturar bases.
+
+---
+
+# 7. Usage & Billing
+
+Controle operacional.
+
+Mostrar:
+
+Consumo:
+
+- mensagens;
+- tokens;
+- armazenamento;
+- chamadas externas.
+
+---
+
+Objetivo:
+
+prever custo.
+
+---
+
+# 8. Audit
+
+Histórico administrativo.
+
+Registrar:
+
+- login;
+- alterações;
+- ações críticas.
+
+---
+
+# Arquitetura de Acesso
+
+Somente:
+
+Platform Administrator
+
+---
+
+Nunca:
+
+Company Owner
+
+Attendant
+
+---
+
+# Modelo de Segurança
+
+O Mission Control possui:
+
+Platform Scope.
+
+---
+
+Ele pode atravessar tenants.
+
+Mas:
+
+toda ação deve ser registrada.
+
+---
+
+# Ações Sensíveis
+
+Exigem auditoria:
+
+- acessar empresa;
+- alterar configuração;
+- modificar integração;
+- alterar agente;
+- alterar módulos.
+
+---
+
+# Impersonation
+
+Futuro.
+
+Permitir suporte técnico.
+
+---
+
+Regra:
+
+Nunca ocultar.
+
+Sempre registrar:
+
+"Administrador acessou como empresa X."
+
+---
+
+# Dashboard do Mission Control
+
+Diferente do dashboard cliente.
+
+---
+
+Cliente:
+
+Resultado comercial.
+
+---
+
+Admin:
+
+Saúde da plataforma.
+
+---
+
+Indicadores:
+
+## Operação
+
+- empresas ativas;
+- usuários ativos;
+- mensagens processadas;
+- conversas abertas.
+
+---
+
+## IA
+
+- tokens;
+- custo;
+- falhas;
+- handoffs.
+
+---
+
+## Infraestrutura
+
+- erros;
+- filas;
+- integrações.
+
+---
+
+# Alertas
+
+O Mission Control deve alertar:
+
+- integração caída;
+- custo acima do esperado;
+- erro recorrente;
+- baixa atividade.
+
+---
+
+# Relação com n8n
+
+O Mission Control acompanha workflows.
+
+Não administra diretamente.
+
+---
+
+Exemplo:
+
+Workflow falhou.
+
+↓
+
+Evento:
+
+workflow.failed
+
+↓
+
+Mission Control exibe alerta.
+
+---
+
+# Relação com Supabase
+
+Pode consultar:
+
+dados globais;
+
+logs;
+
+métricas.
+
+---
+
+Nunca remover segurança do banco.
+
+---
+
+# Relação com IA
+
+Pode:
+
+visualizar;
+
+configurar;
+
+versionar.
+
+---
+
+Não deve:
+
+executar decisões comerciais.
+
+---
+
+# Evolução futura
+
+Pode se tornar:
+
+- centro de operações;
+- suporte;
+- billing;
+- analytics;
+- marketplace de integrações.
+
+---
+
+# Regra Final
+
+O Mission Control é o sistema operacional do administrador.
+
+O cliente nunca deve saber que ele existe.

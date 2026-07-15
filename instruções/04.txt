@@ -1,0 +1,571 @@
+# Conversation Lifecycle
+Version: 1.0
+
+---
+
+# Objetivo
+
+Este documento define todo o ciclo de vida de uma conversa dentro do Conecta Flow.
+
+A conversa é a entidade central da plataforma.
+
+Todas as funcionalidades existem para criar, enriquecer, organizar, evoluir ou concluir uma conversa.
+
+Todo desenvolvimento relacionado ao atendimento deverá respeitar este documento.
+
+---
+
+# Princípio Fundamental
+
+Uma conversa nasce antes de existir um lead.
+
+Nem toda conversa se tornará uma oportunidade comercial.
+
+Portanto:
+
+Conversa ≠ Lead
+
+O Lead é apenas um possível estado de uma conversa.
+
+---
+
+# Ciclo Geral
+
+Nova Mensagem
+
+↓
+
+Triagem
+
+↓
+
+Identificação
+
+↓
+
+Decisão
+
+↓
+
+Atendimento
+
+↓
+
+Qualificação
+
+↓
+
+Conversão
+
+↓
+
+Relacionamento
+
+↓
+
+Reativação
+
+↓
+
+Encerramento
+
+A conversa pode voltar para etapas anteriores sempre que necessário.
+
+Ela nunca é destruída.
+
+---
+
+# Estado 1
+
+## Nova Conversa
+
+Uma nova conversa é criada quando um canal recebe a primeira mensagem.
+
+Exemplos:
+
+- WhatsApp
+- Instagram
+- Landing Page
+- API
+- Outros canais futuros
+
+Neste momento existem poucas informações.
+
+O sistema conhece apenas:
+
+- canal
+- número
+- data
+- mensagem inicial
+
+Nada mais.
+
+---
+
+# Estado 2
+
+## Triagem
+
+Objetivo:
+
+Descobrir se vale a pena continuar o atendimento.
+
+A IA deve evitar processamento desnecessário.
+
+Nesta etapa o sistema tenta identificar:
+
+- spam
+- mensagem automática
+- engano
+- contato pessoal
+- fornecedor
+- funcionário
+- curiosidade sem intenção
+- cliente existente
+- possível novo cliente
+
+A triagem deve utilizar o menor custo computacional possível.
+
+Caso necessário poderá utilizar:
+
+- regras
+- classificadores
+- IA
+
+---
+
+# Resultado da Triagem
+
+A conversa pode seguir para:
+
+Arquivar
+
+↓
+
+Ignorar
+
+↓
+
+Bloquear
+
+↓
+
+Responder automaticamente
+
+↓
+
+Continuar atendimento
+
+---
+
+# Estado 3
+
+## Identificação
+
+Caso a conversa continue.
+
+O sistema procura entender:
+
+Quem está falando?
+
+Possibilidades:
+
+- cliente novo
+- cliente antigo
+- parceiro
+- fornecedor
+- funcionário
+- desconhecido
+
+Caso exista histórico.
+
+Todo contexto deverá ser recuperado.
+
+---
+
+# Estado 4
+
+## Primeira decisão
+
+Agora a plataforma decide.
+
+Quem assume?
+
+Possibilidades:
+
+IA
+
+Humano
+
+Fila
+
+Outro usuário
+
+Essa decisão depende da política operacional da empresa.
+
+Nunca será fixa.
+
+---
+
+# Estado 5
+
+## Atendimento
+
+Durante o atendimento.
+
+A conversa poderá alternar entre:
+
+IA
+
+↓
+
+Humano
+
+↓
+
+IA
+
+↓
+
+Outro usuário
+
+↓
+
+IA
+
+Quantas vezes forem necessárias.
+
+O responsável atual sempre deverá estar visível.
+
+---
+
+# Estado 6
+
+## Qualificação
+
+A qualificação acontece apenas quando fizer sentido.
+
+Ela nunca é obrigatória.
+
+Nesta etapa podem ser definidos:
+
+- interesse
+- urgência
+- necessidade
+- potencial
+- orçamento
+- intenção
+
+Somente agora nasce o Lead.
+
+---
+
+# Estado 7
+
+## Lead Score
+
+Após a qualificação.
+
+O sistema calcula.
+
+Entre diversos fatores:
+
+- interesse
+- comportamento
+- frequência
+- origem
+- respostas
+- interação
+- histórico
+
+O algoritmo poderá evoluir ao longo do tempo.
+
+---
+
+# Estado 8
+
+## Próxima Ação
+
+Toda conversa deve possuir uma próxima ação.
+
+Exemplos:
+
+Aguardar cliente
+
+↓
+
+Responder
+
+↓
+
+Agendar
+
+↓
+
+Enviar proposta
+
+↓
+
+Cobrar retorno
+
+↓
+
+Finalizar
+
+↓
+
+Transferir
+
+↓
+
+Follow-up
+
+Nenhuma conversa importante deve ficar sem próximo passo.
+
+---
+
+# Estado 9
+
+## Conversão
+
+Caso exista conversão.
+
+Podem ocorrer eventos como:
+
+- venda
+- orçamento aprovado
+- pagamento
+- agendamento
+- contrato
+- cadastro
+
+O Core não define como isso acontece.
+
+Os módulos poderão adicionar novos eventos.
+
+---
+
+# Estado 10
+
+## Relacionamento
+
+Após resolver a necessidade inicial.
+
+A conversa continua existindo.
+
+A IA poderá:
+
+- agradecer
+- acompanhar
+- lembrar
+- solicitar feedback
+- oferecer novos serviços
+- responder dúvidas futuras
+
+O relacionamento nunca termina na venda.
+
+---
+
+# Estado 11
+
+## Reativação
+
+Clientes antigos poderão voltar.
+
+Ou serem reativados.
+
+Exemplos.
+
+- follow-up
+- campanhas
+- lembretes
+- aniversário
+- retorno periódico
+
+O histórico completo deve permanecer disponível.
+
+---
+
+# Estado 12
+
+## Encerramento
+
+Uma conversa pode ser encerrada.
+
+Mas nunca apagada.
+
+Estados possíveis:
+
+Encerrada
+
+Arquivada
+
+Silenciada
+
+Bloqueada
+
+Todos permanecem auditáveis.
+
+---
+
+# Linha do Tempo
+
+Toda ação relevante gera um evento.
+
+Exemplos.
+
+Mensagem enviada.
+
+Mensagem recebida.
+
+IA respondeu.
+
+Usuário assumiu.
+
+Usuário devolveu.
+
+Lead qualificado.
+
+Score atualizado.
+
+Agendamento criado.
+
+Pagamento confirmado.
+
+Follow-up executado.
+
+Conversa encerrada.
+
+Essa linha do tempo será a principal fonte de auditoria da plataforma.
+
+---
+
+# Responsável
+
+Toda conversa possui exatamente um responsável operacional.
+
+Pode ser:
+
+IA
+
+Usuário
+
+Fila
+
+Nunca mais de um simultaneamente.
+
+---
+
+# Contexto
+
+O contexto acompanha a conversa.
+
+Nunca o usuário.
+
+O contexto pode conter:
+
+- resumo
+- histórico
+- score
+- intenção
+- preferências
+- anexos
+- observações
+- tarefas
+- eventos
+
+Sempre que a conversa mudar de responsável.
+
+O contexto permanece.
+
+---
+
+# Memória
+
+A IA nunca deve reconstruir contexto do zero.
+
+Sempre que possível utilizar:
+
+- memória resumida
+- histórico
+- RAG
+- informações estruturadas
+
+Evitar processamento repetitivo.
+
+---
+
+# Estados da Conversa
+
+Uma conversa pode assumir estados como:
+
+Nova
+
+↓
+
+Em Triagem
+
+↓
+
+Em Atendimento
+
+↓
+
+Aguardando Cliente
+
+↓
+
+Aguardando Usuário
+
+↓
+
+Em Follow-up
+
+↓
+
+Agendada
+
+↓
+
+Convertida
+
+↓
+
+Encerrada
+
+↓
+
+Arquivada
+
+Esses estados poderão evoluir.
+
+---
+
+# Eventos
+
+O sistema é orientado a eventos.
+
+Toda alteração relevante gera um evento.
+
+Esses eventos poderão disparar:
+
+- workflows
+- notificações
+- IA
+- integrações
+- auditoria
+- métricas
+
+Nunca depender apenas do estado atual.
+
+---
+
+# Regra Fundamental
+
+O usuário trabalha na conversa.
+
+A plataforma trabalha ao redor dela.
+
+Toda funcionalidade nova deverá justificar como melhora o ciclo de vida da conversa.
+
+Caso contrário, provavelmente pertence a outro sistema.

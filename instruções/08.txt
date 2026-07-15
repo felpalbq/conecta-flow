@@ -1,0 +1,396 @@
+# Repository Strategy
+Version: 1.0
+
+---
+
+# Objetivo
+
+Definir a estratégia oficial de organização dos repositórios do Conecta Flow.
+
+Esta estratégia existe para impedir divergência entre código, documentação e interface.
+
+Todo desenvolvimento deverá seguir este documento.
+
+---
+
+# Filosofia
+
+Existe apenas uma fonte da verdade.
+
+Todo o restante deriva dela.
+
+Nenhum repositório possui autonomia para alterar arquitetura.
+
+---
+
+# Estrutura
+
+connect-flow-docs
+
+↓
+
+connect-flow-app
+
+↓
+
+connect-flow-ui
+
+---
+
+# Repositório 1
+
+## connect-flow-docs
+
+É o cérebro do projeto.
+
+Contém:
+
+- visão do produto;
+- arquitetura;
+- decisões;
+- documentação;
+- roadmap;
+- padrões;
+- princípios.
+
+Nunca contém código da aplicação.
+
+---
+
+## Responsabilidade
+
+Definir.
+
+Nunca implementar.
+
+---
+
+# Repositório 2
+
+## connect-flow-app
+
+É o produto.
+
+Todo código oficial vive aqui.
+
+Inclui.
+
+Frontend.
+
+Backend.
+
+Supabase.
+
+Integrações.
+
+Automação.
+
+Mission Control.
+
+Testes.
+
+Documentação técnica.
+
+---
+
+## Este é o único repositório que gera produção.
+
+Toda funcionalidade oficial pertence a ele.
+
+---
+
+# Repositório 3
+
+## connect-flow-ui
+
+Criado pelo Lovable.
+
+Objetivo.
+
+Experimentação.
+
+UX.
+
+Layout.
+
+Componentes.
+
+Fluxos visuais.
+
+Dados mockados.
+
+---
+
+Nunca será considerado código de produção.
+
+---
+
+# Relação entre repositórios
+
+Docs
+
+↓
+
+define arquitetura
+
+↓
+
+App
+
+↓
+
+implementa arquitetura
+
+↓
+
+UI
+
+↓
+
+inspira interface
+
+Nunca o contrário.
+
+---
+
+# Fluxo de desenvolvimento
+
+Nova ideia
+
+↓
+
+Atualizar documentação
+
+↓
+
+Validar arquitetura
+
+↓
+
+Criar interface (Lovable)
+
+↓
+
+Revisar UX
+
+↓
+
+Implementar no App
+
+↓
+
+Testar
+
+↓
+
+Deploy
+
+Nunca implementar antes da documentação.
+
+---
+
+# Lovable
+
+O Lovable nunca é responsável por.
+
+Arquitetura.
+
+Banco.
+
+Segurança.
+
+Autenticação.
+
+Permissões.
+
+Integrações.
+
+Regras de negócio.
+
+Fluxos.
+
+Persistência.
+
+---
+
+O Lovable é responsável apenas por.
+
+Experiência.
+
+Layout.
+
+Componentes.
+
+Responsividade.
+
+Navegação.
+
+Hierarquia visual.
+
+---
+
+# Claude Code
+
+Claude nunca copia automaticamente código do Lovable.
+
+Todo componente deve ser.
+
+Analisado.
+
+Adaptado.
+
+Padronizado.
+
+Integrado.
+
+Documentado.
+
+---
+
+# Componentes
+
+Todo componente aprovado deverá migrar para.
+
+connect-flow-app
+
+Após essa migração.
+
+O componente passa a ser mantido apenas pelo App.
+
+Nunca editar diretamente componentes de produção no repositório do Lovable.
+
+---
+
+# GitHub
+
+Cada repositório possui histórico independente.
+
+Não compartilhar branches.
+
+Não compartilhar pipelines.
+
+Não compartilhar releases.
+
+---
+
+# Documentação
+
+Toda decisão arquitetural nasce primeiro em.
+
+connect-flow-docs
+
+Depois.
+
+Implementada em.
+
+connect-flow-app
+
+---
+
+# Fonte da verdade
+
+Produto
+
+↓
+
+Docs
+
+Arquitetura
+
+↓
+
+Docs
+
+Código
+
+↓
+
+App
+
+Interface
+
+↓
+
+App
+
+Protótipos
+
+↓
+
+UI
+
+Nunca inverter esta hierarquia.
+
+---
+
+# Sincronização
+
+Sempre que um protótipo do Lovable for aprovado.
+
+Claude deverá.
+
+Analisar.
+
+Comparar.
+
+Adaptar.
+
+Implementar.
+
+Jamais copiar automaticamente.
+
+---
+
+# Branches
+
+Cada funcionalidade deverá seguir.
+
+feature/nome
+
+↓
+
+review
+
+↓
+
+main
+
+Nunca desenvolver diretamente na main.
+
+---
+
+# Releases
+
+Apenas o App possui releases.
+
+O repositório UI nunca representa uma versão oficial do produto.
+
+---
+
+# Deploy
+
+Produção.
+
+↓
+
+GitHub
+
+↓
+
+Vercel
+
+O deploy sempre parte do repositório oficial.
+
+Nunca do Lovable.
+
+---
+
+# Princípio Final
+
+O código oficial pertence ao App.
+
+A arquitetura pertence aos Docs.
+
+A experiência nasce no UI.
+
+Cada repositório possui apenas uma responsabilidade.

@@ -1,0 +1,609 @@
+# Development Workflow
+Version: 1.0
+
+---
+
+# Objetivo
+
+Definir o processo de desenvolvimento do Conecta Flow utilizando Claude Code, GitHub, Supabase, Lovable e n8n.
+
+Este documento estabelece:
+
+- ordem de trabalho;
+- responsabilidades das ferramentas;
+- padrões de código;
+- documentação;
+- versionamento;
+- revisão.
+
+---
+
+# Filosofia
+
+O desenvolvimento deve ser:
+
+- documentado;
+- incremental;
+- reversível;
+- orientado ao domínio;
+- seguro.
+
+---
+
+# Papel das Ferramentas
+
+## Claude Code
+
+Responsável por:
+
+- arquitetura;
+- implementação;
+- refatoração;
+- testes;
+- documentação técnica;
+- manutenção do código.
+
+---
+
+## Lovable
+
+Responsável por:
+
+- exploração visual;
+- prototipação;
+- experiência do usuário.
+
+---
+
+Não é responsável por:
+
+- arquitetura backend;
+- regras de negócio;
+- banco de produção.
+
+---
+
+## Supabase
+
+Responsável por:
+
+- autenticação;
+- banco;
+- storage;
+- realtime;
+- segurança RLS.
+
+---
+
+## n8n
+
+Responsável por:
+
+- automações;
+- integrações;
+- workflows externos;
+- processos assíncronos.
+
+---
+
+## GitHub
+
+Fonte oficial de versionamento.
+
+---
+
+# Repositórios
+
+O projeto terá separação inicial.
+
+---
+
+# Repository 1
+
+## conecta-flow-ui-prototype
+
+Responsável:
+
+Lovable.
+
+Objetivo:
+
+validar experiência.
+
+---
+
+Contém:
+
+- componentes visuais;
+- telas;
+- navegação;
+- dados mockados.
+
+---
+
+Não contém:
+
+- dados reais;
+- credenciais;
+- backend.
+
+---
+
+# Repository 2
+
+## conecta-flow-platform
+
+Responsável:
+
+Claude Code.
+
+Objetivo:
+
+produto real.
+
+---
+
+Contém:
+
+- aplicação;
+- backend;
+- banco;
+- integrações;
+- documentação.
+
+---
+
+# Relação entre Repositórios
+
+O protótipo é uma referência.
+
+Não deve ser tratado como dependência.
+
+---
+
+Fluxo:
+
+```
+
+Lovable
+
+↓
+
+Validação visual
+
+↓
+
+Claude Code
+
+↓
+
+Implementação real
+
+```
+
+---
+
+# Branch Strategy
+
+Utilizar:
+
+main
+
+develop
+
+feature branches
+
+---
+
+# main
+
+Produção.
+
+Nunca desenvolver diretamente.
+
+---
+
+# develop
+
+Integração das funcionalidades.
+
+---
+
+# feature
+
+Cada funcionalidade deve possuir branch própria.
+
+Exemplo:
+
+```
+
+feature/inbox-core
+
+feature/contact-model
+
+feature/ai-agent
+
+```
+
+---
+
+# Commits
+
+Commits devem ser pequenos e claros.
+
+---
+
+Formato:
+
+```
+
+tipo: descrição
+
+```
+
+---
+
+Tipos:
+
+feat
+
+fix
+
+docs
+
+refactor
+
+test
+
+chore
+
+---
+
+Exemplo:
+
+```
+feat: create conversation entity
+```
+
+---
+
+# Regra
+
+Um commit deve representar uma mudança lógica.
+
+---
+
+# Antes de Codificar
+
+Claude Code deve:
+
+1.
+
+Ler CLAUDE.md.
+
+2.
+
+Ler documentação relacionada.
+
+3.
+
+Confirmar entendimento.
+
+4.
+
+Planejar alteração.
+
+---
+
+# Nunca
+
+Começar código sem compreender:
+
+- domínio;
+- segurança;
+- impacto.
+
+---
+
+# Ordem de Implementação
+
+Sempre seguir:
+
+```
+
+Documentação
+
+↓
+
+Modelo de domínio
+
+↓
+
+Banco
+
+↓
+
+Backend
+
+↓
+
+Interface
+
+↓
+
+Testes
+
+```
+
+---
+
+# Exceção
+
+Protótipos visuais podem iniciar antes.
+
+---
+
+# Estrutura de Código
+
+Organização orientada ao domínio.
+
+Evitar:
+
+```
+
+controllers
+
+models
+
+services
+
+utils
+
+```
+
+sem contexto.
+
+---
+
+Preferir:
+
+```
+
+modules
+
+ |
+
+ conversations
+
+ contacts
+
+ agents
+
+ integrations
+
+```
+
+---
+
+# Documentação Obrigatória
+
+Toda grande funcionalidade deve possuir:
+
+- objetivo;
+- regras;
+- impacto;
+- eventos;
+- permissões.
+
+---
+
+# Exemplo
+
+Nova funcionalidade:
+
+Agendamento.
+
+Documentar:
+
+```
+
+Appointment Domain
+
+Events
+
+Permissions
+
+Module Dependency
+
+```
+
+---
+
+# Banco de Dados
+
+Nunca alterar banco diretamente em produção.
+
+---
+
+Alterações devem possuir:
+
+migration
+
+documentação
+
+teste
+
+---
+
+# Supabase
+
+Utilizar:
+
+migrations
+
+RLS
+
+policies
+
+types gerados
+
+---
+
+# Segurança
+
+Toda feature deve responder:
+
+Quem acessa?
+
+Qual empresa?
+
+Qual permissão?
+
+Como auditar?
+
+---
+
+# IA
+
+Toda mudança no agente deve documentar:
+
+- prompt;
+- modelo;
+- ferramenta;
+- impacto.
+
+---
+
+# n8n
+
+Workflows devem possuir:
+
+nome padrão;
+
+descrição;
+
+versão;
+
+tratamento de erro.
+
+---
+
+# Exemplo:
+
+```
+
+WF_COMPANY_MESSAGE_RECEIVED_V1
+
+```
+
+---
+
+# Testes
+
+Prioridade:
+
+1.
+
+Regras de negócio.
+
+2.
+
+Segurança.
+
+3.
+
+Integrações.
+
+4.
+
+Interface.
+
+---
+
+# Dados Mock
+
+Dados fictícios.
+
+Nunca utilizar:
+
+- clientes reais;
+- mensagens reais;
+- documentos reais.
+
+---
+
+# Ambiente
+
+Separar:
+
+Development
+
+Staging
+
+Production
+
+---
+
+# Variáveis de Ambiente
+
+Nunca versionar:
+
+API keys
+
+tokens
+
+secrets
+
+---
+
+# Pull Request
+
+Toda mudança relevante deve passar por revisão.
+
+---
+
+Checklist:
+
+Código funciona?
+
+Documentação atualizada?
+
+Segurança validada?
+
+Testes realizados?
+
+---
+
+# Refatoração
+
+Não acumular dívida técnica.
+
+---
+
+Quando encontrar:
+
+duplicação;
+
+arquitetura incorreta;
+
+risco de segurança;
+
+corrigir antes de expandir.
+
+---
+
+# Princípio de Desenvolvimento
+
+Primeiro correto.
+
+Depois rápido.
+
+---
+
+# Regra Final
+
+Claude Code deve agir como engenheiro responsável pelo produto.
+
+Não como gerador de código.
+
+Toda implementação deve respeitar a arquitetura existente.

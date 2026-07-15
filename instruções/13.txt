@@ -1,0 +1,416 @@
+# Security Model
+Version: 1.0
+
+---
+
+# Objetivo
+
+Definir os princípios de segurança do Conecta Flow.
+
+A segurança faz parte da arquitetura.
+
+Nunca será tratada como funcionalidade adicional.
+
+Toda implementação deverá respeitar este documento.
+
+---
+
+# Filosofia
+
+O sistema assume que toda requisição pode ser maliciosa.
+
+Nenhum cliente é confiável.
+
+Nenhum frontend é confiável.
+
+Toda validação ocorre no backend.
+
+---
+
+# Princípios
+
+Security by Design
+
+Least Privilege
+
+Zero Trust
+
+Defense in Depth
+
+Fail Secure
+
+Audit Everything
+
+---
+
+# Autenticação
+
+Toda autenticação será centralizada no Supabase Auth.
+
+Nunca implementar autenticação própria.
+
+Nunca armazenar senhas.
+
+Nunca manipular tokens manualmente.
+
+---
+
+# Sessões
+
+Toda sessão deverá possuir.
+
+Usuário
+
+Empresa
+
+Permissões
+
+Tempo de expiração
+
+Refresh Token
+
+Nunca confiar apenas no frontend.
+
+---
+
+# Autorização
+
+Autenticação responde:
+
+"Quem é o usuário?"
+
+Autorização responde:
+
+"O que ele pode fazer?"
+
+Nunca confundir os dois conceitos.
+
+---
+
+# Permissões
+
+Permissões são granulares.
+
+Nunca utilizar cargos fixos.
+
+Exemplos.
+
+view_contacts
+
+edit_contacts
+
+delete_contacts
+
+take_conversation
+
+transfer_conversation
+
+view_dashboard
+
+manage_users
+
+manage_modules
+
+manage_settings
+
+Cada ação valida sua permissão.
+
+---
+
+# Multiempresa
+
+Toda operação deve validar.
+
+Company ID
+
+Nunca aceitar Company ID enviado pelo frontend.
+
+Sempre obtê-lo através da sessão autenticada.
+
+---
+
+# Row Level Security
+
+Toda tabela deverá utilizar RLS.
+
+Nenhuma tabela operacional ficará acessível sem políticas explícitas.
+
+A ausência de política significa acesso negado.
+
+---
+
+# APIs
+
+Toda API deve validar.
+
+Autenticação
+
+↓
+
+Empresa
+
+↓
+
+Permissão
+
+↓
+
+Recurso
+
+↓
+
+Ação
+
+Somente após essas validações executar a operação.
+
+---
+
+# Frontend
+
+O frontend nunca decide permissões.
+
+Ele apenas oculta elementos de interface.
+
+A decisão real sempre pertence ao backend.
+
+---
+
+# Mission Control
+
+Mission Control possui autenticação independente.
+
+Seu acesso nunca compartilha sessão com clientes.
+
+Toda ação administrativa deve ser registrada.
+
+---
+
+# Auditoria
+
+Toda ação crítica gera auditoria.
+
+Exemplos.
+
+Login
+
+Logout
+
+Alteração de permissões
+
+Alteração de usuários
+
+Integrações
+
+Módulos
+
+Configurações
+
+Exclusões
+
+Exportações
+
+Nunca apagar registros de auditoria.
+
+---
+
+# Soft Delete
+
+Registros importantes nunca serão removidos fisicamente.
+
+Sempre utilizar exclusão lógica quando possível.
+
+---
+
+# Logs
+
+Todo log deve conter.
+
+Timestamp
+
+Usuário
+
+Empresa
+
+Origem
+
+Evento
+
+Resultado
+
+Nunca registrar informações sensíveis.
+
+---
+
+# Dados Sensíveis
+
+Nunca armazenar.
+
+Senhas
+
+Tokens em texto
+
+Chaves privadas
+
+Segredos
+
+Credenciais externas
+
+Todos devem permanecer em variáveis seguras.
+
+---
+
+# Integrações
+
+Cada integração possui credenciais próprias.
+
+Nunca compartilhar tokens entre empresas.
+
+Toda renovação de token deve ser auditada.
+
+---
+
+# Uploads
+
+Todo arquivo enviado deve validar.
+
+Tipo
+
+Tamanho
+
+Extensão
+
+Origem
+
+Nunca confiar apenas na extensão do arquivo.
+
+---
+
+# Rate Limiting
+
+Operações críticas devem possuir limitação.
+
+Exemplos.
+
+Login
+
+Webhooks
+
+Envio de mensagens
+
+Upload
+
+Integrações
+
+---
+
+# Webhooks
+
+Todo webhook deve validar.
+
+Origem
+
+Assinatura
+
+Integridade
+
+Timestamp
+
+Nunca aceitar chamadas anônimas.
+
+---
+
+# IA
+
+A IA nunca recebe informações de outras empresas.
+
+Todo contexto enviado à IA deve pertencer exclusivamente à empresa ativa.
+
+---
+
+# Banco Vetorial
+
+Cada empresa possui coleção própria.
+
+Nunca compartilhar embeddings.
+
+Nunca reutilizar memória entre empresas.
+
+---
+
+# Eventos
+
+Todo evento deve registrar.
+
+Empresa
+
+Usuário
+
+Origem
+
+Timestamp
+
+Nunca permitir eventos sem contexto.
+
+---
+
+# Exportações
+
+Exportação de dados é uma operação privilegiada.
+
+Toda exportação deve gerar auditoria.
+
+---
+
+# Backup
+
+Backups devem ser criptografados.
+
+O processo de restauração deve preservar o isolamento entre empresas.
+
+---
+
+# Ambiente
+
+Development
+
+Staging
+
+Production
+
+Nunca compartilhar credenciais entre ambientes.
+
+---
+
+# Variáveis
+
+Todo segredo pertence ao ambiente.
+
+Nunca ao código.
+
+Nunca ao Git.
+
+---
+
+# Dependências
+
+Toda biblioteca deve ser revisada.
+
+Evitar dependências desnecessárias.
+
+Atualizações críticas devem ser priorizadas.
+
+---
+
+# Regra Final
+
+Toda funcionalidade nova deve responder.
+
+Como ela autentica?
+
+Como ela autoriza?
+
+Como ela audita?
+
+Como ela protege os dados?
+
+Se alguma resposta estiver ausente, a implementação não está concluída.

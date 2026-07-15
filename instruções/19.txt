@@ -1,0 +1,573 @@
+# Mission Control Architecture
+Version: 1.0
+
+---
+
+# Objetivo
+
+Definir a arquitetura do Mission Control.
+
+O Mission Control é o ambiente administrativo da plataforma.
+
+Ele não faz parte do produto entregue ao cliente.
+
+Seu objetivo é operar, monitorar, manter e evoluir toda a plataforma.
+
+---
+
+# Filosofia
+
+O cliente utiliza o Conecta Flow.
+
+O administrador utiliza o Mission Control.
+
+São aplicações diferentes.
+
+Compartilham apenas o domínio.
+
+Nunca a interface.
+
+---
+
+# Responsabilidades
+
+O Mission Control é responsável por:
+
+- administrar empresas
+- administrar usuários
+- administrar módulos
+- monitorar infraestrutura
+- monitorar IA
+- monitorar custos
+- monitorar integrações
+- monitorar workflows
+- acompanhar saúde da plataforma
+- auditar operações
+- administrar deploys
+- acompanhar billing (futuro)
+
+Nunca atender clientes.
+
+Nunca responder conversas.
+
+Nunca substituir o produto.
+
+---
+
+# Arquitetura
+
+Mission Control
+
+↓
+
+Application Layer
+
+↓
+
+Domain Layer
+
+↓
+
+Infrastructure
+
+↓
+
+Supabase
+
+↓
+
+External Services
+
+Utiliza exatamente as mesmas regras da plataforma.
+
+Nunca acessa tabelas diretamente.
+
+---
+
+# Dashboard Principal
+
+Ao abrir o Mission Control o administrador deve visualizar:
+
+Empresas ativas
+
+Empresas com erro
+
+Workflows com falha
+
+Integrações offline
+
+Mensagens hoje
+
+Tokens utilizados
+
+Custo IA hoje
+
+Uso por empresa
+
+Fila de eventos
+
+Alertas
+
+Incidentes
+
+Tudo em tempo real.
+
+---
+
+# Empresas
+
+Cada empresa possui:
+
+Status
+
+Plano
+
+Módulos
+
+Usuários
+
+Integrações
+
+Custo
+
+Consumo
+
+Último acesso
+
+Saúde
+
+Logs
+
+---
+
+# Usuários
+
+Visualizar
+
+Criar
+
+Suspender
+
+Reativar
+
+Nunca alterar senhas manualmente.
+
+---
+
+# Conversation Agent
+
+Visualizar:
+
+Provider
+
+Modelo
+
+Tokens
+
+Custo
+
+Latência
+
+Fallbacks
+
+Erros
+
+Ferramentas utilizadas
+
+Prompt atual
+
+Versão
+
+---
+
+# Custos
+
+Acompanhar:
+
+Tokens
+
+Embeddings
+
+Storage
+
+Mensagens
+
+Uploads
+
+Chamadas externas
+
+Custo estimado
+
+Margem
+
+Receita recorrente
+
+Receita por cliente
+
+Nunca depender de planilhas externas.
+
+---
+
+# Infraestrutura
+
+Visualizar:
+
+Supabase
+
+Storage
+
+Realtime
+
+Functions
+
+n8n
+
+Docker
+
+Redis (futuro)
+
+Banco Vetorial
+
+LLMs
+
+Status
+
+Tempo de resposta
+
+---
+
+# Workflows
+
+Monitorar:
+
+Executados
+
+Pendentes
+
+Falhas
+
+Retentativas
+
+Tempo médio
+
+Histórico
+
+Cada workflow deve possuir:
+
+Status
+
+Empresa
+
+Origem
+
+Evento
+
+Resultado
+
+---
+
+# Integrações
+
+Para cada empresa:
+
+WhatsApp
+
+Instagram
+
+Meta
+
+Google
+
+Mercado Pago
+
+Stripe
+
+Evolution
+
+Status
+
+Última sincronização
+
+Token
+
+Expiração
+
+---
+
+# Eventos
+
+Fluxo em tempo real.
+
+Visualizar:
+
+Evento
+
+Empresa
+
+Origem
+
+Consumidores
+
+Tempo
+
+Resultado
+
+Falhas
+
+---
+
+# Logs
+
+Centralizar:
+
+Backend
+
+Frontend
+
+n8n
+
+IA
+
+Integrações
+
+Sistema
+
+Filtros:
+
+Empresa
+
+Usuário
+
+Período
+
+Severidade
+
+---
+
+# Auditoria
+
+Visualizar:
+
+Quem fez
+
+O quê
+
+Quando
+
+Onde
+
+Resultado
+
+Nunca permitir edição.
+
+---
+
+# Alertas
+
+Categorias:
+
+Erro crítico
+
+Integração caída
+
+Provider indisponível
+
+Workflow parado
+
+Uso elevado
+
+Limite de plano
+
+Banco indisponível
+
+Latência
+
+---
+
+# Billing (Futuro)
+
+Visualizar:
+
+Plano
+
+Mensalidade
+
+Implementação
+
+Consumo IA
+
+Consumo Storage
+
+Consumo Mensagens
+
+Lucro
+
+Margem
+
+Inadimplência
+
+---
+
+# Módulos
+
+Ativar
+
+Suspender
+
+Atualizar
+
+Versão
+
+Licenciamento
+
+Nunca editar código.
+
+---
+
+# Versionamento
+
+Visualizar:
+
+Versão da plataforma
+
+Versão do banco
+
+Versão dos prompts
+
+Versão dos workflows
+
+Versão do frontend
+
+Versão da API
+
+---
+
+# Deploy
+
+Histórico
+
+Versão
+
+Rollback
+
+Ambiente
+
+Status
+
+Data
+
+---
+
+# Saúde da Plataforma
+
+Indicadores:
+
+Disponibilidade
+
+Latência
+
+Mensagens
+
+Eventos
+
+Fila
+
+Tokens
+
+Storage
+
+Banco
+
+CPU
+
+Memória (futuro)
+
+---
+
+# Empresa
+
+Cada empresa possui uma página própria.
+
+Visualizar:
+
+Resumo
+
+Usuários
+
+Conversas
+
+Custos
+
+Módulos
+
+Integrações
+
+IA
+
+Logs
+
+Eventos
+
+Workflows
+
+Saúde
+
+---
+
+# Busca Global
+
+Pesquisar:
+
+Empresa
+
+Usuário
+
+Contato
+
+Telefone
+
+Conversation
+
+Workflow
+
+Evento
+
+Integração
+
+---
+
+# Segurança
+
+Todo acesso deve gerar auditoria.
+
+Toda ação administrativa deve ser registrada.
+
+Nunca existir ações silenciosas.
+
+---
+
+# Permissões
+
+Mission Control possui permissões próprias.
+
+Nem todo administrador pode fazer tudo.
+
+Preparar arquitetura para múltiplos administradores.
+
+---
+
+# Evolução
+
+O Mission Control deverá crescer independentemente da plataforma principal.
+
+Nunca acoplar telas do cliente.
+
+---
+
+# Regra Fundamental
+
+O Mission Control opera a plataforma.
+
+Nunca participa do atendimento.
+
+Ele observa, administra e mantém o ecossistema funcionando.

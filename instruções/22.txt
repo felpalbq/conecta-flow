@@ -1,0 +1,450 @@
+# Git Workflow
+Version: 1.0
+
+---
+
+# Objetivo
+
+Definir o fluxo oficial de versionamento do Conecta Flow.
+
+Todo desenvolvimento deve respeitar este documento.
+
+---
+
+# Filosofia
+
+O Git é a fonte da verdade.
+
+Toda alteração deve ser rastreável.
+
+Todo código deve possuir histórico claro.
+
+Toda mudança deve ser reversível.
+
+---
+
+# Repositórios
+
+Existem dois repositórios principais.
+
+---
+
+# 1
+
+conectaflow-ui
+
+Responsável por:
+
+- prototipação
+- design
+- UX
+- experimentação visual
+- Lovable
+
+Nunca utilizado em produção.
+
+Nunca contém backend.
+
+Nunca contém integrações.
+
+Nunca contém lógica de negócio.
+
+---
+
+# 2
+
+conectaflow-app
+
+Produto oficial.
+
+Responsável por:
+
+- frontend
+- backend
+- domínio
+- APIs
+- integrações
+- banco
+- produção
+
+Este é o repositório principal.
+
+---
+
+# Fonte da Verdade
+
+UX
+
+↓
+
+conectaflow-ui
+
+---
+
+Produto
+
+↓
+
+conectaflow-app
+
+---
+
+# Fluxo
+
+Ideia
+
+↓
+
+Lovable
+
+↓
+
+Protótipo
+
+↓
+
+Validação
+
+↓
+
+Implementação real
+
+↓
+
+conectaflow-app
+
+---
+
+Nunca copiar código cegamente.
+
+Toda implementação deve respeitar a arquitetura.
+
+---
+
+# Branches
+
+Apenas quatro tipos.
+
+---
+
+main
+
+Produção.
+
+Sempre estável.
+
+Sempre deployável.
+
+---
+
+develop
+
+Integração.
+
+Recebe features concluídas.
+
+---
+
+feature/*
+
+Novas funcionalidades.
+
+Exemplo:
+
+feature/inbox-v1
+
+feature/contact-panel
+
+feature/lead-scoring
+
+---
+
+hotfix/*
+
+Correções críticas.
+
+Exemplo:
+
+hotfix/message-duplication
+
+---
+
+# Branches Proibidas
+
+test
+
+new
+
+temp
+
+backup
+
+final
+
+v2
+
+ajustes
+
+misc
+
+---
+
+# Criação de Feature
+
+Sempre partir de:
+
+develop
+
+Nunca partir de main.
+
+---
+
+Fluxo
+
+develop
+
+↓
+
+feature
+
+↓
+
+review
+
+↓
+
+develop
+
+---
+
+# Releases
+
+Quando develop estiver estável.
+
+develop
+
+↓
+
+main
+
+↓
+
+deploy
+
+---
+
+# Commits
+
+Formato obrigatório.
+
+---
+
+feat:
+
+Nova funcionalidade.
+
+---
+
+fix:
+
+Correção.
+
+---
+
+refactor:
+
+Refatoração.
+
+---
+
+docs:
+
+Documentação.
+
+---
+
+test:
+
+Testes.
+
+---
+
+chore:
+
+Infraestrutura.
+
+---
+
+Exemplos
+
+feat: create conversation assignment service
+
+fix: prevent duplicate whatsapp messages
+
+docs: update module architecture
+
+refactor: simplify lead score calculation
+
+---
+
+# Commits Proibidos
+
+update
+
+changes
+
+fixes
+
+ajustes
+
+teste
+
+temp
+
+wip
+
+commit
+
+final
+
+---
+
+# Tamanho dos Commits
+
+Pequenos.
+
+Responsabilidade única.
+
+Ideal:
+
+1 problema
+
+↓
+
+1 commit
+
+---
+
+# Pull Requests
+
+Todo PR deve responder.
+
+O que mudou?
+
+Por que mudou?
+
+Quais documentos impacta?
+
+Existe risco?
+
+---
+
+# Revisão
+
+Antes do merge verificar.
+
+Arquitetura
+
+Segurança
+
+Multi-tenancy
+
+Eventos
+
+Permissões
+
+Documentação
+
+---
+
+# Documentação
+
+Toda alteração arquitetural exige atualização da documentação.
+
+Nunca deixar documentação desatualizada.
+
+---
+
+# Banco
+
+Migrations possuem PR próprio.
+
+Nunca misturar:
+
+Frontend
+
+Backend
+
+Banco
+
+Em um único commit gigante.
+
+---
+
+# Reversão
+
+Toda alteração deve poder ser revertida.
+
+Sem quebrar produção.
+
+---
+
+# Tags
+
+Utilizar versionamento semântico.
+
+v0.1.0
+
+v0.2.0
+
+v0.3.0
+
+v1.0.0
+
+---
+
+# MVP
+
+Exemplo.
+
+v0.1.0
+
+Inbox
+
+Contacts
+
+Conversation Agent
+
+Dashboard
+
+---
+
+# Deploy
+
+Somente a branch main realiza deploy.
+
+---
+
+# Lovable
+
+Nunca realiza deploy.
+
+Nunca é fonte de produção.
+
+Nunca substitui o código principal.
+
+---
+
+# Claude Code
+
+Sempre trabalha no repositório oficial.
+
+conectaflow-app
+
+---
+
+# Regra Final
+
+O Git deve contar a história do projeto.
+
+Qualquer pessoa deve conseguir entender a evolução do sistema apenas observando o histórico.

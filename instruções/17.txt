@@ -1,0 +1,519 @@
+# Conversation Agent Architecture
+Version: 1.0
+
+---
+
+# Objetivo
+
+Definir a arquitetura oficial do Agente Conversacional do Conecta Flow.
+
+O agente é responsável por interpretar, responder, classificar e auxiliar nas conversas.
+
+Ele nunca substitui o domínio da aplicação.
+
+Ele atua como uma camada cognitiva.
+
+---
+
+# Filosofia
+
+O agente não controla o sistema.
+
+O agente auxilia o sistema.
+
+Ele observa.
+
+Interpreta.
+
+Sugere.
+
+Responde.
+
+Resume.
+
+Classifica.
+
+Toda decisão definitiva pertence ao domínio da aplicação.
+
+---
+
+# Papel do Agente
+
+O agente deve:
+
+- atender clientes
+- responder perguntas
+- interpretar intenções
+- qualificar leads
+- realizar triagem
+- executar follow-ups
+- solicitar handoff
+- resumir conversas
+- recuperar contexto
+- sugerir ações
+
+Nunca alterar diretamente dados persistentes.
+
+---
+
+# Arquitetura
+
+Cliente
+
+↓
+
+Mensagem
+
+↓
+
+Conversation Engine
+
+↓
+
+Evento
+
+↓
+
+Conversation Agent
+
+↓
+
+Resposta
+
+↓
+
+Conversation Engine
+
+↓
+
+Mensagem enviada
+
+---
+
+# Componentes
+
+O agente é composto por:
+
+Provider
+
+Model
+
+Prompt
+
+Memory
+
+Knowledge Base
+
+Tools
+
+Policies
+
+Context Builder
+
+Reasoning
+
+Response Generator
+
+---
+
+# Provider
+
+Responsável pela comunicação com o modelo.
+
+Exemplos futuros:
+
+Anthropic
+
+OpenAI
+
+Google
+
+OpenRouter
+
+O restante do sistema nunca conhece o provider.
+
+---
+
+# Model
+
+O modelo é intercambiável.
+
+Cada empresa poderá utilizar modelos diferentes.
+
+O domínio nunca depende de um modelo específico.
+
+---
+
+# Prompt
+
+Todo prompt é versionado.
+
+Nunca editar prompts em produção.
+
+Cada alteração gera uma nova versão.
+
+Prompts antigos permanecem armazenados.
+
+---
+
+# Memory
+
+A memória possui três níveis.
+
+---
+
+## Curto Prazo
+
+Mensagens recentes da conversa.
+
+Utilizada para manter contexto imediato.
+
+---
+
+## Médio Prazo
+
+Resumo automático.
+
+Gerado periodicamente.
+
+Reduz custo de tokens.
+
+---
+
+## Longo Prazo
+
+Conhecimento persistente.
+
+Preferências.
+
+Histórico.
+
+Relacionamento.
+
+Sempre associado à empresa.
+
+---
+
+# Knowledge Base
+
+A base de conhecimento pertence à empresa.
+
+Pode conter.
+
+FAQ
+
+Produtos
+
+Serviços
+
+Políticas
+
+Procedimentos
+
+Documentação
+
+Arquivos
+
+Nunca compartilhar conhecimento entre empresas.
+
+---
+
+# RAG
+
+O agente utiliza Retrieval Augmented Generation.
+
+Fluxo.
+
+Pergunta
+
+↓
+
+Busca vetorial
+
+↓
+
+Contexto relevante
+
+↓
+
+Prompt
+
+↓
+
+Modelo
+
+↓
+
+Resposta
+
+Nunca enviar toda a base ao modelo.
+
+---
+
+# Context Builder
+
+Responsável por montar o contexto enviado ao modelo.
+
+Pode incluir.
+
+Resumo
+
+Últimas mensagens
+
+Lead
+
+Contato
+
+Empresa
+
+Regras
+
+Ferramentas
+
+Conhecimento recuperado
+
+Sempre respeitando limite de tokens.
+
+---
+
+# Policies
+
+Toda empresa possui políticas.
+
+Exemplos.
+
+Nunca negociar preço.
+
+Nunca fornecer descontos.
+
+Sempre solicitar nome.
+
+Sempre confirmar telefone.
+
+Nunca responder questões jurídicas.
+
+As políticas fazem parte do contexto.
+
+---
+
+# Ferramentas
+
+O agente poderá utilizar ferramentas.
+
+Exemplos.
+
+Consultar agenda
+
+Criar agendamento
+
+Gerar pagamento
+
+Consultar histórico
+
+Criar tarefa
+
+Pesquisar documentos
+
+Consultar disponibilidade
+
+Executar follow-up
+
+As ferramentas nunca acessam banco diretamente.
+
+Sempre utilizam serviços da aplicação.
+
+---
+
+# Triagem
+
+Toda conversa inicia pela triagem.
+
+Objetivos.
+
+Eliminar enganos.
+
+Eliminar spam.
+
+Eliminar conversas pessoais.
+
+Eliminar curiosos.
+
+Identificar intenção.
+
+Somente após isso iniciar qualificação.
+
+---
+
+# Qualificação
+
+Após identificar potencial.
+
+O agente calcula.
+
+Interesse.
+
+Urgência.
+
+Poder de compra.
+
+Momento.
+
+Probabilidade.
+
+Essas informações atualizam o Lead.
+
+Nunca diretamente.
+
+Sempre através do domínio.
+
+---
+
+# Handoff
+
+O agente pode solicitar handoff.
+
+Nunca forçar.
+
+A política pertence à empresa.
+
+Exemplos.
+
+Cliente pediu humano.
+
+Lead quente.
+
+Cliente irritado.
+
+Limite técnico.
+
+Solicitação financeira.
+
+Baixa confiança.
+
+---
+
+# Retorno para IA
+
+Após atendimento humano.
+
+A conversa poderá retornar ao agente.
+
+O contexto permanece preservado.
+
+---
+
+# Follow-up
+
+O agente pode sugerir follow-up.
+
+Ou executá-lo automaticamente.
+
+Exemplos.
+
+Orçamento parado.
+
+Agendamento próximo.
+
+Cliente inativo.
+
+Pagamento pendente.
+
+Lead frio.
+
+---
+
+# Resumos
+
+Toda conversa longa poderá gerar resumo.
+
+O resumo nunca substitui o histórico.
+
+Serve apenas para reduzir contexto.
+
+---
+
+# Custos
+
+Toda interação registra.
+
+Modelo.
+
+Tokens.
+
+Tempo.
+
+Custo.
+
+Empresa.
+
+Esses dados alimentam o Mission Control.
+
+---
+
+# Observabilidade
+
+Registrar.
+
+Tempo de resposta.
+
+Uso de ferramentas.
+
+Falhas.
+
+Fallback.
+
+Tokens.
+
+Prompt.
+
+Modelo.
+
+Latência.
+
+---
+
+# Fallback
+
+Caso um provider falhe.
+
+Outro poderá assumir.
+
+O domínio permanece inalterado.
+
+---
+
+# Segurança
+
+O agente nunca recebe dados de outra empresa.
+
+Nunca acessa segredos.
+
+Nunca executa código.
+
+Nunca altera permissões.
+
+---
+
+# Evolução
+
+Novos modelos.
+
+Novos providers.
+
+Novas ferramentas.
+
+Novas memórias.
+
+Nunca exigem alteração do domínio.
+
+---
+
+# Regra Final
+
+O Conversation Agent é uma camada cognitiva.
+
+Ele interpreta o mundo.
+
+O domínio decide o que fazer.
+
+Nunca inverter essa responsabilidade.

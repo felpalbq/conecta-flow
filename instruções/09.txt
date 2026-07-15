@@ -1,0 +1,423 @@
+# Project Structure
+Version: 1.0
+
+---
+
+# Objetivo
+
+Definir a organização oficial do projeto.
+
+Toda implementação deverá respeitar esta estrutura.
+
+Nenhum diretório deverá ser criado sem uma responsabilidade clara.
+
+A organização do código deve refletir o domínio do produto e não a tecnologia utilizada.
+
+---
+
+# Filosofia
+
+O projeto é organizado por funcionalidades (Feature First).
+
+Não por tipo de arquivo.
+
+Cada módulo possui tudo o que necessita para funcionar.
+
+Quanto menor o acoplamento entre módulos, maior será a facilidade de manutenção.
+
+---
+
+# Estrutura Geral
+
+```
+/
+├── docs/
+├── src/
+├── supabase/
+├── tests/
+├── public/
+├── scripts/
+├── config/
+└── .github/
+```
+
+---
+
+# src/
+
+Todo código da aplicação vive dentro de src.
+
+```
+src/
+
+    app/
+
+    features/
+
+    shared/
+
+    core/
+
+    infrastructure/
+```
+
+---
+
+# app/
+
+Responsável apenas por iniciar a aplicação.
+
+Contém:
+
+- Providers
+- Router
+- Layout principal
+- Configuração global
+
+Nunca contém regra de negócio.
+
+---
+
+# features/
+
+Cada funcionalidade do sistema possui seu próprio módulo.
+
+Exemplo.
+
+```
+features/
+
+    home/
+
+    inbox/
+
+    contacts/
+
+    dashboard/
+
+    ai/
+
+    settings/
+
+    mission-control/
+
+    scheduling/
+
+    campaigns/
+
+    payments/
+```
+
+Cada feature deverá conter sua própria organização.
+
+```
+feature/
+
+    components/
+
+    hooks/
+
+    pages/
+
+    services/
+
+    types/
+
+    utils/
+
+    api/
+
+    validations/
+```
+
+A feature deve ser o mais independente possível.
+
+---
+
+# shared/
+
+Tudo que pode ser reutilizado.
+
+```
+shared/
+
+    components/
+
+    hooks/
+
+    lib/
+
+    utils/
+
+    types/
+
+    constants/
+
+    icons/
+
+    ui/
+```
+
+Nenhuma regra específica de negócio pertence aqui.
+
+---
+
+# core/
+
+Contém conceitos centrais da plataforma.
+
+Exemplos.
+
+```
+core/
+
+    auth/
+
+    permissions/
+
+    events/
+
+    conversations/
+
+    notifications/
+
+    tenancy/
+```
+
+Esses módulos são utilizados por toda aplicação.
+
+---
+
+# infrastructure/
+
+Responsável pela comunicação com o mundo externo.
+
+```
+infrastructure/
+
+    supabase/
+
+    ai/
+
+    whatsapp/
+
+    instagram/
+
+    storage/
+
+    payments/
+
+    integrations/
+
+    api/
+```
+
+Toda integração externa pertence aqui.
+
+---
+
+# supabase/
+
+Tudo relacionado ao backend.
+
+```
+supabase/
+
+    migrations/
+
+    seeds/
+
+    functions/
+
+    policies/
+
+    triggers/
+
+    views/
+
+    types/
+```
+
+Nunca misturar código frontend.
+
+---
+
+# tests/
+
+```
+tests/
+
+    unit/
+
+    integration/
+
+    e2e/
+
+    fixtures/
+```
+
+---
+
+# docs/
+
+Toda documentação oficial.
+
+Nunca duplicar documentação dentro do src.
+
+---
+
+# scripts/
+
+Scripts internos.
+
+Exemplos.
+
+Migrações.
+
+Importações.
+
+Conversões.
+
+Automações locais.
+
+---
+
+# config/
+
+Arquivos de configuração.
+
+Nunca misturar configuração com código.
+
+---
+
+# Organização Interna
+
+Todo arquivo deve responder:
+
+"Esta feature continua funcionando se eu mover outra feature?"
+
+Se a resposta for não.
+
+Existe acoplamento excessivo.
+
+---
+
+# Dependências
+
+Fluxo permitido.
+
+```
+Feature
+
+↓
+
+Core
+
+↓
+
+Infrastructure
+```
+
+Nunca.
+
+Infrastructure
+
+↓
+
+Feature
+
+---
+
+# Componentes
+
+Componentes específicos permanecem na feature.
+
+Componentes genéricos permanecem no shared.
+
+Nunca duplicar componentes.
+
+---
+
+# Hooks
+
+Mesmo princípio.
+
+Hook específico.
+
+↓
+
+Feature.
+
+Hook reutilizável.
+
+↓
+
+Shared.
+
+---
+
+# Tipos
+
+Tipos específicos.
+
+↓
+
+Feature.
+
+Tipos globais.
+
+↓
+
+Shared.
+
+---
+
+# Utilitários
+
+Nunca criar um utils genérico enorme.
+
+Todo utilitário deve possuir responsabilidade clara.
+
+---
+
+# Imports
+
+Preferir imports absolutos.
+
+Nunca utilizar caminhos complexos.
+
+Exemplo.
+
+Ruim.
+
+../../../../../components
+
+Bom.
+
+@/features/inbox/components
+
+---
+
+# Crescimento
+
+Toda nova funcionalidade deverá responder.
+
+É uma Feature?
+
+É um módulo Core?
+
+É uma integração?
+
+É compartilhado?
+
+A resposta define sua localização.
+
+---
+
+# Regra Final
+
+O projeto deve crescer horizontalmente.
+
+Nunca criar diretórios genéricos que concentram responsabilidades de múltiplos domínios.
+
+Cada parte do sistema deve possuir um lugar único e previsível.

@@ -1,0 +1,376 @@
+# Coding Standards
+Version: 1.0
+
+---
+
+# Objetivo
+
+Definir o padrão oficial de desenvolvimento do Conecta Flow.
+
+Todo código produzido por humanos ou agentes de IA deverá respeitar este documento.
+
+A consistência do projeto é mais importante do que preferências individuais.
+
+---
+
+# Filosofia
+
+Código é um ativo de longo prazo.
+
+Escrevemos código para ser lido, mantido e evoluído.
+
+A legibilidade tem prioridade sobre a inteligência da implementação.
+
+---
+
+# Linguagem
+
+Todo código deve utilizar:
+
+TypeScript
+
+Strict Mode
+
+Nunca utilizar JavaScript.
+
+---
+
+# Organização
+
+Sempre utilizar arquitetura Feature First.
+
+Nunca organizar o projeto por tipo de arquivo.
+
+Correto:
+
+features/inbox/
+
+features/contacts/
+
+features/dashboard/
+
+Errado:
+
+components/
+
+pages/
+
+services/
+
+---
+
+# Nomes
+
+Utilizar nomes explícitos.
+
+Ruim
+
+process()
+
+Bom
+
+assignConversation()
+
+---
+
+# Funções
+
+Uma responsabilidade.
+
+Poucas linhas.
+
+Poucos parâmetros.
+
+Retornos claros.
+
+Evitar efeitos colaterais.
+
+---
+
+# Componentes React
+
+Cada componente possui apenas uma responsabilidade.
+
+Preferir composição.
+
+Nunca criar componentes gigantes.
+
+---
+
+# Hooks
+
+Hooks representam comportamento.
+
+Nunca apenas agrupamento de funções.
+
+Utilizar prefixo:
+
+useConversation
+
+useLeadScore
+
+useRealtime
+
+---
+
+# Serviços
+
+Toda lógica de negócio reutilizável pertence a serviços.
+
+Nunca duplicar regras.
+
+---
+
+# Validações
+
+Toda entrada deve ser validada.
+
+Frontend melhora UX.
+
+Backend garante segurança.
+
+Nunca confiar no frontend.
+
+---
+
+# Tipos
+
+Nunca utilizar:
+
+any
+
+Preferir tipos explícitos.
+
+Interfaces pequenas.
+
+Tipos reutilizáveis.
+
+---
+
+# Imports
+
+Sempre utilizar aliases.
+
+Exemplo:
+
+@/features/inbox
+
+Nunca utilizar caminhos relativos profundos.
+
+---
+
+# Comentários
+
+Evitar comentários.
+
+Escrever código autoexplicativo.
+
+Comentários apenas para contexto de negócio.
+
+Nunca explicar sintaxe.
+
+---
+
+# Constantes
+
+Nunca utilizar valores mágicos.
+
+Toda constante deve possuir nome.
+
+---
+
+# Erros
+
+Nunca ignorar erros.
+
+Utilizar tratamento explícito.
+
+Mensagens claras.
+
+Registrar logs quando necessário.
+
+---
+
+# Async
+
+Utilizar async/await.
+
+Evitar Promise chains.
+
+---
+
+# Estado
+
+Estado global apenas quando realmente necessário.
+
+Priorizar estado local.
+
+---
+
+# Performance
+
+Não otimizar prematuramente.
+
+Otimizar somente após medir.
+
+---
+
+# Componentes Compartilhados
+
+shared/
+
+Somente componentes realmente reutilizáveis.
+
+Nunca mover componentes apenas porque "talvez sejam reutilizados".
+
+---
+
+# CSS
+
+Utilizar Tailwind.
+
+Nunca criar CSS espalhado.
+
+Evitar estilos inline.
+
+---
+
+# Responsividade
+
+Desktop First.
+
+Responsividade obrigatória.
+
+---
+
+# Acessibilidade
+
+Toda interface deve possuir:
+
+labels
+
+focus
+
+atalhos
+
+contraste
+
+navegação por teclado
+
+---
+
+# Testes
+
+Toda regra crítica deve ser testável.
+
+Evitar acoplamento.
+
+---
+
+# Dependências
+
+Adicionar bibliotecas apenas quando:
+
+reduzem complexidade
+
+são maduras
+
+são mantidas
+
+agregam valor real
+
+---
+
+# Refatoração
+
+Sempre preferir melhorar código existente.
+
+Nunca duplicar.
+
+---
+
+# Logs
+
+Logs úteis.
+
+Nunca excessivos.
+
+Nunca registrar informações sensíveis.
+
+---
+
+# Segurança
+
+Toda implementação deve considerar:
+
+autenticação
+
+autorização
+
+RLS
+
+auditoria
+
+multi-tenancy
+
+---
+
+# Eventos
+
+Toda alteração importante gera evento.
+
+Nunca atualizar estados silenciosamente.
+
+---
+
+# Banco
+
+Nunca escrever SQL diretamente no frontend.
+
+Nunca misturar acesso a dados com UI.
+
+---
+
+# IA
+
+A IA nunca implementa regras do domínio.
+
+Sempre validar respostas.
+
+Nunca confiar cegamente no modelo.
+
+---
+
+# Commits
+
+Pequenos.
+
+Objetivos.
+
+Relacionados a uma única responsabilidade.
+
+---
+
+# Pull Requests
+
+Pequenos.
+
+Fáceis de revisar.
+
+Sempre acompanhados de documentação quando necessário.
+
+---
+
+# Regra Final
+
+Antes de concluir qualquer implementação perguntar:
+
+Está simples?
+
+Está consistente?
+
+Segue a arquitetura?
+
+Pode ser entendido daqui a um ano?
+
+Se alguma resposta for negativa, revisar antes de finalizar.

@@ -1,0 +1,564 @@
+# Multi Tenancy Model
+Version: 1.0
+
+---
+
+# Objetivo
+
+Definir como o Conecta Flow suporta múltiplas empresas dentro da mesma plataforma.
+
+Este documento define:
+
+- isolamento;
+- propriedade dos dados;
+- acesso;
+- criação de tenants;
+- relacionamento entre usuários e empresas;
+- comportamento administrativo.
+
+---
+
+# Filosofia
+
+Cada empresa é um ambiente isolado dentro da plataforma.
+
+Compartilham:
+
+- infraestrutura;
+- aplicação;
+- código;
+- serviços.
+
+Nunca compartilham:
+
+- dados;
+- contexto;
+- conhecimento;
+- conversas;
+- configurações.
+
+---
+
+# Conceito
+
+Tenant = Empresa cliente.
+
+Cada tenant possui:
+
+- usuários;
+- contatos;
+- conversas;
+- mensagens;
+- configurações;
+- integrações;
+- módulos;
+- conhecimento da IA.
+
+---
+
+# Estrutura
+
+```
+
+Platform
+
+|
+
+├── Company A
+
+│      ├── Users
+
+│      ├── Contacts
+
+│      ├── Conversations
+
+│      ├── AI Knowledge
+
+│      └── Integrations
+
+
+├── Company B
+
+│      ├── Users
+
+│      ├── Contacts
+
+│      ├── Conversations
+
+│      ├── AI Knowledge
+
+│      └── Integrations
+
+
+└── Mission Control
+
+```
+
+---
+
+# Modelo de Isolamento
+
+Estratégia inicial:
+
+Shared Database
+
++
+
+Shared Schema
+
++
+
+Tenant Identifier
+
+
+Todas as entidades pertencentes a uma empresa possuem:
+
+company_id
+
+---
+
+# Exemplo
+
+contacts
+
+```
+id
+
+company_id
+
+name
+
+phone
+```
+
+---
+
+messages
+
+```
+id
+
+company_id
+
+conversation_id
+
+content
+```
+
+---
+
+# Regra Fundamental
+
+Nenhuma consulta de dados empresariais pode existir sem contexto de empresa.
+
+---
+
+# Contexto do Tenant
+
+Toda requisição deve carregar:
+
+user_id
+
+company_id
+
+permissions
+
+session
+
+---
+
+# Nunca confiar
+
+Nunca utilizar:
+
+company_id enviado pelo frontend.
+
+O frontend informa intenção.
+
+O backend valida autoridade.
+
+---
+
+# Criação de Empresa
+
+Somente:
+
+- administrador;
+- fluxo autorizado.
+
+---
+
+Processo:
+
+Criar Company
+
+↓
+
+Criar configurações padrão
+
+↓
+
+Criar módulos padrão
+
+↓
+
+Criar usuário inicial
+
+↓
+
+Criar ambiente IA
+
+↓
+
+Registrar evento
+
+---
+
+# Usuários
+
+Um usuário pertence a uma ou mais empresas.
+
+Modelo:
+
+users
+
++
+
+company_users
+
+
+---
+
+# company_users
+
+Responsável pelo relacionamento.
+
+Campos:
+
+user_id
+
+company_id
+
+role
+
+status
+
+permissions
+
+---
+
+# Exemplo
+
+Mesmo usuário:
+
+Empresa A
+
+Atendente
+
+
+Empresa B
+
+Atendente
+
+
+Empresa C
+
+Administrador interno
+
+---
+
+# Papéis
+
+Papéis são limitadores iniciais.
+
+Permissões são o controle real.
+
+---
+
+# Dados do Cliente Final
+
+Pertencem sempre à empresa.
+
+Exemplo:
+
+Um contato WhatsApp recebido por uma clínica pertence à clínica.
+
+Nunca pertence à plataforma.
+
+---
+
+# Conversas
+
+Toda conversa possui:
+
+company_id
+
+contact_id
+
+channel
+
+---
+
+# Mensagens
+
+Toda mensagem possui:
+
+company_id
+
+conversation_id
+
+---
+
+# IA
+
+A separação da IA é obrigatória.
+
+Cada empresa possui:
+
+- prompts;
+- políticas;
+- memória;
+- documentos;
+- embeddings;
+- configurações.
+
+---
+
+# RAG
+
+Nunca existir uma base vetorial global com dados de clientes.
+
+---
+
+Estrutura:
+
+```
+
+vector
+
+|
+
+company_id
+
+|
+
+knowledge_namespace
+
+|
+
+embedding
+
+```
+
+---
+
+# Memória
+
+Memória curta:
+
+por conversa.
+
+
+Memória média:
+
+por empresa.
+
+
+Memória longa:
+
+por cliente da empresa.
+
+---
+
+# n8n
+
+Todo workflow deve saber:
+
+qual empresa iniciou o evento.
+
+---
+
+Exemplo:
+
+Webhook WhatsApp
+
+↓
+
+Identificar número
+
+↓
+
+Encontrar integração
+
+↓
+
+Encontrar company_id
+
+↓
+
+Executar fluxo
+
+---
+
+# Integrações
+
+Cada empresa possui suas próprias credenciais.
+
+Nunca compartilhar tokens.
+
+---
+
+# WhatsApp
+
+Uma empresa:
+
+um número.
+
+ou
+
+múltiplos números.
+
+A arquitetura deve permitir ambos.
+
+---
+
+# Storage
+
+Arquivos devem possuir isolamento lógico.
+
+Exemplo:
+
+```
+
+company_id/
+
+    conversations/
+
+    documents/
+
+    uploads/
+
+```
+
+---
+
+# Logs
+
+Todo log operacional deve possuir:
+
+company_id
+
+quando aplicável.
+
+---
+
+# Mission Control
+
+É a única área que pode atravessar tenants.
+
+Mesmo assim:
+
+toda ação deve ser auditada.
+
+---
+
+# Administrador
+
+Pode:
+
+visualizar empresas;
+
+diagnosticar problemas;
+
+atuar tecnicamente.
+
+
+Não deve:
+
+alterar dados comerciais sem registro.
+
+---
+
+# Exportação
+
+Toda empresa deve poder futuramente:
+
+exportar seus dados;
+
+receber histórico;
+
+remover dados.
+
+---
+
+# Exclusão
+
+Nunca apagar imediatamente.
+
+Processo:
+
+Solicitação
+
+↓
+
+Bloqueio
+
+↓
+
+Backup
+
+↓
+
+Anonimização/remoção
+
+---
+
+# Escalabilidade Futura
+
+O modelo deve permitir evolução para:
+
+Database por tenant
+
+Schema por tenant
+
+Infra dedicada
+
+sem alterar domínio.
+
+---
+
+# Performance
+
+Toda tabela principal deve possuir índice:
+
+company_id
+
+---
+
+# Cache
+
+Nunca criar cache compartilhado sem isolamento.
+
+---
+
+# Testes Obrigatórios
+
+Sempre testar:
+
+Empresa A não acessa Empresa B.
+
+Usuário A não vê dados B.
+
+IA A não utiliza conhecimento B.
+
+Workflow A não executa contexto B.
+
+---
+
+# Regra Final
+
+Multi-tenancy não é uma funcionalidade.
+
+É uma propriedade fundamental do sistema.
+
+Todo código deve preservar o isolamento entre empresas.

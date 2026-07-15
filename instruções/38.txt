@@ -1,0 +1,647 @@
+# Repository Structure
+Version: 1.0
+
+---
+
+# Objetivo
+
+Definir a organização estrutural do repositório principal do Conecta Flow.
+
+Este documento estabelece:
+
+- organização de pastas;
+- separação de responsabilidades;
+- arquitetura modular;
+- regras de dependência.
+
+---
+
+# Princípio
+
+O código deve refletir o domínio do negócio.
+
+A estrutura deve facilitar:
+
+- manutenção;
+- expansão;
+- testes;
+- onboarding de novos desenvolvedores.
+
+---
+
+# Estrutura Geral
+
+```
+
+conecta-flow-platform/
+
+│
+├── CLAUDE.md
+├── README.md
+├── package.json
+├── .env.example
+│
+├── docs/
+│
+├── src/
+│
+├── supabase/
+│
+├── n8n/
+│
+├── tests/
+│
+└── scripts/
+
+```
+
+---
+
+# docs/
+
+Documentação oficial.
+
+Estrutura:
+
+```
+
+docs/
+
+├── 01-product/
+
+├── 02-architecture/
+
+├── 03-execution/
+
+├── 04-development/
+
+└── decisions/
+
+```
+
+---
+
+# decisions/
+
+Registro de decisões arquiteturais.
+
+Formato:
+
+```
+ADR-001-choice-name.md
+```
+
+---
+
+Exemplo:
+
+```
+ADR-001-use-supabase-auth.md
+```
+
+---
+
+# src/
+
+Código principal da aplicação.
+
+Organizado por domínio.
+
+---
+
+Estrutura:
+
+```
+
+src/
+
+├── app/
+
+├── modules/
+
+├── shared/
+
+├── infrastructure/
+
+└── config/
+
+```
+
+---
+
+# app/
+
+Camada de inicialização.
+
+Responsável por:
+
+- bootstrap;
+- providers;
+- rotas;
+- configuração geral.
+
+---
+
+Não contém regra de negócio.
+
+---
+
+# modules/
+
+Núcleo da aplicação.
+
+Cada domínio possui sua própria estrutura.
+
+---
+
+Exemplo:
+
+```
+
+modules/
+
+├── conversations/
+
+├── contacts/
+
+├── agents/
+
+├── companies/
+
+├── users/
+
+├── integrations/
+
+├── appointments/
+
+└── campaigns/
+
+```
+
+---
+
+# Estrutura interna de módulo
+
+Exemplo:
+
+```
+
+conversations/
+
+├── domain/
+
+├── application/
+
+├── infrastructure/
+
+├── ui/
+
+└── index.ts
+
+```
+
+---
+
+# domain/
+
+Contém regras de negócio.
+
+Exemplo:
+
+- entidades;
+- estados;
+- validações;
+- eventos.
+
+---
+
+Não conhece:
+
+- banco;
+- API;
+- interface.
+
+---
+
+# application/
+
+Contém casos de uso.
+
+Exemplo:
+
+```
+
+CreateConversation
+
+AssignConversation
+
+TransferToAgent
+
+```
+
+---
+
+# infrastructure/
+
+Implementações externas.
+
+Exemplo:
+
+- Supabase;
+- APIs;
+- serviços externos.
+
+---
+
+# ui/
+
+Componentes visuais específicos do domínio.
+
+Exemplo:
+
+```
+
+ConversationList
+
+ChatWindow
+
+MessageBubble
+
+```
+
+---
+
+# shared/
+
+Código compartilhado.
+
+Somente quando realmente genérico.
+
+---
+
+Pode conter:
+
+- componentes comuns;
+- tipos;
+- helpers;
+- design system.
+
+---
+
+Não usar como depósito.
+
+---
+
+# infrastructure/
+
+Camada global.
+
+Exemplo:
+
+```
+
+infrastructure/
+
+├── supabase/
+
+├── llm/
+
+├── storage/
+
+├── queue/
+
+└── integrations/
+
+```
+
+---
+
+# Supabase
+
+```
+
+infrastructure/supabase
+
+```
+
+Responsável por:
+
+- client;
+- queries;
+- autenticação;
+- conexão.
+
+---
+
+# LLM
+
+```
+
+infrastructure/llm
+
+```
+
+Responsável por:
+
+- modelos;
+- providers;
+- chamadas.
+
+---
+
+# Integrações
+
+```
+
+infrastructure/integrations
+
+```
+
+Responsável por:
+
+- WhatsApp;
+- Instagram;
+- pagamentos.
+
+---
+
+# supabase/
+
+Arquivos específicos do Supabase.
+
+Estrutura:
+
+```
+
+supabase/
+
+├── migrations/
+
+├── seed/
+
+├── functions/
+
+└── types/
+
+```
+
+---
+
+# migrations/
+
+Alterações de banco.
+
+Nunca editar banco manualmente em produção.
+
+---
+
+# seed/
+
+Dados iniciais.
+
+Somente dados de teste.
+
+---
+
+# functions/
+
+Edge Functions quando necessárias.
+
+---
+
+# types/
+
+Tipos gerados.
+
+---
+
+# n8n/
+
+Workflows de automação.
+
+Estrutura:
+
+```
+
+n8n/
+
+├── workflows/
+
+├── templates/
+
+└── docs/
+
+```
+
+---
+
+# workflows/
+
+Arquivos exportados.
+
+---
+
+Padrão:
+
+```
+
+WF_DOMAIN_ACTION_VERSION.json
+
+```
+
+Exemplo:
+
+```
+WF_WHATSAPP_MESSAGE_RECEIVED_V1.json
+
+```
+
+---
+
+# tests/
+
+Testes.
+
+Estrutura:
+
+```
+
+tests/
+
+├── unit/
+
+├── integration/
+
+└── e2e/
+
+```
+
+---
+
+# scripts/
+
+Scripts auxiliares.
+
+Exemplo:
+
+- setup;
+- migrations;
+- manutenção.
+
+---
+
+# Dependências
+
+Regra:
+
+Domínio não depende de infraestrutura.
+
+---
+
+Correto:
+
+```
+
+domain
+
+↓
+
+application
+
+↓
+
+infrastructure
+
+```
+
+---
+
+Errado:
+
+```
+
+domain
+
+↓
+
+supabase
+
+```
+
+---
+
+# Comunicação Entre Módulos
+
+Preferir:
+
+eventos
+
+casos de uso
+
+interfaces
+
+---
+
+Evitar:
+
+importações diretas excessivas.
+
+---
+
+# Exemplo
+
+Conversation não deve chamar diretamente:
+
+Campaign.
+
+---
+
+Correto:
+
+Conversation cria evento:
+
+```
+conversation.closed
+```
+
+Campaign reage.
+
+---
+
+# Frontend
+
+A interface deve consumir:
+
+casos de uso.
+
+Não acessar banco diretamente.
+
+---
+
+# Segurança
+
+Nenhum módulo ignora:
+
+- tenant;
+- permissões;
+- auditoria.
+
+---
+
+# Novo Módulo
+
+Para criar:
+
+exemplo:
+
+payments
+
+deve possuir:
+
+```
+
+payments/
+
+├── domain/
+
+├── application/
+
+├── infrastructure/
+
+├── ui/
+
+└── docs/
+
+```
+
+---
+
+# Regra
+
+Se uma funcionalidade cresce, ela vira módulo.
+
+---
+
+# Arquivos proibidos
+
+Evitar:
+
+```
+
+utils.ts
+
+helpers.ts
+
+common.ts
+
+misc.ts
+
+```
+
+sem responsabilidade clara.
+
+---
+
+# Regra Final
+
+A estrutura do código deve permitir que o Conecta Flow cresça de um MVP para uma plataforma sem reconstrução.

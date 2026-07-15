@@ -1,0 +1,636 @@
+# Initial Development Plan
+Version: 1.0
+
+---
+
+# Objetivo
+
+Definir o plano inicial de execução do Conecta Flow após conclusão da fase de planejamento.
+
+Este documento orienta:
+
+- primeiros passos;
+- ordem de implementação;
+- checkpoints;
+- critérios de avanço.
+
+---
+
+# Princípio
+
+Não iniciar desenvolvimento de funcionalidades antes de estabelecer a fundação técnica.
+
+A primeira entrega não é uma feature.
+
+É um ambiente de desenvolvimento confiável.
+
+---
+
+# Fase 0 — Preparação
+
+Objetivo:
+
+Criar a base operacional do projeto.
+
+---
+
+## Passo 1
+
+Criar repositório principal.
+
+Nome sugerido:
+
+```
+conecta-flow-platform
+```
+
+---
+
+Configurar:
+
+- Git;
+- branch principal;
+- README;
+- .gitignore.
+
+---
+
+## Passo 2
+
+Adicionar documentação.
+
+Estrutura:
+
+```
+docs/
+
+01-product/
+
+02-architecture/
+
+03-execution/
+
+```
+
+---
+
+## Passo 3
+
+Criar CLAUDE.md
+
+Responsável por:
+
+- contexto;
+- regras;
+- arquitetura;
+- comandos.
+
+---
+
+## Passo 4
+
+Criar estrutura inicial:
+
+```
+src/
+
+supabase/
+
+n8n/
+
+tests/
+
+scripts/
+
+```
+
+---
+
+## Passo 5
+
+Primeiro commit:
+
+```
+chore: initialize project foundation
+```
+
+---
+
+# Fase 1 — Análise pelo Claude Code
+
+Antes de implementar.
+
+Claude Code deve:
+
+---
+
+Ler:
+
+```
+CLAUDE.md
+
+docs/01-product
+
+docs/02-architecture
+
+docs/03-execution
+
+```
+
+---
+
+Produzir:
+
+```
+PROJECT_ANALYSIS.md
+```
+
+Contendo:
+
+- entendimento do produto;
+- riscos;
+- dúvidas;
+- proposta técnica.
+
+---
+
+# Critério
+
+Não iniciar código até validar compreensão.
+
+---
+
+# Fase 2 — Definição Técnica
+
+Objetivo:
+
+Escolher stack final.
+
+---
+
+Definir:
+
+Frontend:
+
+- framework;
+- componentes;
+- estilos.
+
+Backend:
+
+- arquitetura;
+- serviços.
+
+Database:
+
+- Supabase.
+
+IA:
+
+- provider inicial.
+
+---
+
+Documentar:
+
+```
+TECH_STACK_DECISION.md
+```
+
+---
+
+# Fase 3 — Configuração Supabase
+
+Objetivo:
+
+Criar fundação de dados.
+
+---
+
+Criar:
+
+Projeto Supabase.
+
+---
+
+Configurar:
+
+- Auth;
+- banco;
+- storage.
+
+---
+
+Criar primeiras migrations:
+
+---
+
+## Migration 001
+
+Companies
+
+---
+
+## Migration 002
+
+Profiles
+
+---
+
+## Migration 003
+
+Memberships
+
+---
+
+## Migration 004
+
+Roles
+
+---
+
+## Migration 005
+
+Audit Logs
+
+---
+
+Implementar:
+
+RLS inicial.
+
+---
+
+# Critério
+
+Usuário autenticado acessa apenas sua empresa.
+
+---
+
+# Fase 4 — Aplicação Base
+
+Objetivo:
+
+Criar estrutura funcional.
+
+---
+
+Implementar:
+
+- layout;
+- autenticação;
+- navegação;
+- permissões;
+- tema visual.
+
+---
+
+Baseado no protótipo Lovable.
+
+---
+
+# Primeiras telas
+
+## Login
+
+---
+
+## Home
+
+Com:
+
+- boas-vindas;
+- resumo;
+- notificações.
+
+---
+
+## Configurações
+
+Com:
+
+- usuário;
+- empresa.
+
+---
+
+# Fase 5 — Core Conversacional
+
+Prioridade máxima.
+
+---
+
+Implementar:
+
+## Contacts
+
+Primeiro.
+
+---
+
+Depois:
+
+## Conversations
+
+---
+
+Depois:
+
+## Messages
+
+---
+
+Depois:
+
+## Inbox
+
+---
+
+Motivo:
+
+Conversa é o centro do produto.
+
+---
+
+# Fase 6 — WhatsApp Prototype
+
+Objetivo:
+
+Criar primeiro fluxo real.
+
+---
+
+Usar:
+
+Evolution API.
+
+---
+
+Fluxo:
+
+```
+WhatsApp
+
+↓
+
+n8n webhook
+
+↓
+
+Application
+
+↓
+
+Supabase
+
+↓
+
+Inbox
+
+```
+
+---
+
+Critério:
+
+Mensagem real aparece no sistema.
+
+---
+
+# Fase 7 — Agente Inteligente
+
+Implementar:
+
+---
+
+## Agent Foundation
+
+Inclui:
+
+- contexto;
+- memória;
+- ferramentas.
+
+---
+
+## Triagem
+
+Primeiro passo.
+
+---
+
+## Classificação
+
+Depois.
+
+---
+
+## Resposta automática
+
+Depois.
+
+---
+
+## Handoff
+
+Depois.
+
+---
+
+# Fase 8 — Dashboard
+
+Somente após dados reais.
+
+---
+
+Indicadores:
+
+- mensagens;
+- conversas;
+- automações;
+- handoffs.
+
+---
+
+# Fase 9 — Primeiro Piloto
+
+Objetivo:
+
+Usar o sistema em operação real.
+
+---
+
+Antes de vender:
+
+usar internamente.
+
+---
+
+Validar:
+
+- estabilidade;
+- experiência;
+- custos;
+- gargalos.
+
+---
+
+# Fase 10 — Primeiros Clientes
+
+Somente após:
+
+Core funcionando.
+
+---
+
+Processo:
+
+Cliente piloto.
+
+↓
+
+Implementação manual.
+
+↓
+
+Ajustes.
+
+↓
+
+Documentação.
+
+↓
+
+Padronização.
+
+---
+
+# Ordem de Prioridade Geral
+
+```
+
+1. Fundação
+
+2. Multi-tenancy
+
+3. Usuários
+
+4. Conversas
+
+5. Mensagens
+
+6. Inbox
+
+7. WhatsApp
+
+8. IA
+
+9. Handoff
+
+10. Follow-up
+
+11. Dashboard
+
+12. Módulos adicionais
+
+```
+
+---
+
+# O que NÃO fazer
+
+Não iniciar:
+
+- marketplace;
+- billing complexo;
+- múltiplos canais;
+- automações avançadas;
+- dezenas de integrações.
+
+---
+
+# Primeiro Objetivo Comercial
+
+Não é ter uma plataforma completa.
+
+É provar:
+
+"Esse sistema reduz perda de clientes e carga de atendimento."
+
+---
+
+# Primeiro Objetivo Técnico
+
+Não é escalar.
+
+É criar uma base:
+
+- segura;
+- modular;
+- evolutiva.
+
+---
+
+# Definition of Ready
+
+Uma funcionalidade pode começar quando possui:
+
+[x]
+
+Objetivo definido.
+
+[x]
+
+Regra de negócio documentada.
+
+[x]
+
+Permissões definidas.
+
+[x]
+
+Impacto arquitetural avaliado.
+
+[x]
+
+Critério de aceite.
+
+---
+
+# Definition of Done
+
+Uma funcionalidade está pronta quando possui:
+
+[x]
+
+Código implementado.
+
+[x]
+
+Testes mínimos.
+
+[x]
+
+Documentação atualizada.
+
+[x]
+
+Segurança validada.
+
+[x]
+
+Commit realizado.
+
+---
+
+# Regra Final
+
+O Conecta Flow deve evoluir como produto SaaS.
+
+Cada etapa deve aumentar valor real.
+
+Velocidade sem arquitetura cria dívida.
+
+Arquitetura sem execução cria documentação.
+
+O equilíbrio é construir, testar e aprender.

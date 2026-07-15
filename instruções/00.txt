@@ -1,0 +1,158 @@
+# Conecta Flow
+
+# Manifesto
+
+## Nossa missão
+
+Criar a plataforma de atendimento inteligente mais simples, eficiente e humana para pequenas empresas.
+
+A tecnologia deve trabalhar em segundo plano.
+
+O usuário deve sentir que está utilizando uma evolução natural do WhatsApp Business, nunca um CRM complexo.
+
+---
+
+# Nossos princípios
+
+## A conversa é o centro do produto.
+
+Todo o restante existe para enriquecer a conversa.
+
+Nunca o contrário.
+
+---
+
+## Pessoas compram resultado.
+
+Não vendemos Inteligência Artificial.
+
+Não vendemos automação.
+
+Não vendemos CRM.
+
+Vendemos atendimento melhor, economia de tempo e aumento de vendas.
+
+---
+
+## Simplicidade vence.
+
+Sempre que existir dúvida entre duas soluções:
+
+Escolher a mais simples.
+
+---
+
+## O usuário não deve aprender um novo sistema.
+
+Sempre que possível, aproveitar padrões já conhecidos do WhatsApp Business.
+
+---
+
+## O dashboard existe para demonstrar valor.
+
+Não para impressionar.
+
+Indicadores devem responder:
+
+"Vale a pena continuar utilizando esta plataforma?"
+
+---
+
+## A IA deve pensar apenas quando necessário.
+
+Cada processamento desnecessário representa:
+
+- custo;
+- latência;
+- complexidade.
+
+Sempre procurar o menor caminho capaz de entregar a melhor resposta.
+
+---
+
+## O humano continua sendo importante.
+
+A IA não substitui pessoas.
+
+Ela reduz trabalho repetitivo.
+
+O humano assume quando sua capacidade agrega valor.
+
+---
+
+## O sistema deve crescer por módulos.
+
+O Core deve permanecer pequeno.
+
+Novas funcionalidades devem ser adicionadas como módulos independentes.
+
+Nunca aumentar desnecessariamente a complexidade do produto principal.
+
+---
+
+## A plataforma deve ser invisível.
+
+O cliente nunca deve se preocupar com:
+
+- modelos de IA;
+- banco vetorial;
+- infraestrutura;
+- prompts;
+- workflows;
+- integrações.
+
+Tudo isso faz parte do serviço.
+
+---
+
+## Segurança não é um módulo.
+
+Toda decisão técnica deve considerar:
+
+- isolamento entre empresas;
+- privacidade;
+- auditoria;
+- rastreabilidade;
+- menor privilégio possível.
+
+---
+
+## A documentação é parte do produto.
+
+Nenhuma decisão importante deve existir apenas na memória.
+
+Toda alteração relevante deve atualizar a documentação correspondente.
+
+---
+
+# O que nunca construiremos
+
+Nunca construiremos funcionalidades apenas porque outros CRMs possuem.
+
+Toda funcionalidade deve responder positivamente pelo menos uma das perguntas abaixo.
+
+- Melhora a conversa?
+
+- Melhora o resultado da conversa?
+
+- Melhora a operação da plataforma?
+
+Caso contrário, provavelmente não pertence ao produto.
+
+---
+
+# Nossa filosofia
+
+Menos telas.
+
+Menos configuração.
+
+Menos treinamento.
+
+Mais resultado.
+
+Mais contexto.
+
+Mais automação.
+
+Mais simplicidade.

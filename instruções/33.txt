@@ -1,0 +1,615 @@
+# Permission Model
+Version: 1.0
+
+---
+
+# Objetivo
+
+Definir o modelo oficial de permissões do Conecta Flow.
+
+Este documento estabelece:
+
+- papéis;
+- permissões;
+- escopo de acesso;
+- regras de autorização;
+- comportamento administrativo.
+
+---
+
+# Filosofia
+
+Autenticação responde:
+
+"Quem é você?"
+
+Autorização responde:
+
+"O que você pode fazer?"
+
+Nunca misturar os conceitos.
+
+---
+
+# Modelo
+
+O controle de acesso possui quatro camadas:
+
+```
+
+User
+
+↓
+
+Company Membership
+
+↓
+
+Role
+
+↓
+
+Permissions
+
+```
+
+---
+
+# User
+
+Representa uma identidade.
+
+Exemplo:
+
+Uma pessoa com email e senha.
+
+---
+
+# Company Membership
+
+Define o relacionamento:
+
+Usuário
+
++
+
+Empresa
+
+---
+
+Um usuário pode possuir múltiplos memberships.
+
+---
+
+Exemplo:
+
+```
+
+Usuário João
+
+|
+
+Empresa A
+
+Atendente
+
+
+Empresa B
+
+Atendente
+
+```
+
+---
+
+# Role
+
+Representa uma função.
+
+As roles iniciais:
+
+- Company Owner
+- Attendant
+- Platform Administrator
+
+---
+
+# Company Owner
+
+Dono da empresa cliente.
+
+É um usuário operacional.
+
+Não é administrador da plataforma.
+
+---
+
+Pode:
+
+- visualizar dashboard;
+- utilizar inbox;
+- responder conversas;
+- administrar equipe;
+- configurar módulos permitidos;
+- visualizar métricas;
+- gerenciar informações comerciais.
+
+---
+
+Não pode:
+
+- acessar outras empresas;
+- alterar arquitetura;
+- acessar infraestrutura;
+- visualizar dados de outros tenants.
+
+---
+
+# Attendant
+
+Usuário operacional.
+
+---
+
+Pode:
+
+- acessar inbox;
+- responder clientes;
+- assumir conversas;
+- devolver para IA;
+- consultar contatos;
+- atualizar informações permitidas;
+- utilizar recursos ativos.
+
+---
+
+Não pode:
+
+- criar usuários;
+- alterar plano;
+- alterar integrações críticas;
+- alterar configurações globais.
+
+---
+
+# Platform Administrator
+
+Administrador da plataforma.
+
+Responsável pelo Mission Control.
+
+---
+
+Pode:
+
+- gerenciar empresas;
+- criar tenants;
+- administrar usuários;
+- monitorar saúde do sistema;
+- configurar integrações;
+- acessar métricas globais;
+- realizar suporte técnico.
+
+---
+
+Todas as ações são auditadas.
+
+---
+
+# Agente Inteligente
+
+Não é usuário.
+
+Não possui login.
+
+Opera através de permissões técnicas.
+
+---
+
+Possui:
+
+- ferramentas autorizadas;
+- contexto limitado;
+- escopo da empresa.
+
+---
+
+# Modelo de Permissões
+
+Permissões utilizam:
+
+domínio.ação
+
+---
+
+Exemplos:
+
+```
+
+conversation.read
+
+conversation.reply
+
+conversation.assign
+
+conversation.handoff
+
+
+contact.read
+
+contact.edit
+
+
+lead.score.read
+
+lead.score.update
+
+
+appointment.create
+
+appointment.manage
+
+
+campaign.execute
+
+
+module.manage
+
+user.manage
+
+```
+
+---
+
+# Domínios
+
+Principais:
+
+```
+
+conversation
+
+contact
+
+lead
+
+agent
+
+appointment
+
+campaign
+
+payment
+
+integration
+
+module
+
+user
+
+dashboard
+
+audit
+
+system
+
+```
+
+---
+
+# Escopo
+
+Toda permissão possui escopo.
+
+---
+
+# Company Scope
+
+Acesso limitado à empresa atual.
+
+Exemplo:
+
+conversation.read
+
+---
+
+# Platform Scope
+
+Acesso global.
+
+Exemplo:
+
+company.manage
+
+---
+
+# Regra
+
+Permissão global nunca deve ser concedida a usuário comum.
+
+---
+
+# Matriz Inicial
+
+## Conversation
+
+```
+
+Owner
+
+read
+
+reply
+
+assign
+
+
+Attendant
+
+read
+
+reply
+
+
+Admin
+
+global
+
+```
+
+---
+
+## Contacts
+
+```
+
+Owner
+
+read
+
+edit
+
+
+Attendant
+
+read
+
+limited edit
+
+
+Admin
+
+global
+
+```
+
+---
+
+## Users
+
+```
+
+Owner
+
+manage company users
+
+
+Attendant
+
+none
+
+
+Admin
+
+global
+
+```
+
+---
+
+## Modules
+
+```
+
+Owner
+
+view active modules
+
+
+Admin
+
+activate/deactivate
+
+```
+
+---
+
+## Integrations
+
+```
+
+Owner
+
+view status
+
+
+Admin
+
+configure
+
+```
+
+---
+
+# Handoff
+
+Alteração de responsável exige permissão:
+
+conversation.assign
+
+---
+
+Toda ação gera evento:
+
+conversation.assigned
+
+---
+
+# IA
+
+Usuários podem:
+
+assumir conversa;
+
+devolver para IA.
+
+---
+
+Permissões:
+
+agent.takeover
+
+agent.release
+
+---
+
+# Dashboard
+
+Acesso depende do escopo.
+
+---
+
+Empresa:
+
+somente seus indicadores.
+
+---
+
+Admin:
+
+visão global.
+
+---
+
+# Mission Control
+
+Nunca exposto para empresas.
+
+---
+
+Possui permissões próprias:
+
+```
+
+platform.company.manage
+
+platform.user.manage
+
+platform.integration.manage
+
+platform.audit.read
+
+```
+
+---
+
+# Módulos
+
+Permissões podem depender do módulo.
+
+---
+
+Exemplo:
+
+Se Campaign está desativado:
+
+campaign.execute
+
+não existe.
+
+---
+
+# Feature Flags
+
+Permissões devem respeitar:
+
+módulo ativo
+
++
+
+permissão
+
++
+
+escopo
+
+---
+
+# API
+
+Toda rota deve validar:
+
+1.
+
+usuário autenticado.
+
+2.
+
+empresa.
+
+3.
+
+permissão.
+
+4.
+
+regra de domínio.
+
+---
+
+# Frontend
+
+O frontend apenas esconde opções.
+
+Nunca protege dados.
+
+---
+
+# Banco
+
+RLS deve reforçar isolamento.
+
+---
+
+# Auditoria
+
+Registrar:
+
+- usuário;
+- empresa;
+- ação;
+- objeto afetado;
+- timestamp.
+
+---
+
+# Futuro
+
+O modelo deve permitir:
+
+- supervisores;
+- equipes;
+- departamentos;
+- permissões customizadas.
+
+---
+
+# Regra Final
+
+Papéis simplificam.
+
+Permissões controlam.
+
+Isolamento protege.
+
+Auditoria garante confiança.

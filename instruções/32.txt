@@ -1,0 +1,547 @@
+# Module Architecture
+Version: 1.0
+
+---
+
+# Objetivo
+
+Definir como funcionalidades opcionais são construídas, ativadas e gerenciadas dentro do Conecta Flow.
+
+---
+
+# Filosofia
+
+O Core resolve a maior dor comum.
+
+Os módulos aumentam capacidade.
+
+Uma empresa nunca deve precisar trocar de sistema para evoluir.
+
+---
+
+# Arquitetura
+
+```
+
+                    Platform
+
+                       |
+
+                  Core System
+
+                       |
+
+        --------------------------------
+
+        |              |              |
+
+   Scheduling     Campaigns      Payments
+
+        |              |              |
+
+   Optional      Optional       Optional
+
+```
+
+---
+
+# Core
+
+O Core sempre existe.
+
+Ele representa o produto principal.
+
+---
+
+# Core Modules
+
+## Conversation Inbox
+
+Responsável por:
+
+- mensagens;
+- histórico;
+- anexos;
+- atendimento;
+- handoff;
+- status.
+
+---
+
+## Contacts
+
+Responsável por:
+
+- cadastro;
+- histórico;
+- classificação;
+- informações comerciais.
+
+---
+
+## Intelligent Agent
+
+Responsável por:
+
+- triagem;
+- respostas;
+- qualificação;
+- follow-up.
+
+---
+
+## Lead Intelligence
+
+Responsável por:
+
+- score;
+- intenção;
+- potencial;
+- classificação.
+
+---
+
+## Dashboard
+
+Responsável por:
+
+- indicadores;
+- resultados;
+- economia;
+- produtividade.
+
+---
+
+# Módulos Opcionais
+
+São capacidades adicionais.
+
+---
+
+# Scheduling Module
+
+Para empresas que trabalham com horários.
+
+Exemplos:
+
+- clínicas;
+- salões;
+- serviços.
+
+---
+
+Capacidades:
+
+- agenda;
+- disponibilidade;
+- confirmação;
+- lembretes;
+- cancelamento.
+
+---
+
+# Campaign Module
+
+Para relacionamento ativo.
+
+Capacidades:
+
+- segmentação;
+- disparos;
+- campanhas;
+- reativação.
+
+---
+
+# Payment Module
+
+Para negócios com cobrança digital.
+
+Capacidades:
+
+- gerar link;
+- acompanhar status;
+- confirmação.
+
+---
+
+# Landing Page Module
+
+Capacidades:
+
+- páginas simples;
+- captura de leads;
+- integração com campanhas.
+
+---
+
+# Social Module
+
+Futuro.
+
+Capacidades:
+
+- Instagram;
+- outros canais.
+
+---
+
+# Ativação
+
+Módulos são ativados por empresa.
+
+Nunca por código.
+
+---
+
+Exemplo:
+
+Company A
+
+```
+Core
+
+Scheduling ON
+
+Campaign OFF
+
+Payment ON
+```
+
+---
+
+Company B
+
+```
+Core
+
+Scheduling OFF
+
+Campaign ON
+
+Payment OFF
+```
+
+---
+
+# Feature Flags
+
+Toda funcionalidade opcional deve possuir controle.
+
+Exemplo:
+
+```
+
+company_modules
+
+company_id
+
+module_id
+
+enabled
+
+activated_at
+
+```
+
+---
+
+# Dependências
+
+Módulos podem depender de outros.
+
+Exemplo:
+
+Campaigns
+
+depende:
+
+Contacts
+
+Agent
+
+---
+
+Scheduling
+
+depende:
+
+Contacts
+
+Notifications
+
+---
+
+Nunca criar dependências ocultas.
+
+---
+
+# Isolamento
+
+Um módulo não pode alterar o Core diretamente.
+
+---
+
+Comunicação:
+
+Evento
+
+↓
+
+Serviço
+
+↓
+
+Módulo
+
+---
+
+# Exemplo
+
+Appointment criado.
+
+Evento:
+
+appointment.created
+
+
+Consumidores:
+
+Notification
+
+Dashboard
+
+Agent
+
+---
+
+# Interface
+
+O usuário deve enxergar apenas módulos ativos.
+
+---
+
+Exemplo:
+
+Empresa sem agenda:
+
+não vê menu Agenda.
+
+---
+
+# Configuração
+
+Cada módulo possui:
+
+- configurações;
+- permissões;
+- limites;
+- métricas.
+
+---
+
+# Planos
+
+Planos comerciais são combinações de módulos.
+
+---
+
+Exemplo:
+
+Starter
+
+```
+Core
+```
+
+---
+
+Growth
+
+```
+Core
+
+Campaigns
+
+Advanced Agent
+
+```
+
+---
+
+Premium
+
+```
+Core
+
+Campaigns
+
+Scheduling
+
+Payments
+
+Advanced Analytics
+
+```
+
+---
+
+# Upgrade
+
+Quando empresa ativa módulo:
+
+Processo:
+
+Pagamento confirmado
+
+↓
+
+Módulo ativado
+
+↓
+
+Configuração criada
+
+↓
+
+Usuários notificados
+
+---
+
+# Downgrade
+
+Nunca apagar dados automaticamente.
+
+---
+
+Processo:
+
+Desativar módulo
+
+↓
+
+Bloquear novas ações
+
+↓
+
+Manter histórico
+
+---
+
+# Desenvolvimento
+
+Adicionar novo módulo requer:
+
+1.
+
+Documentação
+
+2.
+
+Domínio
+
+3.
+
+Eventos
+
+4.
+
+Permissões
+
+5.
+
+Interface
+
+6.
+
+Testes
+
+7.
+
+Feature Flag
+
+---
+
+# Nunca
+
+Criar módulo apenas escondendo tela.
+
+---
+
+Um módulo precisa possuir:
+
+- domínio próprio;
+- regras próprias;
+- permissões;
+- eventos.
+
+---
+
+# Mercado
+
+O Core deve atender:
+
+80% dos clientes.
+
+---
+
+Os módulos atendem:
+
+20% mais complexos.
+
+---
+
+# Custos
+
+Módulos podem possuir:
+
+- limites;
+- cobrança adicional;
+- consumo variável.
+
+---
+
+# Exemplo
+
+IA:
+
+limite de mensagens.
+
+Storage:
+
+limite de arquivos.
+
+Campanhas:
+
+limite de disparos.
+
+---
+
+# Mission Control
+
+Administrador pode:
+
+- ativar;
+- desativar;
+- monitorar;
+- configurar.
+
+---
+
+# Auditoria
+
+Toda alteração de módulo gera evento.
+
+Exemplo:
+
+module.enabled
+
+module.disabled
+
+---
+
+# Regra Final
+
+Módulos adicionam capacidade.
+
+Nunca criam novos produtos independentes.

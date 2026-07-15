@@ -1,0 +1,28 @@
+# Credenciais e segredos — nunca versionar
+.env
+.env.*
+!.env.example
+*credentials*
+*credenciais*
+**/key*.txt
+*.pem
+*.key
+
+# Dependências e builds
+node_modules/
+.next/
+dist/
+build/
+coverage/
+
+# Sistema operacional
+desktop.ini
+Thumbs.db
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log

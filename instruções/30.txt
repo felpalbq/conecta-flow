@@ -1,0 +1,756 @@
+# Database Domain Model
+Version: 1.0
+
+---
+
+# Objetivo
+
+Definir o modelo conceitual de dados do Conecta Flow.
+
+Este documento representa o domínio do sistema.
+
+Não representa ainda:
+
+- tabelas SQL;
+- migrations;
+- índices;
+- implementação Supabase.
+
+---
+
+# Princípio
+
+O banco deve refletir o domínio.
+
+Nunca adaptar o domínio ao banco.
+
+---
+
+# Contexto Geral
+
+O Conecta Flow possui quatro grandes áreas:
+
+```
+
+PLATFORM
+
+|
+
+├── Companies
+|
+├── Users
+|
+├── Conversations
+|
+├── Intelligence
+|
+└── Operations
+
+```
+
+---
+
+# Entidade Central
+
+## Company
+
+Representa uma empresa cliente da plataforma.
+
+É o tenant principal.
+
+---
+
+Responsabilidades:
+
+- isolamento de dados;
+- configuração;
+- plano contratado;
+- módulos ativos;
+- integrações.
+
+---
+
+Relacionamentos:
+
+Company possui:
+
+- usuários;
+- contatos;
+- conversas;
+- mensagens;
+- agentes;
+- conhecimento;
+- integrações;
+- métricas.
+
+---
+
+# Company
+
+Conceitualmente:
+
+```
+Company
+
+id
+
+name
+
+status
+
+plan
+
+settings
+
+created_at
+
+```
+
+---
+
+# Usuário
+
+## User
+
+Representa uma pessoa que acessa o sistema.
+
+---
+
+Um usuário não pertence necessariamente a uma única empresa.
+
+O relacionamento acontece através de:
+
+Company Membership.
+
+---
+
+# Company Membership
+
+Representa a relação:
+
+Usuário
+
++
+
+Empresa
+
+---
+
+Responsabilidades:
+
+- definir acesso;
+- permissões;
+- status.
+
+---
+
+Exemplo:
+
+```
+
+Felipe
+
+|
+
+Company A
+
+role: attendant
+
+
+Company B
+
+role: admin
+
+```
+
+---
+
+# Contato
+
+## Contact
+
+Pessoa que conversa com a empresa.
+
+---
+
+Importante:
+
+O contato pertence à empresa.
+
+Nunca à plataforma.
+
+---
+
+Exemplos:
+
+Cliente final
+
+Lead
+
+Interessado
+
+Contato frio
+
+---
+
+Relacionamentos:
+
+Contact possui:
+
+- conversas;
+- histórico;
+- classificação;
+- score.
+
+---
+
+# Identidade do Contato
+
+Um contato pode possuir:
+
+- WhatsApp;
+- Instagram;
+- Email;
+- telefone.
+
+---
+
+Nunca assumir que um canal representa uma pessoa única.
+
+---
+
+# Conversa
+
+## Conversation
+
+É o núcleo operacional do sistema.
+
+---
+
+Representa uma interação entre:
+
+Empresa
+
++
+
+Contato
+
++
+
+Canal
+
+---
+
+Uma conversa possui:
+
+- estado;
+- responsável;
+- origem;
+- histórico.
+
+---
+
+# Estados possíveis
+
+Exemplo:
+
+```
+
+new
+
+↓
+
+active
+
+↓
+
+waiting_customer
+
+↓
+
+waiting_human
+
+↓
+
+closed
+
+```
+
+---
+
+# Mensagem
+
+## Message
+
+Representa uma unidade de comunicação.
+
+---
+
+Pode ser:
+
+- recebida;
+- enviada;
+- automática;
+- humana;
+- IA.
+
+---
+
+A mensagem nunca pertence diretamente ao contato.
+
+Pertence à conversa.
+
+---
+
+# Origem da Mensagem
+
+Exemplos:
+
+```
+
+customer
+
+agent
+
+attendant
+
+system
+
+```
+
+---
+
+# Canal
+
+## Channel
+
+Representa o meio de comunicação.
+
+---
+
+Inicialmente:
+
+WhatsApp.
+
+Futuro:
+
+Instagram
+
+Telegram
+
+Email
+
+---
+
+Não criar lógica específica de canal no domínio.
+
+---
+
+# Lead
+
+## Lead Profile
+
+Representa a interpretação comercial do contato.
+
+---
+
+Não é uma entidade separada inicialmente.
+
+É uma extensão do contato.
+
+---
+
+Informações:
+
+- estágio;
+- interesse;
+- potencial;
+- score;
+- intenção.
+
+---
+
+# Lead Score
+
+## Lead Score
+
+Representa valor estimado.
+
+---
+
+Pode considerar:
+
+- respostas;
+- comportamento;
+- interesse;
+- histórico;
+- dados fornecidos.
+
+---
+
+Nunca deve depender apenas da IA.
+
+---
+
+# Agente Inteligente
+
+## Agent
+
+Representa a camada de inteligência da empresa.
+
+---
+
+Possui:
+
+- configuração;
+- comportamento;
+- modelo;
+- ferramentas.
+
+---
+
+Cada empresa possui seu agente.
+
+---
+
+# Configuração do Agente
+
+Inclui:
+
+- nome;
+- tom;
+- instruções;
+- limites;
+- políticas.
+
+---
+
+# Conhecimento
+
+## Knowledge Base
+
+Representa informações usadas pela IA.
+
+---
+
+Pode conter:
+
+- documentos;
+- textos;
+- FAQs;
+- informações comerciais.
+
+---
+
+# Embeddings
+
+São derivados do conhecimento.
+
+Nunca são a fonte original.
+
+---
+
+Fluxo:
+
+Documento
+
+↓
+
+Processamento
+
+↓
+
+Embedding
+
+↓
+
+Vector Search
+
+↓
+
+Contexto IA
+
+---
+
+# Integração
+
+## Integration
+
+Representa conexão com serviços externos.
+
+---
+
+Exemplos:
+
+WhatsApp
+
+Instagram
+
+Google Calendar
+
+Pagamento
+
+---
+
+Possui:
+
+- status;
+- credenciais;
+- configuração.
+
+---
+
+# Módulo
+
+## Module
+
+Representa funcionalidades contratáveis.
+
+---
+
+Exemplos:
+
+Core
+
+Appointments
+
+Campaigns
+
+Payments
+
+Landing Pages
+
+---
+
+# Company Subscription
+
+Define:
+
+quais módulos estão ativos.
+
+---
+
+# Plano
+
+## Plan
+
+Representa pacote comercial.
+
+---
+
+Exemplo:
+
+Starter
+
+Growth
+
+Premium
+
+---
+
+# Uso
+
+## Usage
+
+Controla consumo.
+
+Exemplos:
+
+- mensagens;
+- tokens;
+- chamadas IA;
+- armazenamento.
+
+---
+
+# Agenda
+
+## Appointment
+
+Representa compromisso.
+
+---
+
+Não pertence ao Core.
+
+É módulo adicional.
+
+---
+
+Relacionamento:
+
+Contact
+
++
+
+Company
+
+---
+
+# Campanha
+
+## Campaign
+
+Representa disparos planejados.
+
+---
+
+Inclui:
+
+- público;
+- mensagem;
+- agendamento;
+- resultado.
+
+---
+
+# Pagamento
+
+## Payment
+
+Representa transações relacionadas ao cliente final.
+
+---
+
+Exemplo:
+
+link gerado.
+
+status confirmado.
+
+---
+
+# Auditoria
+
+## Audit Log
+
+Registra ações importantes.
+
+---
+
+Exemplos:
+
+usuário alterado;
+
+permissão modificada;
+
+configuração alterada.
+
+---
+
+# Eventos
+
+Eventos não substituem entidades.
+
+Eles registram acontecimentos.
+
+---
+
+Exemplo:
+
+Conversation
+
+possui estado atual.
+
+
+Event:
+
+conversation.assigned
+
+registra mudança.
+
+---
+
+# Relacionamentos Principais
+
+```
+
+Company
+
+|
+
+├── Users
+
+├── Contacts
+
+│       |
+
+│       └── Conversations
+
+│                |
+
+│                └── Messages
+
+
+├── Agent
+
+│       |
+
+│       └── Knowledge
+
+
+├── Integrations
+
+
+├── Modules
+
+
+└── Usage
+
+
+```
+
+---
+
+# Regras Fundamentais
+
+## Mensagens
+
+Nunca apagar.
+
+---
+
+## Conversas
+
+Histórico preservado.
+
+---
+
+## Contatos
+
+Evoluem com o tempo.
+
+---
+
+## IA
+
+Aprende através de conhecimento.
+
+Nunca altera dados comerciais automaticamente sem regra.
+
+---
+
+## Empresas
+
+Sempre isoladas.
+
+---
+
+# Futuras Evoluções
+
+O modelo deve permitir:
+
+- múltiplos canais;
+- múltiplos agentes;
+- múltiplos números;
+- equipes maiores;
+- franquias;
+- planos avançados.
+
+---
+
+# Regra Final
+
+O banco do Conecta Flow representa relacionamentos humanos e comerciais.
+
+Não apenas registros.

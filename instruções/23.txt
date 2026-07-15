@@ -1,0 +1,387 @@
+# Lovable Workflow
+Version: 1.0
+
+---
+
+# Objetivo
+
+Definir como o Lovable deve ser utilizado durante o desenvolvimento do Conecta Flow.
+
+O Lovable é uma ferramenta de descoberta de produto e prototipação.
+
+Ele não é responsável pela implementação definitiva.
+
+---
+
+# Filosofia
+
+O produto nasce na interface.
+
+O código nasce na arquitetura.
+
+O Lovable valida experiência.
+
+O Claude Code implementa a solução.
+
+---
+
+# Papel do Lovable
+
+O Lovable é responsável por:
+
+- explorar ideias
+- validar UX
+- construir wireframes
+- definir navegação
+- testar fluxos
+- organizar componentes
+- validar hierarquia visual
+- gerar protótipos navegáveis
+
+Nunca é responsável por:
+
+- arquitetura
+- banco de dados
+- autenticação
+- integrações
+- regras de negócio
+- APIs
+- segurança
+
+---
+
+# Fluxo Oficial
+
+Ideia
+
+↓
+
+Discussão
+
+↓
+
+Prompt
+
+↓
+
+Lovable
+
+↓
+
+Protótipo
+
+↓
+
+Revisão
+
+↓
+
+Ajustes
+
+↓
+
+Aprovação
+
+↓
+
+Documentação
+
+↓
+
+Claude Code
+
+↓
+
+Implementação
+
+---
+
+Nunca inverter esta ordem.
+
+---
+
+# Antes de abrir o Lovable
+
+Toda tela deve responder:
+
+Quem utilizará?
+
+Qual problema resolve?
+
+Qual ação principal?
+
+Quais informações realmente importam?
+
+O que pode ser removido?
+
+---
+
+# Durante a prototipação
+
+Priorizar:
+
+clareza
+
+simplicidade
+
+rapidez
+
+legibilidade
+
+familiaridade
+
+Nunca pensar em implementação.
+
+Pensar apenas na experiência.
+
+---
+
+# Dados
+
+Sempre utilizar dados mockados.
+
+Nunca conectar banco.
+
+Nunca conectar APIs.
+
+Nunca conectar Supabase.
+
+Nunca conectar n8n.
+
+---
+
+# Componentes
+
+Os componentes do Lovable representam intenção visual.
+
+Não representam implementação.
+
+O Claude Code poderá reestruturar completamente os componentes.
+
+Desde que preserve a experiência.
+
+---
+
+# Responsividade
+
+Toda tela deve nascer Desktop First.
+
+Depois adaptar para tablet.
+
+Depois mobile.
+
+Nunca o contrário.
+
+---
+
+# Revisão
+
+Antes de aprovar uma tela perguntar:
+
+Existe informação desnecessária?
+
+Existe clique desnecessário?
+
+Existe duplicação?
+
+Existe excesso de indicadores?
+
+A ação principal está evidente?
+
+---
+
+# UX
+
+Sempre priorizar:
+
+Conversation First.
+
+O usuário abre o sistema para conversar.
+
+Não para analisar gráficos.
+
+---
+
+# Dashboard
+
+O Dashboard é secundário.
+
+Deve mostrar resultados.
+
+Nunca competir com a Inbox.
+
+---
+
+# Inbox
+
+A Inbox é o coração da plataforma.
+
+Todo o restante existe para enriquecê-la.
+
+---
+
+# Contatos
+
+As informações do Lead devem estar próximas da conversa.
+
+Nunca obrigar o usuário a navegar entre várias telas.
+
+---
+
+# IA
+
+O usuário nunca conversa com a IA.
+
+O usuário conversa com clientes.
+
+A IA apenas auxilia.
+
+---
+
+# Menus
+
+Menus pequenos.
+
+Poucas opções.
+
+Organização previsível.
+
+Evitar profundidade excessiva.
+
+---
+
+# Cores
+
+Utilizar identidade oficial.
+
+Gradiente lilás/roxo como elemento principal.
+
+Verde:
+
+ações positivas
+
+Amarelo:
+
+atenção
+
+Lead Score
+
+Vermelho:
+
+erros
+
+alertas
+
+Azul:
+
+informação
+
+Cinza:
+
+elementos neutros
+
+Nunca utilizar excesso de cores.
+
+---
+
+# Tipografia
+
+Priorizar leitura.
+
+Poucas variações.
+
+Hierarquia clara.
+
+---
+
+# Ícones
+
+Utilizar apenas quando agregarem compreensão.
+
+Nunca decorar interface.
+
+---
+
+# Animações
+
+Discretas.
+
+Rápidas.
+
+Nunca chamar mais atenção que o conteúdo.
+
+---
+
+# Protótipos
+
+Cada protótipo representa uma hipótese.
+
+Não representa implementação.
+
+---
+
+# Aprovação
+
+Uma tela somente será considerada concluída quando:
+
+Fluxo validado.
+
+UX validada.
+
+Informações organizadas.
+
+Componentes coerentes.
+
+Documentação atualizada.
+
+---
+
+# Handoff
+
+Após aprovação.
+
+Criar documento contendo:
+
+Objetivo da tela
+
+Fluxo
+
+Estados
+
+Componentes
+
+Eventos
+
+Permissões
+
+Responsividade
+
+Somente então iniciar implementação.
+
+---
+
+# Alterações
+
+Nunca modificar diretamente código do produto para testar UX.
+
+Toda experimentação ocorre primeiro no Lovable.
+
+---
+
+# Versionamento
+
+Manter histórico dos protótipos.
+
+Registrar decisões importantes.
+
+Nunca perder versões relevantes.
+
+---
+
+# Regra Fundamental
+
+O Lovable descobre o produto.
+
+O Claude Code constrói o produto.
+
+Nunca inverter essas responsabilidades.

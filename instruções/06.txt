@@ -1,0 +1,437 @@
+# System Architecture
+Version: 1.0
+
+---
+
+# Objetivo
+
+Este documento define a arquitetura conceitual do Conecta Flow.
+
+Ele estabelece a responsabilidade de cada componente da plataforma.
+
+Nenhuma implementação poderá violar estes princípios sem uma decisão arquitetural registrada (ADR).
+
+O objetivo é manter o sistema modular, previsível e escalável.
+
+---
+
+# Filosofia
+
+O sistema é dividido em camadas.
+
+Cada camada possui responsabilidades exclusivas.
+
+Nunca duplicar responsabilidades.
+
+Nunca mover lógica apenas por conveniência.
+
+---
+
+# Arquitetura Geral
+
+Usuário
+
+↓
+
+Frontend
+
+↓
+
+Backend (Supabase)
+
+↓
+
+Event Bus
+
+↓
+
+Automação (n8n)
+
+↓
+
+Serviços de IA
+
+↓
+
+Integrações Externas
+
+---
+
+# Camada 1
+
+## Frontend
+
+Responsável apenas pela experiência do usuário.
+
+Pode:
+
+- renderizar telas;
+- validar formulários simples;
+- controlar navegação;
+- armazenar estado temporário;
+- consumir APIs;
+- exibir indicadores;
+- exibir conversas;
+- atualizar interface em tempo real.
+
+Nunca deve:
+
+- tomar decisões de negócio;
+- implementar regras comerciais;
+- calcular score;
+- executar automações;
+- controlar permissões.
+
+Toda regra pertence ao backend.
+
+---
+
+# Camada 2
+
+## Backend
+
+O Backend representa a verdade do sistema.
+
+Responsabilidades:
+
+- autenticação;
+- autorização;
+- persistência;
+- regras de negócio;
+- APIs;
+- auditoria;
+- eventos;
+- controle de permissões;
+- isolamento entre empresas.
+
+Todo dado importante nasce aqui.
+
+Nunca no frontend.
+
+---
+
+# Camada 3
+
+## Banco de Dados
+
+O banco não executa lógica de negócio.
+
+Seu papel é:
+
+- armazenar;
+- relacionar;
+- proteger;
+- auditar.
+
+Toda estrutura deverá ser orientada ao domínio.
+
+Nunca ao framework.
+
+---
+
+# Camada 4
+
+## Event Bus
+
+O sistema será orientado a eventos.
+
+Toda alteração importante gera um evento.
+
+Exemplos.
+
+Mensagem recebida.
+
+↓
+
+Lead qualificado.
+
+↓
+
+Handoff.
+
+↓
+
+Pagamento confirmado.
+
+↓
+
+Agendamento criado.
+
+↓
+
+Follow-up executado.
+
+Eventos nunca executam regras.
+
+Eventos apenas comunicam acontecimentos.
+
+---
+
+# Camada 5
+
+## Automação (n8n)
+
+O n8n é o orquestrador.
+
+Nunca é a origem da regra de negócio.
+
+Seu papel é:
+
+- integrar sistemas;
+- executar workflows;
+- coordenar processos;
+- chamar APIs;
+- reagir a eventos;
+- controlar filas;
+- executar tarefas assíncronas.
+
+Nunca deve armazenar estado permanente.
+
+Nunca deve substituir o backend.
+
+---
+
+# Camada 6
+
+## Serviços de IA
+
+A IA possui apenas responsabilidades cognitivas.
+
+Pode:
+
+- interpretar;
+- resumir;
+- classificar;
+- responder;
+- sugerir;
+- gerar texto;
+- extrair informações.
+
+Nunca deve:
+
+- decidir permissões;
+- alterar arquitetura;
+- persistir dados diretamente;
+- substituir regras determinísticas.
+
+Sempre que possível utilizar regras simples antes da IA.
+
+---
+
+# Camada 7
+
+## Integrações
+
+Todas as integrações externas devem ser isoladas.
+
+Exemplos.
+
+WhatsApp
+
+Instagram
+
+Calendário
+
+Gateway de Pagamento
+
+CRM
+
+APIs futuras
+
+Cada integração deve possuir uma camada própria.
+
+Nunca espalhar chamadas externas pelo sistema.
+
+---
+
+# Mission Control
+
+Mission Control é uma aplicação independente.
+
+Ele não faz parte do ambiente operacional do cliente.
+
+Responsabilidades:
+
+- administrar empresas;
+- administrar módulos;
+- administrar usuários;
+- acompanhar custos;
+- acompanhar IA;
+- acompanhar workflows;
+- monitorar infraestrutura;
+- visualizar auditorias;
+- gerenciar integrações;
+- suporte operacional.
+
+Nenhuma tela do cliente acessa funções exclusivas do Mission Control.
+
+---
+
+# Core
+
+O Core contém apenas capacidades universais.
+
+Exemplos.
+
+Conversas
+
+Contatos
+
+Usuários
+
+Autenticação
+
+Eventos
+
+IA
+
+Timeline
+
+Dashboard
+
+Qualquer funcionalidade específica deverá nascer como módulo.
+
+---
+
+# Módulos
+
+Os módulos são independentes.
+
+Devem poder ser:
+
+- instalados;
+- removidos;
+- atualizados;
+- evoluídos.
+
+Sem alterar o Core.
+
+Exemplos.
+
+Agenda
+
+Pagamento
+
+Campanhas
+
+Landing Pages
+
+Instagram
+
+Google Calendar
+
+---
+
+# Responsabilidade das decisões
+
+Frontend
+
+↓
+
+Experiência
+
+Backend
+
+↓
+
+Regras
+
+Banco
+
+↓
+
+Persistência
+
+Eventos
+
+↓
+
+Comunicação
+
+n8n
+
+↓
+
+Orquestração
+
+IA
+
+↓
+
+Cognição
+
+Mission Control
+
+↓
+
+Administração
+
+Essa separação nunca deve ser quebrada.
+
+---
+
+# Fluxo de uma mensagem
+
+Mensagem
+
+↓
+
+Canal
+
+↓
+
+Backend
+
+↓
+
+Evento
+
+↓
+
+n8n
+
+↓
+
+IA (quando necessário)
+
+↓
+
+Backend
+
+↓
+
+Persistência
+
+↓
+
+Frontend
+
+↓
+
+Usuário
+
+O frontend nunca conversa diretamente com a IA.
+
+Toda comunicação passa pelo backend.
+
+---
+
+# Escalabilidade
+
+Toda nova funcionalidade deverá responder:
+
+Em qual camada ela pertence?
+
+Caso a resposta não seja clara, a arquitetura deve ser revisada antes da implementação.
+
+---
+
+# Princípio Final
+
+O sistema deve permanecer simples.
+
+Quanto maior o crescimento do produto, maior deverá ser a disciplina arquitetural.
+
+A complexidade nunca poderá ser transferida para o usuário.
+
+Ela deve permanecer dentro da plataforma.

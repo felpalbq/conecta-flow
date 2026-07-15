@@ -1,0 +1,332 @@
+# API Boundaries
+Version: 1.0
+
+---
+
+# Objetivo
+
+Definir os limites de comunicação entre todos os componentes da plataforma.
+
+Este documento impede acoplamentos indevidos e garante que cada camada possua uma única responsabilidade.
+
+Toda comunicação entre módulos deverá respeitar estas fronteiras.
+
+---
+
+# Filosofia
+
+Cada componente possui responsabilidades exclusivas.
+
+Nenhum componente poderá acessar diretamente outro quando existir uma camada responsável por essa comunicação.
+
+Toda integração deve acontecer através de interfaces bem definidas.
+
+---
+
+# Arquitetura
+
+```
+
+Frontend
+
+↓
+
+Application Layer
+
+↓
+
+Domain Layer
+
+↓
+
+Infrastructure Layer
+
+↓
+
+Supabase
+
+↓
+
+External Services
+
+```
+
+Nenhuma camada pula outra.
+
+---
+
+# Frontend
+
+Pode:
+
+- consumir APIs
+- renderizar dados
+- enviar comandos
+- atualizar interface
+- receber eventos em tempo real
+
+Nunca pode:
+
+- acessar banco
+- executar SQL
+- chamar LLM
+- executar workflows
+- alterar permissões
+- calcular regras de negócio
+
+---
+
+# Application Layer
+
+Responsável por coordenar casos de uso.
+
+Pode:
+
+- validar requisições
+- chamar serviços
+- publicar eventos
+- montar respostas
+
+Nunca contém:
+
+- SQL
+- componentes
+- lógica de infraestrutura
+
+---
+
+# Domain Layer
+
+Representa o negócio.
+
+Pode:
+
+- validar regras
+- modificar Aggregates
+- emitir eventos
+- garantir consistência
+
+Nunca conhece:
+
+- Supabase
+- React
+- n8n
+- APIs externas
+
+---
+
+# Infrastructure Layer
+
+Responsável pela comunicação externa.
+
+Pode:
+
+- Supabase
+- Storage
+- Meta API
+- Evolution API
+- Stripe
+- Google
+- OpenAI
+- Anthropic
+
+Nunca contém regra de negócio.
+
+---
+
+# Supabase
+
+Representa persistência.
+
+Nunca toma decisões.
+
+Nunca contém lógica comercial.
+
+Seu papel é:
+
+- armazenar
+- recuperar
+- proteger
+- indexar
+
+---
+
+# IA
+
+A IA é um serviço cognitivo.
+
+Pode:
+
+- interpretar
+- resumir
+- responder
+- classificar
+- sugerir
+
+Nunca pode:
+
+- alterar banco diretamente
+- modificar permissões
+- executar SQL
+- alterar configurações
+
+Toda resposta passa pela Application Layer.
+
+---
+
+# n8n
+
+O n8n é um orquestrador.
+
+Pode:
+
+- reagir a eventos
+- integrar sistemas
+- chamar APIs
+- controlar filas
+- executar tarefas assíncronas
+
+Nunca pode:
+
+- alterar tabelas críticas diretamente
+- modificar regras de negócio
+- decidir permissões
+- substituir o backend
+
+---
+
+# Mission Control
+
+Mission Control utiliza exatamente as mesmas APIs da plataforma.
+
+Possui apenas permissões administrativas.
+
+Nunca acessa tabelas diretamente.
+
+Nunca cria atalhos administrativos.
+
+---
+
+# Integrações
+
+Toda integração externa passa por adaptadores.
+
+Exemplo.
+
+WhatsApp Adapter
+
+Instagram Adapter
+
+Calendar Adapter
+
+Payment Adapter
+
+LLM Adapter
+
+Nunca espalhar chamadas HTTP pelo projeto.
+
+---
+
+# Eventos
+
+Eventos são publicados apenas pelo Domain Layer.
+
+Consumidores podem existir em:
+
+Frontend
+
+n8n
+
+Mission Control
+
+Dashboard
+
+Auditoria
+
+Integrações
+
+Todos independentes.
+
+---
+
+# Banco Vetorial
+
+Nunca é acessado diretamente pelo Frontend.
+
+Toda consulta passa pelo serviço de IA.
+
+---
+
+# Storage
+
+Uploads.
+
+↓
+
+Storage Service
+
+↓
+
+Supabase Storage
+
+↓
+
+Banco recebe apenas referência.
+
+Nunca arquivos binários.
+
+---
+
+# Tempo Real
+
+Realtime pertence ao backend.
+
+O frontend apenas assina eventos.
+
+Nunca cria estados paralelos.
+
+---
+
+# Logs
+
+Toda camada gera seus próprios logs.
+
+Frontend
+
+↓
+
+UX
+
+Backend
+
+↓
+
+Aplicação
+
+Infraestrutura
+
+↓
+
+Integrações
+
+Nunca misturar responsabilidades.
+
+---
+
+# Tratamento de Erros
+
+Cada camada trata apenas seus próprios erros.
+
+Nunca esconder erros críticos.
+
+Sempre propagar contexto suficiente.
+
+---
+
+# Regra Fundamental
+
+Toda comunicação deve atravessar apenas uma fronteira por vez.
+
+Nunca criar atalhos.
+
+A simplicidade arquitetural é mais importante do que reduzir algumas linhas de código.

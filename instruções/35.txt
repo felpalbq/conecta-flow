@@ -1,0 +1,709 @@
+# Implementation Roadmap
+Version: 1.0
+
+---
+
+# Objetivo
+
+Definir a sequência de construção do Conecta Flow.
+
+Este documento orienta:
+
+- prioridades;
+- fases;
+- ferramentas;
+- entregáveis;
+- critérios de evolução.
+
+---
+
+# Princípio
+
+Construir o menor produto capaz de resolver a maior dor.
+
+Não construir funcionalidades antes da necessidade.
+
+---
+
+# Estratégia Geral
+
+O desenvolvimento será dividido em fases.
+
+```
+
+FASE 0
+
+Fundação
+
+
+FASE 1
+
+Experiência e Produto Visual
+
+
+FASE 2
+
+Core Operacional
+
+
+FASE 3
+
+Inteligência Artificial
+
+
+FASE 4
+
+Automação e Integrações
+
+
+FASE 5
+
+Módulos Avançados
+
+
+FASE 6
+
+Escala SaaS
+
+```
+
+---
+
+# FASE 0 — Fundação
+
+Objetivo:
+
+Criar ambiente e documentação.
+
+---
+
+## Entregáveis
+
+Documentação:
+
+- princípios;
+- arquitetura;
+- segurança;
+- multi-tenancy;
+- domínio;
+- eventos;
+- IA;
+- módulos.
+
+---
+
+Ambiente:
+
+- GitHub;
+- Claude Code;
+- Supabase;
+- n8n;
+- Docker.
+
+---
+
+## Ferramentas
+
+Claude Code:
+
+responsável por arquitetura e implementação.
+
+---
+
+GitHub:
+
+fonte da verdade do código.
+
+---
+
+Supabase:
+
+base de dados e serviços.
+
+---
+
+n8n:
+
+orquestração inicial.
+
+---
+
+Lovable:
+
+protótipo visual.
+
+---
+
+# Critério de conclusão
+
+Projeto possui:
+
+- documentação;
+- estrutura de repositório;
+- padrões definidos.
+
+---
+
+# FASE 1 — Experiência e Produto Visual
+
+Objetivo:
+
+Materializar o produto.
+
+---
+
+# Motivo
+
+O Conecta Flow nasce da experiência.
+
+Antes do código, validar:
+
+- fluxo;
+- telas;
+- navegação;
+- percepção de valor.
+
+---
+
+# Lovable
+
+Responsabilidade:
+
+Criar protótipo UI.
+
+---
+
+Não deve:
+
+- criar lógica;
+- criar backend;
+- definir arquitetura.
+
+---
+
+# Entregáveis
+
+Interface:
+
+## Home
+
+Com:
+
+- boas-vindas;
+- resumo;
+- notificações;
+- atividades recentes.
+
+---
+
+## Inbox
+
+Tela principal.
+
+Com:
+
+- lista de conversas;
+- chat;
+- anexos;
+- emojis;
+- respostas rápidas;
+- comandos.
+
+---
+
+## Contatos
+
+Com:
+
+- histórico;
+- classificação;
+- score;
+- dados comerciais.
+
+---
+
+## Dashboard
+
+Com:
+
+- indicadores;
+- resultados;
+- economia;
+- produtividade.
+
+---
+
+## Configurações
+
+Visualizar:
+
+- usuários;
+- módulos;
+- integrações.
+
+---
+
+# Dados
+
+Somente:
+
+mockados.
+
+---
+
+# Critério de conclusão
+
+Usuário consegue imaginar utilizando diariamente.
+
+---
+
+# FASE 2 — Core Operacional
+
+Objetivo:
+
+Criar o produto mínimo funcional.
+
+---
+
+# Construir
+
+## Autenticação
+
+Supabase Auth.
+
+---
+
+## Empresas
+
+Multi-tenancy.
+
+---
+
+## Usuários
+
+Memberships.
+
+---
+
+## Contatos
+
+CRUD inicial.
+
+---
+
+## Conversas
+
+Modelo principal.
+
+---
+
+## Mensagens
+
+Histórico.
+
+---
+
+## Inbox funcional
+
+Receber e enviar mensagens.
+
+---
+
+# Primeira Integração
+
+WhatsApp.
+
+Inicialmente:
+
+Evolution API.
+
+---
+
+Objetivo:
+
+validar fluxo.
+
+---
+
+Futuro:
+
+Meta API oficial.
+
+---
+
+# Critério
+
+Empresa consegue:
+
+- cadastrar;
+- receber conversa;
+- responder;
+- acompanhar histórico.
+
+---
+
+# FASE 3 — Inteligência Artificial
+
+Objetivo:
+
+Adicionar o agente.
+
+---
+
+# Construir:
+
+## Triagem
+
+Primeiro contato.
+
+---
+
+## Classificação
+
+Separar:
+
+- irrelevante;
+- cliente;
+- lead.
+
+---
+
+## Qualificação
+
+Criar contexto comercial.
+
+---
+
+## Handoff
+
+Transferência humana.
+
+---
+
+## Follow-up
+
+Reativação.
+
+---
+
+# RAG
+
+Inicialmente:
+
+estrutura simples.
+
+---
+
+Criar:
+
+- documentos;
+- embeddings;
+- busca.
+
+---
+
+# Critério
+
+IA resolve parte significativa dos atendimentos.
+
+---
+
+# FASE 4 — Automação e Integrações
+
+Objetivo:
+
+Expandir capacidade.
+
+---
+
+# n8n
+
+Assume:
+
+- workflows;
+- tarefas assíncronas;
+- integrações.
+
+---
+
+# Construir:
+
+- notificações;
+- follow-ups;
+- sincronizações;
+- jobs.
+
+---
+
+# Integrações
+
+Prioridade:
+
+1.
+
+WhatsApp oficial.
+
+2.
+
+Google Calendar.
+
+3.
+
+Instagram.
+
+---
+
+# Critério
+
+Sistema opera com pouca intervenção.
+
+---
+
+# FASE 5 — Módulos Avançados
+
+Somente após validação comercial.
+
+---
+
+# Agendamento
+
+Para:
+
+clínicas;
+
+salões;
+
+serviços.
+
+---
+
+# Campanhas
+
+Para:
+
+reativação;
+
+marketing.
+
+---
+
+# Pagamentos
+
+Para:
+
+vendas digitais.
+
+---
+
+# Landing Pages
+
+Captura.
+
+---
+
+# Critério
+
+Existe demanda real.
+
+---
+
+# FASE 6 — Escala SaaS
+
+Objetivo:
+
+transformar operação em produto escalável.
+
+---
+
+Construir:
+
+- billing;
+- planos;
+- limites;
+- métricas avançadas;
+- onboarding;
+- automações comerciais.
+
+---
+
+# Ordem das Ferramentas
+
+## Lovable
+
+Primeiro.
+
+Responsável por:
+
+experiência visual.
+
+---
+
+## Claude Code
+
+Segundo.
+
+Responsável por:
+
+arquitetura e código.
+
+---
+
+## Supabase
+
+Terceiro.
+
+Responsável por:
+
+dados.
+
+---
+
+## n8n
+
+Depois.
+
+Responsável por:
+
+processos.
+
+---
+
+## APIs externas
+
+Conforme necessidade.
+
+---
+
+# Repositórios
+
+Inicialmente:
+
+dois repositórios.
+
+---
+
+## Repository 1
+
+Lovable Prototype
+
+Objetivo:
+
+UI/UX.
+
+---
+
+## Repository 2
+
+Main Application
+
+Objetivo:
+
+produto real.
+
+---
+
+# Relação
+
+Lovable serve como:
+
+referência visual.
+
+---
+
+Não será necessariamente incorporado.
+
+---
+
+# Regra
+
+Não misturar:
+
+protótipo visual
+
+com
+
+código de produção.
+
+---
+
+# MVP Real
+
+O MVP comercial contém:
+
+```
+
+Multi-tenant
+
++
+
+Usuários
+
++
+
+Inbox
+
++
+
+Contatos
+
++
+
+WhatsApp
+
++
+
+IA
+
++
+
+Handoff
+
++
+
+Follow-up
+
++
+
+Dashboard simples
+
+```
+
+---
+
+# Fora do MVP
+
+Inicialmente:
+
+- pagamentos;
+- campanhas complexas;
+- landing pages;
+- múltiplos canais;
+- analytics avançado.
+
+---
+
+# Validação
+
+Antes de construir módulos:
+
+Buscar clientes reais.
+
+---
+
+Perguntas:
+
+O problema existe?
+
+Pagam?
+
+Usam diariamente?
+
+Precisam dos módulos?
+
+---
+
+# Regra Final
+
+Construir o que gera valor percebido.
+
+Não construir tecnologia por tecnologia.
