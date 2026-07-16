@@ -2,78 +2,42 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Estado atual do repositório
+## O projeto
 
-Este repositório contém apenas **documentação de planejamento** — ainda não existe código. Todo o conteúdo está em [instruções/](instruções/), com 45 documentos de especificação (em português) que definem o produto, a arquitetura e o processo de desenvolvimento do **Conecta Flow**: um SaaS de atendimento inteligente via WhatsApp para pequenas empresas.
+**Conecta Flow** — SaaS multi-tenant de atendimento inteligente via WhatsApp para micro e pequenas empresas. A conversa é a entidade central do produto; CRM, score, agenda e dashboard existem para enriquecê-la. Um Agente Inteligente (LLM + conhecimento + ferramentas + políticas) faz triagem, responde, qualifica e transfere para humanos quando agrega valor. Existe um segundo ambiente administrativo, o **Mission Control** (`/admin`), invisível para clientes.
 
-O código real será criado no repositório `conecta-flow-platform` (ver [instruções/38.txt](instruções/38.txt) e [instruções/43.txt](instruções/43.txt)). Não há comandos de build, lint ou teste ainda.
+**Estado atual:** fase de fundação — a documentação canônica em [docs/](docs/) está completa; o código da aplicação ainda não foi iniciado. Não há comandos de build/teste ainda; quando o scaffold existir (Next.js + TypeScript strict + Tailwind + shadcn/ui + Supabase), atualizar esta seção com os comandos.
 
-## Índice dos documentos
+## Documentação — fonte da verdade
 
-Os arquivos são numerados; os mais importantes para orientação:
+Nunca implementar baseado apenas no contexto da conversa. Antes de qualquer alteração relevante, ler os documentos aplicáveis:
 
-- **Produto**: `00` Manifesto · `inicio` Product Vision · `01` Product Principles · `02` Atores · `04` Ciclo de vida da conversa · `05` Módulos · `42` MVP Specification
-- **Arquitetura**: `06` System Architecture · `10/14/15/30` Domain/Database Model · `11/29` Event Architecture · `12/28/44` Multi-tenancy · `13/27` Security Model · `16` API Boundaries · `17/31` AI Agent Architecture · `18/32` Module Architecture · `19/34` Mission Control · `33` Permission Model · `39` Supabase · `40` n8n · `41` Integrações
-- **Execução**: `20` AI Development Principles · `21` Coding Standards · `22` Git Workflow · `23` Lovable Workflow · `24` N8N Guidelines · `25` Technical Stack · `26/09` Project Structure · `35` Roadmap · `36` Development Workflow · `37` Claude Code Project Setup · `38` Repository Structure · `43` Initial Development Plan · `07/45` Como o Claude Code deve operar
+- [docs/01-product/](docs/01-product/) — manifesto, visão, princípios, atores, especificação do MVP e **glossário** (linguagem ubíqua: use exatamente esses termos)
+- [docs/02-architecture/](docs/02-architecture/) — arquitetura do sistema, domínio, banco, ciclo de vida da conversa, eventos, multi-tenancy, segurança, permissões, agente IA, módulos, Mission Control, integrações
+- [docs/03-execution/](docs/03-execution/) — roadmap e plano de implementação (4 marcos com critérios de aceite)
+- [docs/04-development/](docs/04-development/) — stack, estrutura do projeto, padrões de código, git, Supabase, n8n, Lovable e o modelo operacional do Claude
+- [docs/decisions/](docs/decisions/) — ADRs 001–014. Decisões estruturais nunca mudam silenciosamente: toda mudança arquitetural gera novo ADR e atualiza a documentação no mesmo PR.
 
-Alguns números cobrem o mesmo tema em versões diferentes (ex.: 09/26, 12/28, 13/27). Em caso de divergência, confirmar com o usuário qual prevalece.
+## Stack (decidida — ver ADRs)
 
-## Essência do produto
-
-- **A conversa é o centro do produto.** Tudo (score, agenda, dashboard, CRM) existe para enriquecer a conversa — nunca o contrário.
-- A experiência deve parecer uma evolução natural do WhatsApp Business, nunca um CRM complexo.
-- **Regra de ouro**: toda funcionalidade deve melhorar a conversa, o resultado da conversa ou a operação da plataforma. Caso contrário, não pertence ao produto.
-- O Core permanece pequeno; tudo que for específico nasce como módulo independente e plugável (agenda, pagamentos, campanhas, Instagram...).
-- **Mission Control** é uma aplicação administrativa separada — nunca misturar com o ambiente do cliente.
-
-## Stack planejada (instruções/25.txt)
-
-- **App**: Next.js + TypeScript (strict, nunca JavaScript) + React + Tailwind + shadcn/ui
-- **Forms/validação**: React Hook Form + Zod (toda entrada externa tem schema)
-- **Estado**: local primeiro; server state com TanStack Query; global só se justificado (Context, depois Zustand)
-- **Backend/dados**: Supabase (PostgreSQL, Auth, Storage, Realtime, Edge Functions, pgvector para RAG); ORM ainda não decidido (Drizzle vs Supabase Client)
-- **Automação**: n8n self-hosted (Docker) — orquestração apenas, **nunca** regras de negócio, persistência ou permissões
-- **IA**: arquitetura de adaptadores, nunca acoplar a um único provider (Anthropic/OpenAI/Google)
-- **Deploy**: Vercel (app) + Supabase Cloud + n8n em Docker · Versionamento no GitHub
-
-## Arquitetura em camadas (instruções/06.txt)
-
-Frontend → Backend (Supabase) → Event Bus → n8n → Serviços de IA → Integrações externas
-
-Responsabilidades exclusivas, nunca duplicadas:
-- **Frontend**: só experiência do usuário — nunca regra de negócio, score, permissões ou acesso direto à IA/banco
-- **Backend**: a verdade do sistema — auth, autorização, regras, eventos, auditoria, isolamento entre empresas
-- **Eventos**: toda alteração importante gera evento; eventos comunicam, nunca executam regras
-- **n8n**: orquestra e integra; nunca armazena estado permanente
-- **IA**: apenas cognição (interpretar, classificar, responder); regra determinística sempre vem antes de chamada a LLM (IA custa dinheiro — Princípio 6)
-- **Integrações** (WhatsApp via Evolution API, etc.): sempre isoladas em camada/adapter próprio
+Next.js (route handlers = API) · TypeScript strict (nunca `any`) · Tailwind + shadcn/ui · React Hook Form + Zod · TanStack Query · **Supabase** (Postgres, Auth, Storage, Realtime, Edge Functions, Queues) · acesso a dados via **supabase-js + tipos gerados, sem ORM** (ADR-010) · eventos em tabela `events` + pgmq (ADR-008) · IA via **OpenAI** atrás de adaptador Vercel AI SDK (ADR-012) · WhatsApp via adapter normalizado — Evolution API só no piloto, Meta Cloud API antes do 1º cliente pagante (ADR-014) · deploy Vercel; VPS Docker para Evolution/n8n · n8n e RAG só pós-piloto (ADR-009, ADR-013).
 
 ## Regras invioláveis
 
-- **Multi-tenancy desde a primeira linha**: nenhum recurso assume empresa única, IDs fixos ou configuração global. Empresa A nunca vê dados da Empresa B. RLS obrigatório.
-- **Segurança faz parte da arquitetura**: toda funcionalidade nasce com autenticação, autorização, auditoria e menor privilégio.
-- **Nunca confiar no frontend** para validação ou autorização.
-- **Triagem antes de IA**: mensagens passam por classificação (irrelevante/particular/cliente/lead) antes de processamento inteligente. Lead não nasce automaticamente — conversa vira lead só quando demonstra potencial comercial.
-- **Documentação é parte do produto**: alterações arquiteturais atualizam a documentação e decisões importantes geram ADR (`docs/decisions/ADR-NNN-nome.md`). Nunca alterar decisões estruturais silenciosamente.
-- Nunca copiar código do protótipo Lovable diretamente — ele é apenas referência visual.
+1. **Multi-tenancy sempre:** todo dado pertence a uma Company; `company_id` denormalizado e indexado em toda tabela operacional (ADR-006); RLS obrigatório (sem política = acesso negado); nunca confiar em `company_id` vindo do frontend; testes de isolamento no CI. Usuários vinculam-se a empresas via `company_memberships` (ADR-001).
+2. **Camadas:** frontend só experiência; regras de negócio no domínio (route handlers/serviços); banco não executa lógica; integrações externas sempre atrás de adapters em `infrastructure/`; IA só cognição — nunca decide permissões nem persiste dados; n8n só orquestra — nunca contém regra de negócio.
+3. **Eventos:** toda alteração importante gera evento imutável `dominio.acao` na mesma transação (glossário tem o catálogo); consumidores idempotentes; features se comunicam por eventos/serviços — nunca importação direta entre features.
+4. **IA custa dinheiro:** regra determinística antes de LLM; triagem com modelo econômico; custo/tokens registrados em `usage` desde a primeira chamada; prompts versionados, nunca editados em produção.
+5. **Conversa é o centro:** status e responsável (`owner_type: ai|user|queue`) são campos separados (ADR-007); conversas e mensagens nunca são apagadas (LGPD atende-se por anonimização); Lead nasce da qualificação de uma Conversation, nunca automaticamente (ADR-002).
+6. **Segurança primeiro:** toda funcionalidade nasce com autenticação, autorização (`dominio.acao`), auditoria; segredos nunca em código/Git; validação Zod em toda entrada externa; webhooks sempre validados.
 
-## Convenções de código (instruções/21.txt e 38.txt)
+## Convenções
 
-- Organização por domínio/feature (`src/modules/<dominio>/{domain,application,infrastructure,ui}`), nunca por tipo de arquivo. Domínio não depende de infraestrutura.
-- Módulos se comunicam por eventos/casos de uso, não por importação direta.
-- Nunca `any`; imports com alias `@/...`; sem valores mágicos; sem arquivos `utils.ts`/`helpers.ts` genéricos.
-- Hooks com prefixo `use` representando comportamento (`useConversation`, `useLeadScore`).
-- Workflows n8n exportados como `n8n/workflows/WF_DOMAIN_ACTION_VERSION.json`.
+- Estrutura feature-first: `src/{app, features, core, shared, infrastructure}` (ADR-003; detalhes em docs/04-development/project-structure.md). Proibido `utils.ts`/`helpers.ts` genéricos; imports com alias `@/`.
+- Código e identificadores em inglês; interface em pt-BR. Tabelas snake_case plural; FKs `<entity>_id`.
+- Git: `main` (produção/deploy) ← `develop` ← `feature/*` (nunca partir de `main`); commits `tipo: descrição` em inglês (`feat:`, `fix:`, `refactor:`, `docs:`, `test:`, `chore:`); migrations em PR próprio; nunca misturar frontend+backend+banco num commit.
+- Repositórios: este (`conecta-flow-platform`) é o produto; `conecta-flow-ui-prototype` (Lovable) é só referência visual — nunca copiar código de lá sem adaptar (ADR-004).
 
-## Git (instruções/22.txt)
+## Como o Claude trabalha aqui
 
-- Branches: `main` (produção, único deploy), `develop` (integração), `feature/*` (partem de `develop`, nunca de `main`), `hotfix/*`.
-- Commits pequenos, uma responsabilidade, formato `feat:|fix:|refactor:|docs:|test:|chore:` em inglês (ex.: `feat: create conversation assignment service`).
-- Migrations de banco têm PR próprio — nunca misturar frontend/backend/banco num commit gigante.
-- Tags com versionamento semântico.
-
-## Ordem de trabalho esperada (instruções/07.txt e 45.txt)
-
-Antes de qualquer implementação relevante: ler a documentação aplicável → compreender o objetivo → avaliar impacto arquitetural → planejar → implementar → testar → atualizar documentação → commit. Nunca implementar baseado apenas no contexto da conversa. Perguntar ao usuário quando houver decisão de negócio, múltiplas arquiteturas possíveis ou risco alto.
-
-Ordem de construção definida para o início do desenvolvimento (instruções/43.txt): Fundação → Multi-tenancy → Usuários → Contatos → Conversas → Mensagens → Inbox → WhatsApp (Evolution API) → IA (triagem → classificação → resposta → handoff) → Follow-up → Dashboard. Fora do MVP: agenda, pagamentos, campanhas, landing pages, Instagram, analytics avançado, kanban.
+Ordem: ler docs → entender → avaliar impacto → planejar → implementar → testar → **atualizar documentação** → commit. Perguntar ao usuário quando houver decisão de negócio, múltiplas arquiteturas ou risco alto; executar direto quando a tarefa é clara e segue padrões. Nunca executar sem confirmação: mudanças destrutivas, banco de produção, remoção de dados, mudanças de segurança. Detalhes: docs/04-development/claude-operating-model.md.
