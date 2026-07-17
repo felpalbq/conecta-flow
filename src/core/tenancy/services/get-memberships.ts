@@ -1,5 +1,8 @@
 import 'server-only';
 
+import { cache } from 'react';
+
+import { getCurrentUser } from '@/core/auth/services/get-current-user';
 import { createClient } from '@/infrastructure/supabase/server-client';
 import type { Role } from '@/core/permissions/role-permissions';
 
@@ -11,13 +14,25 @@ export interface MembershipWithCompany {
   companySlug: string;
 }
 
-/** RLS-scoped: only ever returns memberships of the currently authenticated user. */
-export async function getMemberships(): Promise<MembershipWithCompany[]> {
+/**
+ * Only ever returns memberships of the currently authenticated user — this
+ * relies on the explicit `profile_id` filter below, not RLS alone: the
+ * company_memberships_select policy also allows reading *peers'* rows
+ * (anyone sharing a company), which is correct for a future team-display
+ * feature but would leak other users' memberships here if left unfiltered.
+ * Wrapped in React's cache() so the layout and page calling this in the
+ * same request dedupe into a single query.
+ */
+export const getMemberships = cache(async (): Promise<MembershipWithCompany[]> => {
+  const user = await getCurrentUser();
+  if (!user) return [];
+
   const supabase = await createClient();
 
   const { data: memberships, error: membershipsError } = await supabase
     .from('company_memberships')
     .select('id, role, company_id')
+    .eq('profile_id', user.id)
     .eq('status', 'active');
 
   if (membershipsError) {
@@ -55,4 +70,4 @@ export async function getMemberships(): Promise<MembershipWithCompany[]> {
       },
     ];
   });
-}
+});
