@@ -21,7 +21,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@/supabase/types": ["./supabase/types/database.types"]
     }
   },
   "include": [
