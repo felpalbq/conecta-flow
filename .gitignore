@@ -11,9 +11,17 @@
 # Dependências e builds
 node_modules/
 .next/
+out/
 dist/
 build/
 coverage/
+
+# Next.js / TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Vercel
+.vercel
 
 # Sistema operacional
 desktop.ini
@@ -26,3 +34,7 @@ Thumbs.db
 
 # Logs
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*

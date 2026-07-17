@@ -1,0 +1,9 @@
+node_modules
+.next
+coverage
+supabase/types
+package-lock.json
+docs/
+CLAUDE.md
+AGENTS.md
+README.md

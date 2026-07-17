@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [develop, main]
+
+jobs:
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run format:check
+
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run test
+
+  # RLS isolation suite (mandatory per docs/02-architecture/multi-tenancy.md):
+  # runs against a real local Supabase stack (auth.uid()/JWT-backed RLS, not a
+  # bare Postgres container) so it exercises the same client -> PostgREST -> RLS
+  # path the app relies on. Wired once supabase/migrations + seed exist.
+  # rls-isolation:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 22
+  #         cache: npm
+  #     - run: npm ci
+  #     - uses: supabase/setup-cli@v1
+  #     - run: supabase start -x studio,imgproxy,vector,edge-runtime
+  #     - run: supabase status -o env >> "$GITHUB_ENV"
+  #     - run: npm run seed
+  #     - run: npm run test:rls
+  #     - if: always()
+  #       run: supabase stop
