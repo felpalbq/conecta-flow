@@ -34,7 +34,7 @@ Nunca implementar baseado apenas no contexto da conversa. Antes de qualquer alte
 - [docs/02-architecture/](docs/02-architecture/) — arquitetura do sistema, domínio, banco, ciclo de vida da conversa, eventos, multi-tenancy, segurança, permissões, agente IA, módulos, Mission Control, integrações
 - [docs/03-execution/](docs/03-execution/) — roadmap e plano de implementação (4 marcos com critérios de aceite)
 - [docs/04-development/](docs/04-development/) — stack, estrutura do projeto, padrões de código, git, Supabase, n8n, Lovable e o modelo operacional do Claude
-- [docs/decisions/](docs/decisions/) — ADRs 001–014. Decisões estruturais nunca mudam silenciosamente: toda mudança arquitetural gera novo ADR e atualiza a documentação no mesmo PR.
+- [docs/decisions/](docs/decisions/) — ADRs 001–014. Decisões estruturais nunca mudam silenciosamente: toda mudança arquitetural gera novo ADR e atualiza a documentação no mesmo commit.
 
 ## Stack (decidida — ver ADRs)
 
@@ -53,7 +53,7 @@ Next.js (route handlers = API) · TypeScript strict (nunca `any`) · Tailwind + 
 
 - Estrutura feature-first: `src/{app, features, core, shared, infrastructure}` (ADR-003; detalhes em docs/04-development/project-structure.md). Proibido `utils.ts`/`helpers.ts` genéricos; imports com alias `@/`.
 - Código e identificadores em inglês; interface em pt-BR. Tabelas snake_case plural; FKs `<entity>_id`.
-- Git: `main` (produção/deploy) ← `develop` ← `feature/*` (nunca partir de `main`); commits `tipo: descrição` em inglês (`feat:`, `fix:`, `refactor:`, `docs:`, `test:`, `chore:`); migrations em PR próprio; nunca misturar frontend+backend+banco num commit.
+- Git: uma única branch `main` (sempre estável e deployável) — sem `develop`, `feature/*` ou PRs; commits `tipo: descrição` em inglês (`feat:`, `fix:`, `refactor:`, `docs:`, `test:`, `chore:`); migrations em commit próprio; nunca misturar frontend+backend+banco num commit.
 - Repositórios: este (`conecta-flow-platform`) é o produto; `conecta-flow-ui-prototype` (Lovable) é só referência visual — nunca copiar código de lá sem adaptar (ADR-004).
 
 ## Como o Claude trabalha aqui

@@ -53,7 +53,7 @@ Tecnologias oficiais. Nenhuma tecnologia é adicionada sem avaliação. A stack 
 ## Qualidade
 
 - **ESLint + Prettier** (config padrão Next.js) · **Vitest** (unidade) · Playwright (e2e, quando houver fluxos críticos).
-- **GitHub Actions:** typecheck + lint + test em todo PR; testes de isolamento RLS obrigatórios no CI.
+- **GitHub Actions:** typecheck + lint + test em todo push na main; testes de isolamento RLS obrigatórios no CI.
 - **Sentry** para erros; logs estruturados (evento, usuário, empresa, timestamp, contexto).
 - Monitoramento inicial: logs + dashboards internos (tabelas `events`/`usage`); observabilidade dedicada é evolução.
 

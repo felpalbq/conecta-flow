@@ -24,7 +24,7 @@ Application → supabase-js → Auth | PostgreSQL | Storage | Realtime | Edge Fu
 
 - Toda alteração estrutural via migration em `supabase/migrations/`. Nunca alterar produção manualmente.
 - Ordem inicial: extensions → companies → profiles → memberships → permissions → admin_users → audit_logs → core entities → policies.
-- Migrations têm PR próprio, com documentação e teste.
+- Migrations têm commit próprio, com documentação e teste.
 - Tipos gerados (`supabase gen types`) versionados em `supabase/types/`.
 
 ## Seed

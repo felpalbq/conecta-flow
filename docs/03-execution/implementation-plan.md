@@ -18,7 +18,7 @@ Plano executável das fases 0–4 do roadmap. As decisões que fundamentam este 
 Ambiente confiável + multi-tenancy comprovadamente isolado. Nenhuma feature visível.
 
 - [x] Scaffold Next.js + TypeScript strict + Tailwind + shadcn/ui
-- [x] ESLint + Prettier + Vitest + GitHub Actions (typecheck, lint, test em todo PR)
+- [x] ESLint + Prettier + Vitest + GitHub Actions (typecheck, lint, test em todo push na main)
 - [x] Stack Supabase local (`supabase/config.toml`) + `.env.example` — **pendente:** criar o projeto Supabase cloud de development (requer decisão do usuário: organização/billing; ver checkpoint em `docs/04-development/supabase-guidelines.md`)
 - [x] Migrations: extensions → companies → profiles → company_memberships → permissions → admin_users → audit_logs (+ funções de autorização e policies em migrations próprias, após todas as tabelas — necessário porque o Postgres valida corpos de função `language sql` contra o catálogo na criação)
 - [x] RLS em todas as tabelas + **suíte de testes de isolamento no CI** (`tests/integration/rls`, job `rls-isolation` no CI)
@@ -76,5 +76,5 @@ Ver `roadmap.md` (Fases 5–7): RAG, n8n, Meta Cloud API, módulos, LGPD externa
 ## Processo
 
 - Protótipo Lovable pode correr em paralelo como referência visual — nunca código de produção.
-- Branches `main` + `develop` + `feature/*`; migrations em PR próprio; commits `tipo: descrição`.
+- Uma única branch `main`, sem PRs; migrations em commit próprio; commits `tipo: descrição`.
 - Toda etapa termina com documentação atualizada (Definition of Done).

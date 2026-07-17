@@ -13,16 +13,9 @@ Históricos independentes; sem branches, pipelines ou releases compartilhados. F
 
 ## Branches
 
-Apenas quatro tipos:
+Uma única branch: **main** — sempre estável e deployável; todo o desenvolvimento acontece diretamente nela. Decisão do time (não há develop, feature/* nem hotfix/*) para manter o fluxo simples nesta fase do projeto — sem PRs, sem branches de integração.
 
-- **main** — produção; sempre estável e deployável; somente ela realiza deploy.
-- **develop** — integração; recebe features concluídas.
-- **feature/*** — partem de `develop`, nunca de `main` (ex.: `feature/inbox-core`, `feature/lead-scoring`).
-- **hotfix/*** — correções críticas (ex.: `hotfix/message-duplication`).
-
-Proibidas: `test`, `new`, `temp`, `backup`, `final`, `v2`, `ajustes`, `misc`.
-
-Fluxo: `develop → feature → review → develop`; release: `develop → main → deploy`. Nunca desenvolver diretamente na main.
+Nunca criar branches auxiliares (`test`, `new`, `temp`, `backup`, `final`, `v2`, `ajustes`, `misc` ou qualquer `feature/*`/`develop`) sem alinhar antes com o usuário.
 
 ## Commits
 
@@ -34,17 +27,15 @@ Exemplos: `feat: create conversation assignment service`, `fix: prevent duplicat
 
 Proibidos: `update`, `changes`, `fixes`, `ajustes`, `teste`, `temp`, `wip`, `final`.
 
-Commits pequenos e coesos: 1 problema → 1 commit. Nunca misturar frontend, backend e banco em um commit gigante. **Migrations possuem PR próprio.**
+Commits pequenos e coesos: 1 problema → 1 commit. Nunca misturar frontend, backend e banco em um commit gigante. **Migrations têm commit próprio**, separado de código de aplicação.
 
-## Pull Requests
+## Revisão (sem PRs)
 
-Todo PR responde: o que mudou? por que mudou? quais documentos impacta? existe risco?
-
-Revisão antes do merge verifica: arquitetura, segurança, multi-tenancy, eventos, permissões, documentação. Checklist: código funciona? documentação atualizada? segurança validada? testes realizados?
+Sem branches nem Pull Requests: cada commit direto na `main` deve responder sozinho — o que mudou? por que mudou? quais documentos impacta? existe risco? Antes de commitar, revisar: arquitetura, segurança, multi-tenancy, eventos, permissões, documentação. Checklist: código funciona? documentação atualizada? segurança validada? testes realizados?
 
 ## Documentação
 
-Toda alteração arquitetural exige atualização da documentação correspondente no mesmo PR. Nunca deixar documentação desatualizada.
+Toda alteração arquitetural exige atualização da documentação correspondente no mesmo commit. Nunca deixar documentação desatualizada.
 
 ## Tags e versionamento
 

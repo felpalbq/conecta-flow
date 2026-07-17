@@ -54,7 +54,6 @@ Estados adicionais pós-MVP: `in_followup`, `scheduled`, `converted` (ver conver
 | Workflows n8n | `WF_SOURCE_EVENT_V<n>` | `WF_WHATSAPP_MESSAGE_RECEIVED_V1` |
 | Tabelas | snake_case plural | `conversations`, `company_memberships` |
 | Colunas / FKs | snake_case / `<entity>_id` | `company_id`, `conversation_id` |
-| Branches | `feature/*`, `hotfix/*` | `feature/inbox-core` |
 | Commits | `tipo: descrição` (inglês) | `feat: create conversation entity` |
 
 ## Termos de operação

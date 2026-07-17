@@ -81,7 +81,7 @@ Arquivos privados; nunca URLs públicas permanentes.
 
 ## Regras
 
-- Toda alteração estrutural via migration (`supabase/migrations/`); nunca alterar produção manualmente; migrations em PR próprio.
+- Toda alteração estrutural via migration (`supabase/migrations/`); nunca alterar produção manualmente; migrations em commit próprio.
 - Seeds apenas com dados fictícios — nunca dados reais em desenvolvimento.
 - Ordem das migrations iniciais: extensions → companies → profiles → memberships → permissions → admin_users → audit_logs → core entities → policies.
 - Backups criptografados, preservando isolamento, eventos, auditoria e integridade referencial. Restauração por empresa deve ser possível.
