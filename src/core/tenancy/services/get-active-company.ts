@@ -2,6 +2,7 @@ import 'server-only';
 
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { cache } from 'react';
 
 import { ACTIVE_COMPANY_COOKIE } from '../constants';
 import { getMemberships, type MembershipWithCompany } from './get-memberships';
@@ -16,8 +17,10 @@ export interface ActiveCompanyContext {
  * memberships (never trusts the cookie value blindly) — falls back to the
  * first membership if missing/stale/invalid. Redirects to /sem-empresa if
  * the user has zero company memberships (e.g., an admin-only profile).
+ * Wrapped in React's cache() so the layout and page calling this in the same
+ * request dedupe into a single lookup.
  */
-export async function getActiveCompanyOrThrow(): Promise<ActiveCompanyContext> {
+export const getActiveCompanyOrThrow = cache(async (): Promise<ActiveCompanyContext> => {
   const memberships = await getMemberships();
 
   if (memberships.length === 0) {
@@ -30,4 +33,4 @@ export async function getActiveCompanyOrThrow(): Promise<ActiveCompanyContext> {
   const membership = memberships.find((m) => m.companyId === activeCompanyId) ?? memberships[0]!;
 
   return { membership, memberships };
-}
+});
