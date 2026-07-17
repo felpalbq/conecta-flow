@@ -6,9 +6,9 @@ Tecnologias oficiais. Nenhuma tecnologia é adicionada sem avaliação. A stack 
 
 | Camada | Tecnologia | Notas |
 |--------|-----------|-------|
-| Framework | **Next.js** | frontend, route handlers (API), server components |
+| Framework | **Next.js 16** | frontend, route handlers (API), server components. `middleware.ts` foi renomeado para `proxy.ts` (`src/proxy.ts`) — ver AGENTS.md |
 | Linguagem | **TypeScript strict** | nunca JavaScript; nunca `any` |
-| UI | **React + Tailwind CSS + shadcn/ui** | nunca recriar componentes básicos; sem CSS espalhado |
+| UI | **React + Tailwind CSS + shadcn/ui** | nunca recriar componentes básicos; sem CSS espalhado. A CLI atual do shadcn/ui gera componentes sobre **Base UI** (`@base-ui/react`), não Radix — convenções diferem: `render={<Componente />}` no lugar de `asChild`, `onClick` no lugar de `onSelect` em itens de menu |
 | Formulários | **React Hook Form + Zod** | toda entrada externa possui schema Zod |
 | Server state | **TanStack Query** | cache, sincronização, mutations |
 | Client state | estado local → React Context → Zustand | global apenas com justificativa |

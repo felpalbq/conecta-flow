@@ -6,7 +6,25 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Conecta Flow** — SaaS multi-tenant de atendimento inteligente via WhatsApp para micro e pequenas empresas. A conversa é a entidade central do produto; CRM, score, agenda e dashboard existem para enriquecê-la. Um Agente Inteligente (LLM + conhecimento + ferramentas + políticas) faz triagem, responde, qualifica e transfere para humanos quando agrega valor. Existe um segundo ambiente administrativo, o **Mission Control** (`/admin`), invisível para clientes.
 
-**Estado atual:** fase de fundação — a documentação canônica em [docs/](docs/) está completa; o código da aplicação ainda não foi iniciado. Não há comandos de build/teste ainda; quando o scaffold existir (Next.js + TypeScript strict + Tailwind + shadcn/ui + Supabase), atualizar esta seção com os comandos.
+**Estado atual:** Marco 1 (Fundação Segura) implementado — scaffold Next.js, schema de banco com RLS, auth (login/logout/recuperação de senha), contexto de tenancy e layout base estão prontos; ver `docs/03-execution/implementation-plan.md` para o checklist detalhado. Módulos de produto (Inbox, Agente IA, etc.) ainda não foram construídos.
+
+Comandos (rodar a partir da raiz do repo):
+
+```
+npm run dev          # servidor Next.js em http://localhost:3000 (ou 127.0.0.1, ver nota abaixo)
+npm run typecheck    # tsc --noEmit
+npm run lint         # eslint
+npm run format       # prettier --write
+npm run test         # vitest — testes unitários (tests/unit)
+npm run test:rls     # vitest — suíte de isolamento RLS (tests/integration/rls), exige stack local rodando
+
+npx supabase start   # sobe o stack local (Postgres, Auth, Realtime, Storage) — exige Docker
+npx supabase db reset  # recria o banco e reaplica todas as migrations
+npm run seed          # popula 2 empresas, 4 usuários fixture (supabase/seed/fixtures.ts)
+npm run db:types      # regenera supabase/types/database.types.ts após alterar migrations
+```
+
+Copiar `.env.example` para `.env.local` e preencher com `npx supabase status -o env` após `supabase start`. **Acessar a app via `http://127.0.0.1:3000`, não `localhost`** — o `site_url` do Supabase Auth local é `127.0.0.1` (necessário para os links de recuperação de senha baterem no allow-list de redirect).
 
 ## Documentação — fonte da verdade
 

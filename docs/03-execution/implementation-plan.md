@@ -9,7 +9,7 @@ Plano executável das fases 0–4 do roadmap. As decisões que fundamentam este 
 - [x] Glossário (linguagem ubíqua)
 - [x] CLAUDE.md autossuficiente
 - [ ] Validação do Product Owner
-- [ ] Exclusão da pasta de instruções originais
+- [x] Exclusão da pasta de instruções originais
 
 **Critério:** qualquer pessoa (ou instância de Claude) entende e desenvolve o projeto lendo apenas `CLAUDE.md` + `docs/`.
 
@@ -17,14 +17,14 @@ Plano executável das fases 0–4 do roadmap. As decisões que fundamentam este 
 
 Ambiente confiável + multi-tenancy comprovadamente isolado. Nenhuma feature visível.
 
-- [ ] Scaffold Next.js + TypeScript strict + Tailwind + shadcn/ui
-- [ ] ESLint + Prettier + Vitest + GitHub Actions (typecheck, lint, test em todo PR)
-- [ ] Projeto Supabase (development) + `.env.example`
-- [ ] Migrations: extensions → companies → profiles → company_memberships → permissions → admin_users → audit_logs
-- [ ] RLS em todas as tabelas + **suíte de testes de isolamento no CI**
-- [ ] Supabase Auth: login, logout, recuperação de senha
-- [ ] Layout base (identidade lilás/roxo), Home mínima, Configurações (perfil/empresa)
-- [ ] Seed de desenvolvimento: 2 empresas, 3 usuários (1 em duas empresas)
+- [x] Scaffold Next.js + TypeScript strict + Tailwind + shadcn/ui
+- [x] ESLint + Prettier + Vitest + GitHub Actions (typecheck, lint, test em todo PR)
+- [x] Stack Supabase local (`supabase/config.toml`) + `.env.example` — **pendente:** criar o projeto Supabase cloud de development (requer decisão do usuário: organização/billing; ver checkpoint em `docs/04-development/supabase-guidelines.md`)
+- [x] Migrations: extensions → companies → profiles → company_memberships → permissions → admin_users → audit_logs (+ funções de autorização e policies em migrations próprias, após todas as tabelas — necessário porque o Postgres valida corpos de função `language sql` contra o catálogo na criação)
+- [x] RLS em todas as tabelas + **suíte de testes de isolamento no CI** (`tests/integration/rls`, job `rls-isolation` no CI)
+- [x] Supabase Auth: login, logout, recuperação de senha (verificado ponta a ponta localmente, incluindo e-mail via Mailpit)
+- [x] Layout base (identidade lilás/roxo), Home mínima, Configurações (perfil/empresa)
+- [x] Seed de desenvolvimento: 2 empresas, 4 usuários (owner-only, attendant-only, 1 em duas empresas com papéis diferentes, 1 platform admin sem empresa)
 
 **Critério de aceite:** usuário da Empresa A autenticado não lê nenhum dado da Empresa B (teste automatizado); usuário multi-empresa alterna contexto corretamente.
 
