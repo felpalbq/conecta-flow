@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ⚠️ Conecta Flow Platform — ARCHIVED
 
-## Getting Started
+**Status:** Read-Only Archive · Superseded by [`flow-connect`](https://github.com/felpalbq/flow-connect)  
+**Date:** 2026-07-17  
+**Reason:** [ADR-015](./docs/decisions/ADR-015-official-repository-inversion.md) — Repository consolidation
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## ⬅️ Go to Official Repository
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Active development** has moved to **[`flow-connect`](https://github.com/felpalbq/flow-connect)**.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+This repository is archived for **historical reference only**. All new features, bug fixes, and releases are published from `flow-connect`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## What Happened
 
-To learn more about Next.js, take a look at the following resources:
+- ✅ Auditoria e correções completadas (8 achados)
+- ✅ Fundação (Supabase, RLS, permissões, auditoria) migrada para flow-connect
+- ✅ Server Functions adaptadas ao TanStack Start
+- ✅ Banco, testes, CI/CD duplicados com sucesso
+- ✅ flow-connect é agora o repositório oficial único
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Migration Details
 
-## Deploy on Vercel
+See:
+- [`docs/decisions/ADR-015-official-repository-inversion.md`](./docs/decisions/ADR-015-official-repository-inversion.md) — Decision record
+- [`docs/migration/destination-audit.md`](./docs/migration/destination-audit.md) — Stack verification (flow-connect)
+- [`docs/migration/migration-checkpoint.md`](./docs/migration/migration-checkpoint.md) — Phases 0–3 status
+- [`docs/instructions/`](./docs/instructions%20temporarias/) — Migration instructions (Portuguese)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## If You Need This Code
+
+### To see the current state before migration:
+Browse git history on the `main` branch up to commit `829b587` (destination audit).
+
+### To continue development:
+Clone [`flow-connect`](https://github.com/felpalbq/flow-connect) instead.
+
+### To understand the architecture:
+See `docs/02-architecture/` — it applies to both repos (framework-agnostic).
+
+---
+
+## License
+
+Same as flow-connect. See LICENSE file.
+
+---
+
+**This repository is no longer maintained. Go to [flow-connect](https://github.com/felpalbq/flow-connect).**
