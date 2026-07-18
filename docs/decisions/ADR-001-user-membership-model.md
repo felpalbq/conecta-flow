@@ -15,3 +15,7 @@ Adotar o modelo de memberships: `auth.users → profiles → company_memberships
 - Suporta o operador da plataforma e usuários que atendem para mais de uma empresa sem migração futura.
 - RLS baseia-se em memberships (empresas do usuário), não em coluna única.
 - A interface precisa de seletor de empresa ativa para usuários com múltiplos memberships.
+
+## Clarificação 2026-07
+
+Multi-membership é capacidade **arquitetural** (um profile pode ter vínculos com várias companies — necessário para o operador da plataforma e casos excepcionais administrados via Mission Control). **Não é feature de produto**: o usuário típico pertence a uma única company e a UI não promove alternância. O `CompanySwitcher` permanece no código como mecanismo de suporte, renderizado apenas quando existem múltiplos memberships — o que, por política de produto, só ocorre em contas administradas pela plataforma. O protótipo de UI não exibe switcher, e isso está correto.

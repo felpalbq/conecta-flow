@@ -15,7 +15,7 @@ export interface ActiveCompanyContext {
 /**
  * Reads the active-company cookie and validates it against the caller's own
  * memberships (never trusts the cookie value blindly) — falls back to the
- * first membership if missing/stale/invalid. Redirects to /sem-empresa if
+ * first membership if missing/stale/invalid. Redirects to /no-company if
  * the user has zero company memberships (e.g., an admin-only profile).
  * Wrapped in React's cache() so the layout and page calling this in the same
  * request dedupe into a single lookup.
@@ -24,7 +24,7 @@ export const getActiveCompanyOrThrow = cache(async (): Promise<ActiveCompanyCont
   const memberships = await getMemberships();
 
   if (memberships.length === 0) {
-    redirect('/sem-empresa');
+    redirect('/no-company');
   }
 
   const cookieStore = await cookies();

@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from '@/shared/components/ui/card';
 
-export default function SemEmpresaPage() {
+export default function NoCompanyPage() {
   return (
     <div className="flex min-h-screen items-center justify-center px-4">
       <Card className="w-full max-w-sm">

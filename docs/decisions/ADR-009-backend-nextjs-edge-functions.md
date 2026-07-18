@@ -1,6 +1,8 @@
 # ADR-009 — Backend: Next.js para aplicação, Edge Functions para borda, n8n pós-piloto
 
-**Status:** Aceito · 2026-07-15
+**Status:** Aceito · 2026-07-15 · Em revisão pelo ADR-015
+
+> **Nota 2026-07-17:** ADR-015 inverte o repositório oficial para `flow-connect` (Lovable). A stack real será verificada na Instrução 03 (Fase 0). Essa ADR será revisada se o framework do destino não suportar server-side como esperado.
 
 ## Contexto
 

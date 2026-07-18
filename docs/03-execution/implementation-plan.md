@@ -28,6 +28,10 @@ Ambiente confiável + multi-tenancy comprovadamente isolado. Nenhuma feature vis
 
 **Critério de aceite:** usuário da Empresa A autenticado não lê nenhum dado da Empresa B (teste automatizado); usuário multi-empresa alterna contexto corretamente.
 
+**Deferral da Regra 3 (eventos):** a tabela `events` só chega no Marco 2 (Etapa C) — `company.updated` e `profile.updated` hoje não geram evento, apenas auditoria (`audit_logs`). Deferral documentado como `TODO(marco-2)` nos services (`update-company.ts`, `update-profile.ts`); ao criar a tabela `events`, retrofitar publicação em todo write path existente, não só nos novos.
+
+**Pendências de teste registradas:** `getMemberships` (`src/core/tenancy/services/get-memberships.ts`) ainda sem teste unitário — exige mock do client Supabase; valor menor que a cobertura de autorização, mas fica como pendência aberta.
+
 ## Etapa C — Marco 2: Inbox Operacional
 
 Conversar de verdade pelo WhatsApp através da plataforma.

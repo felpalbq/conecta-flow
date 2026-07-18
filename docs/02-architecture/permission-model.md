@@ -67,6 +67,10 @@ Exemplos: `conversation.read`, `conversation.reply`, `conversation.assign`, `con
 
 O modelo deve permitir: supervisores, equipes, departamentos, permissões customizadas — sem alterar a estrutura em camadas.
 
+## Fonte de verdade do catálogo
+
+`src/core/permissions/permission-catalog.ts` é a fonte de verdade das chaves `dominio.acao` — é de onde `ROLE_PERMISSIONS` (role-permissions.ts) e a tabela `permissions` derivam. A tabela é uma **projeção** semeada via migration (`20260717020000_sync_permission_catalog.sql`) para consulta administrativa (Mission Control) e para a UI renderizar nomes de permissão — nunca a autoridade. Um teste de consistência (`tests/unit/core/permissions/catalog-consistency.test.ts`) garante que toda chave usada em `ROLE_PERMISSIONS` existe no catálogo. Ao adicionar uma permissão nova: atualizar o catálogo em código primeiro, depois a migration, depois `ROLE_PERMISSIONS`.
+
 ## Regra final
 
 Papéis simplificam. Permissões controlam. Isolamento protege. Auditoria garante confiança.

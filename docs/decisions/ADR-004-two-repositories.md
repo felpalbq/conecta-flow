@@ -1,6 +1,6 @@
 # ADR-004 — Dois repositórios; documentação dentro do principal
 
-**Status:** Aceito · 2026-07-15
+**Status:** Superseded por ADR-015 · 2026-07-17
 
 ## Contexto
 

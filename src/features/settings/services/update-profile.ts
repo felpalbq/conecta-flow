@@ -2,6 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 
+import { logAction } from '@/core/audit/log-action';
 import { requireUser } from '@/core/auth/services/require-user';
 import { createClient } from '@/infrastructure/supabase/server-client';
 
@@ -26,6 +27,14 @@ export async function updateProfile(input: ProfileInput): Promise<{ error?: stri
     return { error: 'Não foi possível salvar as alterações.' };
   }
 
+  await logAction({
+    companyId: null,
+    action: 'profile.updated',
+    entity: `profiles:${user.id}`,
+    metadata: { fields: ['name', 'avatarUrl'] },
+  });
+
+  // TODO(marco-2): publish profile.updated event once the events table exists.
   revalidatePath('/settings/profile');
   return {};
 }

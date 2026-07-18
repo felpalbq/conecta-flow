@@ -2,6 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 
+import { logAction } from '@/core/audit/log-action';
 import { getActiveCompanyOrThrow } from '@/core/tenancy/services/get-active-company';
 import { createClient } from '@/infrastructure/supabase/server-client';
 
@@ -33,6 +34,14 @@ export async function updateCompany(input: CompanyInput): Promise<{ error?: stri
     return { error: 'Não foi possível salvar. Apenas o Owner pode editar a empresa.' };
   }
 
+  await logAction({
+    companyId: membership.companyId,
+    action: 'company.updated',
+    entity: `companies:${membership.companyId}`,
+    metadata: { fields: ['name', 'timezone', 'locale'] },
+  });
+
+  // TODO(marco-2): publish company.updated event once the events table exists.
   revalidatePath('/settings/company');
   return {};
 }

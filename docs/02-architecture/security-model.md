@@ -44,6 +44,8 @@ Toda ação crítica gera registro imutável em `audit_logs` (nunca apagado, nun
 
 Todo log contém: timestamp, usuário, empresa, origem, evento, resultado. **Nunca registrar:** senhas, tokens, conteúdo privado completo, dados financeiros sensíveis.
 
+Escrita feita via `src/core/audit/log-action.ts` (`logAction`) — grava como o usuário autenticado (a policy de insert exige `actor_id = auth.uid()`). Toda server action que altera estado chama `logAction` após a operação principal ter sido commitada; falha de auditoria não derruba a operação de negócio, apenas loga o erro.
+
 ## Soft delete e imutabilidade
 
 Registros importantes nunca são removidos fisicamente (`deleted_at`). Imutáveis: `messages`, `timeline_events`, `audit_logs`, `events`, `payments`.

@@ -53,8 +53,9 @@ Next.js (route handlers = API) · TypeScript strict (nunca `any`) · Tailwind + 
 
 - Estrutura feature-first: `src/{app, features, core, shared, infrastructure}` (ADR-003; detalhes em docs/04-development/project-structure.md). Proibido `utils.ts`/`helpers.ts` genéricos; imports com alias `@/`.
 - Código e identificadores em inglês; interface em pt-BR. Tabelas snake_case plural; FKs `<entity>_id`.
+- Toda server action que altera estado chama `logAction` (`src/core/audit/log-action.ts`) após a operação principal — sem exceção (Regra Inviolável 6).
 - Git: uma única branch `main` (sempre estável e deployável) — sem `develop`, `feature/*` ou PRs; commits `tipo: descrição` em inglês (`feat:`, `fix:`, `refactor:`, `docs:`, `test:`, `chore:`); migrations em commit próprio; nunca misturar frontend+backend+banco num commit.
-- Repositórios: este (`conecta-flow-platform`) é o produto; `conecta-flow-ui-prototype` (Lovable) é só referência visual — nunca copiar código de lá sem adaptar (ADR-004).
+- **Repositório oficial único:** `flow-connect` (ADR-015). Lovable = UI/UX; Claude Code = engenharia. Propriedade por diretório: ver `docs/04-development/repository-ownership.md`. Nada de copiar código entre repositórios — o código vive aqui agora.
 
 ## Como o Claude trabalha aqui
 

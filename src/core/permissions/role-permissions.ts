@@ -6,8 +6,25 @@
  * callers reading from Supabase cast to `Role` at the boundary.
  */
 export const ROLE_PERMISSIONS = {
-  owner: ['user.manage', 'dashboard.read', 'audit.read'],
-  attendant: ['dashboard.read'],
+  owner: [
+    'conversation.read',
+    'conversation.reply',
+    'conversation.assign',
+    'conversation.handoff',
+    'contact.read',
+    'contact.edit',
+    'user.manage',
+    'dashboard.read',
+    'audit.read',
+    'module.read',
+  ],
+  attendant: [
+    'conversation.read',
+    'conversation.reply',
+    'conversation.handoff',
+    'contact.read',
+    'dashboard.read',
+  ],
 } as const satisfies Record<string, readonly string[]>;
 
 export type Role = keyof typeof ROLE_PERMISSIONS;
